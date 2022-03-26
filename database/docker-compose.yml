@@ -1,6 +1,7 @@
 version: '3.7'
+
 services:
-  mongodb_container:
+  mongodb:
     image: mongo:latest
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -9,6 +10,11 @@ services:
       - 27017:27017
     volumes:
       - ${PWD}/volume:/data/db
+
+  mongo-seed:
+    build: ./mongo-seed
+    links:
+      - mongodb
 
 volumes:
   mongodb_data_container:
