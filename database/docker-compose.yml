@@ -2,19 +2,40 @@ version: '3.7'
 
 services:
   mongodb:
+    container_name: mongo_dev
     image: mongo:latest
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_INITDB_ROOT_USERNAME
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_INITDB_ROOT_PASSWORD
+    env_file:
+      - .env
     ports:
       - 27017:27017
     volumes:
       - ${PWD}/volume:/data/db
+    networks:
+      - dev
 
   mongo-seed:
-    build: ./mongo-seed
-    links:
+    container_name: mongo_seed
+    env_file:
+      - .env
+    build:
+      context: ./mongo-seed
+      dockerfile: Dockerfile
+      args:
+        - DATABASE_URI=$DATABASE_URI
+        - USERNAME=$MONGO_INITDB_ROOT_USERNAME
+        - PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+    networks:
+      - dev
+    depends_on:
       - mongodb
 
 volumes:
   mongodb_data_container:
+
+networks:
+  dev:
+    name: dev
+    driver: bridge
