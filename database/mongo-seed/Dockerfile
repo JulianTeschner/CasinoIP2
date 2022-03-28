@@ -9,4 +9,4 @@ FROM mongo
  
 COPY init.json /init.json
 
-CMD mongoimport --username ${USERNAME} --password ${PASSWORD} --uri ${DATABASE_URI} --collection balance --drop --file /init.json
+CMD mongoimport --username ${USERNAME} --password ${PASSWORD} --uri ${DATABASE_URI} --collection balance --drop --file --jsonArray /init.json
