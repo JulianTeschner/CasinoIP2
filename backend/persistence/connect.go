@@ -2,14 +2,17 @@ package persistence
 
 import (
 	"context"
+	"fmt"
 	_ "fmt"
 	"log"
 	"time"
 
-	_ "go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
+
+var ctx context.Context
 
 // CreateDbConnection creates a connection to the Database and return a Client if successful.
 func CreateDbConnection() *mongo.Client {
@@ -17,17 +20,17 @@ func CreateDbConnection() *mongo.Client {
 	/*
 	   Connect to my cluster
 	*/
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://root:rootpassword@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer client.Disconnect(ctx)
 
 	return client
 
@@ -46,14 +49,14 @@ func GetDatabases(client *mongo.Client) []string {
 	/*
 	   List databases
 	*/
-	databases, err := client.ListDatabaseNames(
-		context.WithTimeout(
-			context.Background(),
-			10*time.Second),
-	)
+
+	databases, err := client.ListDatabaseNames(ctx, bson.M{})
 	if err != nil {
+		fmt.Println("here")
 		log.Fatal(err)
 	}
+
+	fmt.Println("From db: ", databases)
 	return databases
 }
 
@@ -62,5 +65,11 @@ func GetCollection(client *mongo.Client, database string, collection string) *mo
 	db := client.Database(database)
 	coll := db.Collection(collection)
 
+	fmt.Println("From coll: ", coll)
+
 	return coll
+}
+
+func Disconnect(client *mongo.Client) {
+	client.Disconnect(ctx)
 }

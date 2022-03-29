@@ -3,12 +3,17 @@ package main
 import (
 	"fmt"
 
-	"../persistence"
-	_ "go.mongodb.org/mongo-driver/mongo"
-	_ "go.mongodb.org/mongo-driver/mongo/options"
+	"custom.com/persistence"
 )
 
 func main() {
-	connection := persistence.CreateDbConnection()
-	fmt.Println(connection)
+	client := persistence.CreateDbConnection()
+	// fmt.Println(connection)
+
+	defer persistence.Disconnect(client)
+	dbs := persistence.GetDatabases(client)
+
+	// coll := persistence.GetCollection(connection, "api_prod_db", "users")
+
+	fmt.Printf("%T", dbs)
 }
