@@ -45,6 +45,7 @@ func CreateDbConnection() *mongo.Client {
 	fmt.Println(results, databases) */
 }
 
+// GetDatabase returns a list with all Database names.
 func GetDatabases(client *mongo.Client) []string {
 	/*
 	   List databases
@@ -60,6 +61,7 @@ func GetDatabases(client *mongo.Client) []string {
 	return databases
 }
 
+// GetCollection returns a specific collection reference from a database specified by the name.
 func GetCollection(client *mongo.Client, database string, collection string) *mongo.Collection {
 
 	db := client.Database(database)
@@ -70,6 +72,7 @@ func GetCollection(client *mongo.Client, database string, collection string) *mo
 	return coll
 }
 
+// Disconnect closes the connection to the database.
 func Disconnect(client *mongo.Client) {
 	client.Disconnect(ctx)
 }
