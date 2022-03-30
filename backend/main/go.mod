@@ -4,7 +4,12 @@ go 1.17
 
 replace custom.com/persistence => ../persistence
 
-require custom.com/persistence v0.0.0-00010101000000-000000000000
+replace custom.com/models => ../models
+
+require (
+	custom.com/models v0.0.0-00010101000000-000000000000
+	custom.com/persistence v0.0.0-00010101000000-000000000000
+)
 
 require (
 	github.com/go-stack/stack v1.8.0 // indirect
