@@ -9,36 +9,6 @@ db.createUser({
   roles: [{ role: 'readWrite', db: 'api_prod_db' }],
 });
 db.createCollection('users');
-db.users.insert({
-  _id: '5e9f8f8f8f8f8f8f8f8f8f8',
-  name: 'John Doe',
-  email: 'something@something.com',
-  dateOfBirth: '2020-01-01',
-  address: {
-    street: '123 Main St',
-    city: 'Anytown',
-    state: 'CA',
-    zip: '12345',
-  },
-  balance: {
-    amount: 100,
-    currency: 'USD',
-    amountOnDate: [
-      {
-        date: '2020-01-01',
-        amount: 100,
-      },
-      {
-        date: '2020-01-02',
-        amount: 200,
-      },
-      {
-        date: '2020-01-03',
-        amount: 300,
-      },
-    ],
-  },
-});
 // ##############################
 
 // Create api_dev_db
@@ -65,10 +35,11 @@ db.createUser({
 });
 db.createCollection('users');
 db.users.insert({
-  _id: '5e9f8f8f8f8f8f8f8f8f8f8',
-  name: 'John Doe',
+  _id: '5e9f8f8f8f8f',
+  first_name: 'John',
+  last_name: 'Doe',
   email: 'something@something.com',
-  dateOfBirth: '2020-01-01',
+  date_of_birth: '2020-01-01',
   address: {
     street: '123 Main St',
     city: 'Anytown',
@@ -78,7 +49,7 @@ db.users.insert({
   balance: {
     amount: 100,
     currency: 'USD',
-    amountOnDate: [
+    amount_on_date: [
       {
         date: '2020-01-01',
         amount: 100,

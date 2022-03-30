@@ -14,6 +14,10 @@ import (
 
 var ctx context.Context
 
+func init() {
+	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+}
+
 // CreateDbConnection creates a connection to the Database and return a Client if successful.
 func CreateDbConnection() *mongo.Client {
 
@@ -24,8 +28,6 @@ func CreateDbConnection() *mongo.Client {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 
 	err = client.Connect(ctx)
 	if err != nil {
@@ -57,7 +59,6 @@ func GetDatabases(client *mongo.Client) []string {
 		log.Fatal(err)
 	}
 
-	fmt.Println("From db: ", databases)
 	return databases
 }
 
@@ -66,8 +67,6 @@ func GetCollection(client *mongo.Client, database string, collection string) *mo
 
 	db := client.Database(database)
 	coll := db.Collection(collection)
-
-	fmt.Println("From coll: ", coll)
 
 	return coll
 }
