@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	_ "fmt"
 	"time"
 
 	"custom.com/models"
@@ -30,10 +31,10 @@ func main() {
 	}
 
 	var users []models.User
-
 	if err := cursor.All(ctx, &users); err != nil {
 		panic(err)
 	}
 
-	fmt.Println(users[0])
+	fmt.Println(users)
+
 }
