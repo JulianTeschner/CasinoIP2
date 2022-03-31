@@ -43,4 +43,5 @@ func main() {
 	user.LastName = "Not"
 	user.ID = primitive.NewObjectID()
 	usersCollection.InsertOne(ctx, &user)
+
 }
