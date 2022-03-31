@@ -1,19 +1,25 @@
 package models
 
 import (
+	"context"
+	"fmt"
 	"testing"
 	"time"
+
+	"custom.com/persistence"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+var ctx context.Context
+
 var expected User
 
 func init() {
 	expected.ID = primitive.NewObjectID()
-	expected.FirstName = "John"
-	expected.LastName = "Doe"
+	expected.FirstName = "Test"
+	expected.LastName = "Test"
 	expected.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
 	expected.Email = "test@test.com"
 	expected.Balance = Balance{
@@ -30,20 +36,32 @@ func init() {
 		State:  "CA",
 		Zip:    "12345",
 	}
+
+	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+
 }
 
 func TestUserString(t *testing.T) {
-	val, err := bson.Marshal(expected)
-	if err != nil {
-		t.Error(err)
-	}
-	var u User
-	if bson.Unmarshal(val, &u) != nil {
-		t.Error("Unmarshal failed")
+
+	client := persistence.CreateDbConnection()
+
+	defer persistence.Disconnect(client)
+
+	usersCollection := persistence.GetCollection(client, "api_test_db", "users")
+
+	usersCollection.InsertOne(ctx, &expected)
+
+	var actual User
+
+	cursor := usersCollection.FindOne(ctx, bson.M{"FirstName": "Test"})
+
+	if err := cursor.Decode(&actual); err != nil {
+		t.Errorf("Error decoding user: %v", err)
 	}
 
-	if u.String() != expected.String() {
-		t.Errorf("Expected %s, got %s", expected.String(), u.String())
+	fmt.Println(actual)
+	if actual.String() != expected.String() {
+		t.Errorf("Expected %v, got %v", expected.String(), actual.String())
 	}
 
 }

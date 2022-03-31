@@ -64,7 +64,6 @@ func (u *User) UnmarshalBSON(data []byte) error {
 
 // MarshalBSON is a custom marshaler for User
 func (u *User) MarshalBSON() ([]byte, error) {
-	fmt.Println("I get called")
 	return bson.Marshal(struct {
 		ID          primitive.ObjectID `bson:"_id"`
 		FirstName   string             `bson:"first_name"`
