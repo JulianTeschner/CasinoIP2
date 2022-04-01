@@ -18,20 +18,7 @@ type User struct {
 	Balance     Balance            `bson:"balance, omitempty, inline" json:"balance"`
 }
 
-func (user User) GetBSON() (interface{}, error) {
-	u := User{
-		ID:          user.ID,
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Email:       user.Email,
-		DateOfBirth: user.DateOfBirth,
-		Address:     user.Address,
-		Balance:     user.Balance,
-	}
-	return u, nil
-}
-
-// UnmarshalJSON is a custom unmarshaler for User
+// UnmarshalBSON is a custom unmarshaler for User
 func (u *User) UnmarshalBSON(data []byte) error {
 	// Unmarshal into a temporary type where the "ends" field is a string.
 	decoded := new(struct {
