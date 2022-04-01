@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"custom.com/models"
-	"custom.com/persistence"
+	"github.com/JulianTeschner/CasinoIP2/models"
+	"github.com/JulianTeschner/CasinoIP2/persistence"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
