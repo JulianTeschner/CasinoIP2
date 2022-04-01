@@ -19,15 +19,12 @@ func init() {
 
 func main() {
 	client := persistence.CreateDbConnection()
-	// fmt.Println(connection)
 
 	defer persistence.Disconnect(client)
 
 	usersCollection := persistence.GetCollection(client, "api_test_db", "users")
 
 	cursor, err := usersCollection.Find(ctx, bson.M{"last_name": "Doe"})
-	// id, _ := primitive.ObjectIDFromHex("62455d5f8ff40d087123167c")
-	// cursor, err := usersCollection.Find(ctx, bson.M{"_id": id})
 	if err != nil {
 		panic(err)
 	}

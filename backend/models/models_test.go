@@ -2,14 +2,13 @@ package models
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 
-	"github.com/JulianTeschner/CasinoIP2/persistence"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var ctx context.Context
@@ -41,27 +40,23 @@ func init() {
 
 }
 
+// TestCreateUser test marshalling and unmarshalling
 func TestUserString(t *testing.T) {
 
-	client := persistence.CreateDbConnection()
+	client, _ := mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
 
-	defer persistence.Disconnect(client)
+	client.Connect(ctx)
+	defer client.Disconnect(ctx)
 
-	usersCollection := persistence.GetCollection(client, "api_test_db", "users")
+	collection := client.Database("api_test_db").Collection("users")
+	collection.InsertOne(ctx, &expected)
 
-	usersCollection.InsertOne(ctx, &expected)
+	cursor, _ := collection.Find(ctx, bson.M{"last_name": "Test"})
+	var users []User
+	_ = cursor.All(ctx, &users)
 
-	var actual User
-
-	cursor := usersCollection.FindOne(ctx, bson.M{"FirstName": "Test"})
-
-	if err := cursor.Decode(&actual); err != nil {
-		t.Errorf("Error decoding user: %v", err)
-	}
-
-	fmt.Println(actual)
-	if actual.String() != expected.String() {
-		t.Errorf("Expected %v, got %v", expected.String(), actual.String())
+	if users[0].String() != expected.String() {
+		t.Errorf("Expected %v, got %v", expected.String(), users[0].String())
 	}
 
 }
