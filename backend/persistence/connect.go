@@ -47,7 +47,8 @@ func Disconnect(client *mongo.Client) error {
 	return client.Disconnect(ctx)
 }
 
-func GetValue(client *mongo.Client,
+// GetUser returns a user from the database. If the user does not exist, it returns an empty user.
+func GetUser(client *mongo.Client,
 	database string,
 	collection string,
 	key string,
@@ -56,7 +57,7 @@ func GetValue(client *mongo.Client,
 	var user models.User
 	err := coll.FindOne(ctx, bson.M{key: value}).Decode(&user)
 	if err != nil {
-		log.Fatal(err)
+		log.Println("User not found: ", err)
 	}
 	return user
 }
