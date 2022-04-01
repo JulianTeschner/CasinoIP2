@@ -35,11 +35,11 @@ db.createUser({
 });
 db.createCollection('users');
 db.users.insert({
-  _id: '5e9f8f8f8f8f',
+  _id: new ObjectId(),
   first_name: 'John',
   last_name: 'Doe',
   email: 'something@something.com',
-  date_of_birth: '2020-01-01',
+  date_of_birth: '01-02-2020',
   address: {
     street: '123 Main St',
     city: 'Anytown',
@@ -51,16 +51,12 @@ db.users.insert({
     currency: 'USD',
     amount_on_date: [
       {
-        date: '2020-01-01',
+        date: '01-02-2020',
         amount: 100,
       },
       {
-        date: '2020-01-02',
+        date: '02-02-2020',
         amount: 200,
-      },
-      {
-        date: '2020-01-03',
-        amount: 300,
       },
     ],
   },
