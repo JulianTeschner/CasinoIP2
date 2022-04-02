@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/JulianTeschner/CasinoIP2/models"
@@ -18,13 +19,17 @@ func init() {
 }
 
 func main() {
-	client := persistence.CreateDbConnection()
+	client, err := persistence.NewClient()
+	if err != nil {
+		log.Fatalln(err)
 
-	defer persistence.Disconnect(client)
+	}
+	client.Connect(ctx)
+	defer client.Disconnect(ctx)
 
-	usersCollection := persistence.GetCollection(client, "api_test_db", "users")
+    client.Database("api_test_db").Collection("users").InsertOne(ctx, 
 
-	cursor, err := usersCollection.Find(ctx, bson.M{"last_name": "Doe"})
+	/* cursor, err := usersCollection.Find(ctx, bson.M{"last_name": "Doe"})
 	if err != nil {
 		panic(err)
 	}
@@ -39,6 +44,6 @@ func main() {
 	user := users[0]
 	user.LastName = "Not"
 	user.ID = primitive.NewObjectID()
-	usersCollection.InsertOne(ctx, &user)
+	usersCollection.InsertOne(ctx, &user) */
 
 }

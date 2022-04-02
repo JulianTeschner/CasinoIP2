@@ -1,17 +1,27 @@
 package persistence
 
 import (
+	"context"
+	"log"
+	"os"
 	"testing"
 	"time"
 
 	"github.com/JulianTeschner/CasinoIP2/models"
 	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var expected models.User
+var ctx context.Context
+var client *mongo.Client
 
-func init() {
+func setup() func() {
+	client, _ = NewClient()
+	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+	client.Connect(ctx)
+
 	expected.ID = primitive.NewObjectID()
 	expected.FirstName = "Test"
 	expected.LastName = "Test"
@@ -32,51 +42,71 @@ func init() {
 		Zip:    "12345",
 	}
 
-	client := CreateDbConnection()
-	collection := GetCollection(client, "api_test_db", "users")
-	collection.InsertOne(ctx, expected)
-
-}
-
-func TestCreateConnection(t *testing.T) {
-
-	client := CreateDbConnection()
-	if client == nil {
-		t.Error("Client is nil")
+	deleteMe := models.User{
+		ID:          primitive.NewObjectID(),
+		FirstName:   "Please",
+		LastName:    "Delete",
+		DateOfBirth: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+		Email:       "delete@me.com",
+		Balance: models.Balance{
+			Amount:   100,
+			Currency: "USD",
+			AmountOnDate: []models.AmountOnDate{{
+				Amount: 100,
+				Date:   time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+			}},
+		},
+		Address: models.Address{
+			Street: "123 Main St",
+			City:   "Anytown",
+			State:  "CA",
+			Zip:    "12345",
+		},
 	}
-}
 
-func TestGetCollection(t *testing.T) {
-
-	client := CreateDbConnection()
-	collection := GetCollection(client, "api_test_db", "users")
-	if collection == nil {
-		t.Error("Collection is nil")
-	}
-}
-
-func TestDisconnect(t *testing.T) {
-
-	client := CreateDbConnection()
-	err := Disconnect(client)
+	res, err := client.Database("api_test_db").Collection("users").InsertOne(ctx, &expected)
 	if err != nil {
-		t.Error("Error disconnecting")
+		log.Fatal(err)
+	}
+	log.Println("Inserted a single document: ", res.InsertedID)
+	client.Database("api_test_db").Collection("users").InsertOne(ctx, &deleteMe)
+	// Return a function to teardown the test
+	return func() {
+		log.Println("teardown suite")
+		client.Database("api_test_db").Collection("users").DeleteOne(ctx, &expected)
+		client.Disconnect(ctx)
+	}
+}
+
+func TestMain(m *testing.M) {
+	log.Println("Setup persistence tests")
+	teardown := setup()
+	// Run the tests
+	code := m.Run()
+	// Exit with the code
+	teardown()
+	log.Println("Tear down persistence tests")
+
+	os.Exit(code)
+
+}
+
+func TestCreateClient(t *testing.T) {
+
+	testClient, _ := NewClient()
+	if testClient == nil {
+		t.Error("Client is nil")
 	}
 }
 
 func TestGetValue(t *testing.T) {
 
-	client := CreateDbConnection()
 	value := GetUser(client, "api_test_db", "users", "last_name", "Test")
-	if value.LastName != "Test" {
-		t.Error("Value is not equal")
-	}
+	assert.Equal(t, expected, value)
 }
 
 func TestGetNonExistingValue(t *testing.T) {
 
-	client := CreateDbConnection()
-	// collection := GetCollection(client, "api_test_db", "users")
-	val := GetUser(client, "api_test_db", "users", "last_name", "NotExisting")
-	assert.Equal(t, models.User{}, val)
+	value := GetUser(client, "api_test_db", "users", "last_name", "NotExisting")
+	assert.Equal(t, models.User{}, value)
 }

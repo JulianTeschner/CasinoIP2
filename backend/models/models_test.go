@@ -2,6 +2,8 @@ package models
 
 import (
 	"context"
+	"log"
+	"os"
 	"testing"
 	"time"
 
@@ -11,11 +13,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var ctx context.Context
-
 var expected User
+var ctx context.Context
+var client *mongo.Client
 
-func init() {
+func setup() func() {
+	client, _ = mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
+	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+	client.Connect(ctx)
+
 	expected.ID = primitive.NewObjectID()
 	expected.FirstName = "Test"
 	expected.LastName = "Test"
@@ -36,22 +42,34 @@ func init() {
 		Zip:    "12345",
 	}
 
-	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+	// Return a function to teardown the test
+	return func() {
+		log.Println("teardown suite")
+		client.Database("api_test_db").Collection("users").DeleteOne(ctx, &expected)
+		client.Disconnect(ctx)
+	}
+}
+
+func TestMain(m *testing.M) {
+	log.Println("Setup models tests")
+	teardown := setup()
+	// Run the tests
+	code := m.Run()
+	// Exit with the code
+	log.Println("teardown models tests")
+	teardown()
+	log.Println("Teardown models tests")
+
+	os.Exit(code)
 
 }
 
 // TestCreateUser test marshalling and unmarshalling
 func TestUserString(t *testing.T) {
 
-	client, _ := mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
+	client.Database("api_test_db").Collection("users").InsertOne(ctx, &expected)
 
-	client.Connect(ctx)
-	defer client.Disconnect(ctx)
-
-	collection := client.Database("api_test_db").Collection("users")
-	collection.InsertOne(ctx, &expected)
-
-	cursor, _ := collection.Find(ctx, bson.M{"last_name": "Test"})
+	cursor, _ := client.Database("api_test_db").Collection("users").Find(ctx, bson.M{"last_name": "Test"})
 	var users []User
 	_ = cursor.All(ctx, &users)
 
