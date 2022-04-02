@@ -110,3 +110,21 @@ func TestGetNonExistingValue(t *testing.T) {
 	value := GetUser(client, "api_test_db", "users", "last_name", "NotExisting")
 	assert.Equal(t, models.User{}, value)
 }
+
+func TestDeleteMe(t *testing.T) {
+
+	value, _ := DeleteUser(client, "api_test_db", "users", "last_name", "Delete")
+	assert.Equal(t, int64(1), value.DeletedCount)
+}
+
+func TestDeleteNoOne(t *testing.T) {
+
+	value, _ := DeleteUser(client, "api_test_db", "users", "last_name", "NotExisting")
+	assert.Equal(t, int64(0), value.DeletedCount)
+}
+
+func TestDeletionFail(t *testing.T) {
+	c, _ := NewClient()
+	_, err := DeleteUser(c, "api_test_db", "users", "last_name", "Please")
+	assert.Error(t, err)
+}

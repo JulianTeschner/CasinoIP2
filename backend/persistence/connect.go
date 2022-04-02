@@ -36,3 +36,36 @@ func GetUser(client *mongo.Client,
 	}
 	return user
 }
+
+// GetUser returns a user from the database. If the user does not exist, it returns an empty user.
+func GetUsers(client *mongo.Client,
+	database string,
+	collection string,
+	key string,
+	value string) models.User {
+
+	var user models.User
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	err := client.Database(database).Collection(collection).FindOne(ctx, bson.M{key: value}).Decode(&user)
+	if err != nil {
+		log.Println("User not found: ", err)
+	}
+	return user
+}
+
+// DeleteUser deletes a user from the database.
+func DeleteUser(client *mongo.Client,
+	database string,
+	collection string,
+	key string,
+	value string) (*mongo.DeleteResult, error) {
+
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	result, err := client.Database(database).Collection(collection).DeleteOne(ctx, bson.M{key: value})
+	if err != nil {
+		log.Println("Deletion failed: ", err)
+	}
+	return result, err
+}
