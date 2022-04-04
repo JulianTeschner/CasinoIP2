@@ -1,27 +1,13 @@
 package handlers
 
 import (
-	"context"
 	"log"
 	"net/http"
 
 	"github.com/JulianTeschner/CasinoIP2/models"
 	"github.com/JulianTeschner/CasinoIP2/persistence"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/mongo"
 )
-
-var client *mongo.Client
-var ctx context.Context
-
-func init() {
-	var err error
-	client, err = persistence.NewClient()
-	if err != nil {
-		panic(err)
-	}
-	client.Connect(ctx)
-}
 
 // GetUser is the handler for the GET api/user/* route
 func GetUser(c *gin.Context) {
@@ -29,7 +15,7 @@ func GetUser(c *gin.Context) {
 	log.Println("GetUser: ", name)
 
 	var err error
-	user := persistence.GetUser(client, "api_test_db", "users", "last_name", name)
+	user := persistence.GetUser("api_test_db", "users", "last_name", name)
 	log.Println(user)
 	if user.FirstName == "" {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
@@ -49,10 +35,18 @@ func PostUser(c *gin.Context) {
 	}
 	log.Println("PostUser: ", user)
 
-	_, err = persistence.PostUser(client, "api_test_db", "users", &user)
+	_, err = persistence.PostUser("api_test_db", "users", &user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, &user)
+}
+
+func SetupRouter() *gin.Engine {
+	log.Println("Setting up router")
+	router := gin.Default()
+	router.GET("/api/user/:name", GetUser)
+	router.POST("/api/user", PostUser)
+	return router
 }
