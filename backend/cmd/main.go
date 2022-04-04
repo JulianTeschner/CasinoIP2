@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/JulianTeschner/CasinoIP2/handlers"
@@ -24,6 +25,9 @@ func main() {
 	defer client.Disconnect(ctx)
 
 	router := gin.Default()
-	router.GET("/api/user/:name", handlers.GetUser)
+	router.GET("/api/user/:name/", handlers.GetUser)
+	router.POST("/api/user", handlers.PostUser)
 	router.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+
+	log.Println("I was here")
 }

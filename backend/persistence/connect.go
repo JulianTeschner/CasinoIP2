@@ -37,6 +37,21 @@ func GetUser(client *mongo.Client,
 	return user
 }
 
+// PostUser adds a user to the database.
+func PostUser(client *mongo.Client,
+	database string,
+	collection string,
+	user *models.User) (*mongo.InsertOneResult, error) {
+
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	result, err := client.Database(database).Collection(collection).InsertOne(ctx, user)
+	if err != nil {
+		log.Println("User not found: ", err)
+	}
+	return result, err
+}
+
 // DeleteUser deletes a user from the database.
 func DeleteUser(client *mongo.Client,
 	database string,

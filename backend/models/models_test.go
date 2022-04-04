@@ -2,11 +2,13 @@ package models
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"os"
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -65,7 +67,7 @@ func TestMain(m *testing.M) {
 }
 
 // TestCreateUser test marshalling and unmarshalling
-func TestUserString(t *testing.T) {
+func TestUserBson(t *testing.T) {
 
 	client.Database("api_test_db").Collection("users").InsertOne(ctx, &expected)
 
@@ -77,4 +79,11 @@ func TestUserString(t *testing.T) {
 		t.Errorf("Expected %v, got %v", expected.String(), users[0].String())
 	}
 
+}
+
+func TestUserJson(t *testing.T) {
+	userJson, _ := json.Marshal(&expected)
+	var user User
+	_ = json.Unmarshal(userJson, &user)
+	assert.Equal(t, user.String(), expected.String())
 }

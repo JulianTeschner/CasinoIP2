@@ -128,3 +128,24 @@ func TestDeletionFail(t *testing.T) {
 	_, err := DeleteUser(c, "api_test_db", "users", "last_name", "Please")
 	assert.Error(t, err)
 }
+
+func TestPostUser(t *testing.T) {
+	var user models.User
+	user.ID = primitive.NewObjectID()
+	user.FirstName = "Post"
+	user.LastName = "Me"
+	user.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
+	result, _ := PostUser(client, "api_test_db", "users", &user)
+	assert.Equal(t, user.ID, result.InsertedID)
+}
+
+func TestPostUserFail(t *testing.T) {
+	var user models.User
+	user.ID = primitive.NewObjectID()
+	user.FirstName = "Post"
+	user.LastName = "Me"
+	client, _ := NewClient()
+	user.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
+	_, err := PostUser(client, "api_test_db", "users", &user)
+	assert.Error(t, err)
+}
