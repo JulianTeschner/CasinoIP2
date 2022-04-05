@@ -96,14 +96,14 @@ func TestCreateClient(t *testing.T) {
 
 func TestGetValue(t *testing.T) {
 
-	value := GetUser("api_test_db", "users", "last_name", "Test")
+	value, _ := GetUser("api_test_db", "users", "last_name", "Test")
 	assert.Equal(t, expected, value)
 }
 
 func TestGetNonExistingValue(t *testing.T) {
 
-	value := GetUser("api_test_db", "users", "last_name", "NotExisting")
-	assert.Equal(t, models.User{}, value)
+	_, err := GetUser("api_test_db", "users", "last_name", "NotExisting")
+	assert.NotNil(t, err)
 }
 
 func TestDeleteMe(t *testing.T) {

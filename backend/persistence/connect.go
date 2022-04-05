@@ -28,7 +28,7 @@ func NewClient() {
 func GetUser(database string,
 	collection string,
 	key string,
-	value string) models.User {
+	value string) (models.User, error) {
 
 	var user models.User
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
@@ -36,8 +36,9 @@ func GetUser(database string,
 	err := Client.Database(database).Collection(collection).FindOne(ctx, bson.M{key: value}).Decode(&user)
 	if err != nil {
 		log.Println("User not found: ", err)
+		return user, err
 	}
-	return user
+	return user, nil
 }
 
 // PostUser adds a user to the database.
@@ -49,9 +50,10 @@ func PostUser(database string,
 
 	result, err := Client.Database(database).Collection(collection).InsertOne(ctx, user)
 	if err != nil {
-		log.Println("User not found: ", err)
+		log.Println("User could not be added: ", err)
+		return result, err
 	}
-	return result, err
+	return result, nil
 }
 
 // DeleteUser deletes a user from the database.
@@ -65,6 +67,7 @@ func DeleteUser(database string,
 	result, err := Client.Database(database).Collection(collection).DeleteOne(ctx, bson.M{key: value})
 	if err != nil {
 		log.Println("Deletion failed: ", err)
+		return result, err
 	}
-	return result, err
+	return result, nil
 }

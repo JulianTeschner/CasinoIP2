@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/JulianTeschner/CasinoIP2/handlers"
@@ -19,6 +20,9 @@ func main() {
 	defer persistence.Client.Disconnect(ctx)
 
 	router := handlers.SetupRouter()
-	router.Run(":8080")
+	err := router.Run(":8080")
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 }

@@ -15,9 +15,8 @@ func GetUser(c *gin.Context) {
 	log.Println("GetUser: ", name)
 
 	var err error
-	user := persistence.GetUser("api_test_db", "users", "last_name", name)
-	log.Println(user)
-	if user.FirstName == "" {
+	user, err := persistence.GetUser("api_test_db", "users", "last_name", name)
+	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
@@ -30,17 +29,27 @@ func PostUser(c *gin.Context) {
 	c.Request.ParseForm()
 	err := c.BindJSON(&user)
 	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	_, err = persistence.PostUser("api_test_db", "users", &user)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	log.Println("PostUser: ", user)
+	c.JSON(http.StatusOK, &user)
+}
 
-	_, err = persistence.PostUser("api_test_db", "users", &user)
+func DeleteUser(c *gin.Context) {
+	name := c.Param("name")
+	log.Println("DeleteUser: ", name)
+
+	result, err := persistence.DeleteUser("api_test_db", "users", "last_name", name)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, &user)
+	c.JSON(http.StatusOK, result)
 }
 
 func SetupRouter() *gin.Engine {
@@ -48,5 +57,6 @@ func SetupRouter() *gin.Engine {
 	router := gin.Default()
 	router.GET("/api/user/:name", GetUser)
 	router.POST("/api/user", PostUser)
+	router.DELETE("/api/user/:name", DeleteUser)
 	return router
 }
