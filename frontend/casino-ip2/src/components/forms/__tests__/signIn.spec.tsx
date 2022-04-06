@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from "@testing-library/react";
-import SignIn from "../SignIn";
+import SignIn from "../signIn";
 
 describe("SignIn", () => {
 	it("renders the form for the sign-in process", async () => {
