@@ -18,10 +18,7 @@ var ctx context.Context
 var client *mongo.Client
 
 func setup() func() {
-	client, _ = NewClient()
-	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
-	client.Connect(ctx)
-
+	NewClient()
 	expected.ID = primitive.NewObjectID()
 	expected.FirstName = "Test"
 	expected.LastName = "Test"
@@ -64,17 +61,17 @@ func setup() func() {
 		},
 	}
 
-	res, err := client.Database("api_test_db").Collection("users").InsertOne(ctx, &expected)
+	res, err := Client.Database("api_test_db").Collection("users").InsertOne(ctx, &expected)
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Println("Inserted a single document: ", res.InsertedID)
-	client.Database("api_test_db").Collection("users").InsertOne(ctx, &deleteMe)
+	Client.Database("api_test_db").Collection("users").InsertOne(ctx, &deleteMe)
 	// Return a function to teardown the test
 	return func() {
 		log.Println("teardown suite")
-		client.Database("api_test_db").Collection("users").DeleteOne(ctx, &expected)
-		client.Disconnect(ctx)
+		Client.Database("api_test_db").Collection("users").DeleteOne(ctx, &expected)
+		Client.Disconnect(ctx)
 	}
 }
 
@@ -92,39 +89,62 @@ func TestMain(m *testing.M) {
 }
 
 func TestCreateClient(t *testing.T) {
-
-	testClient, _ := NewClient()
-	if testClient == nil {
-		t.Error("Client is nil")
-	}
+	client := Client
+	NewClient()
+	assert.NotEqual(t, Client, client)
 }
 
 func TestGetValue(t *testing.T) {
 
-	value := GetUser(client, "api_test_db", "users", "last_name", "Test")
+	value, _ := GetUser("api_test_db", "users", "last_name", "Test")
 	assert.Equal(t, expected, value)
 }
 
 func TestGetNonExistingValue(t *testing.T) {
 
-	value := GetUser(client, "api_test_db", "users", "last_name", "NotExisting")
-	assert.Equal(t, models.User{}, value)
+	_, err := GetUser("api_test_db", "users", "last_name", "NotExisting")
+	assert.NotNil(t, err)
 }
 
 func TestDeleteMe(t *testing.T) {
 
-	value, _ := DeleteUser(client, "api_test_db", "users", "last_name", "Delete")
+	value, _ := DeleteUser("api_test_db", "users", "last_name", "Delete")
 	assert.Equal(t, int64(1), value.DeletedCount)
 }
 
 func TestDeleteNoOne(t *testing.T) {
 
-	value, _ := DeleteUser(client, "api_test_db", "users", "last_name", "NotExisting")
+	value, _ := DeleteUser("api_test_db", "users", "last_name", "NotExisting")
 	assert.Equal(t, int64(0), value.DeletedCount)
 }
 
 func TestDeletionFail(t *testing.T) {
-	c, _ := NewClient()
-	_, err := DeleteUser(c, "api_test_db", "users", "last_name", "Please")
+	Client.Disconnect(ctx)
+	_, err := DeleteUser("api_test_db", "users", "last_name", "Please")
+	NewClient()
+	assert.Error(t, err)
+
+}
+
+func TestPostUser(t *testing.T) {
+	var user models.User
+	user.ID = primitive.NewObjectID()
+	user.FirstName = "Post"
+	user.LastName = "Me"
+	user.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
+	result, _ := PostUser("api_test_db", "users", &user)
+	DeleteUser("api_test_db", "users", "last_name", "Me")
+	assert.Equal(t, user.ID, result.InsertedID)
+}
+
+func TestPostUserFail(t *testing.T) {
+	var user models.User
+	Client.Disconnect(ctx)
+	user.ID = primitive.NewObjectID()
+	user.FirstName = "Post"
+	user.LastName = "Me"
+	user.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
+	_, err := PostUser("api_test_db", "users", &user)
+	NewClient()
 	assert.Error(t, err)
 }
