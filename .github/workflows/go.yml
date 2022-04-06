@@ -19,15 +19,17 @@ jobs:
       run:
         working-directory: ./backend
     steps:
+    - name: Setup Go Environment
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
+        
+    - name: Setup Mongo DB in Docker
     - uses: actions/checkout@v3
     - run: docker-compose up -d
       working-directory: ./database
- #   - run: echo $(pwd)
-#      working-directory: ./database
+      
+    - name: Run Tests
     - run: |
-          go test ./... -coverprofile cover.out
-          go tool cover -func cover.out | grep total | TOTAL="awk '{print substr($3, 1, length($3)-1)}'"
-          echo $(TOTAL)
+        sudo go test ./... -coverprofile coverage.out -covermode count
+        sudo go tool cover -func coverage.out
