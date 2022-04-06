@@ -22,5 +22,6 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - uses: actions/checkout@v3
     - run: echo $(pwd)
+      working-directory: ./database
     - run: go test ./...
       
