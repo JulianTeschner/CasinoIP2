@@ -59,6 +59,7 @@ func SetupRouter() *gin.Engine {
 		"admin": "admin",
 	}))
 	authorized.GET("/api/user/:name", GetUser)
+
 	authorized.POST("/api/user", PostUser)
 	authorized.DELETE("/api/user/:name", DeleteUser)
 	return router

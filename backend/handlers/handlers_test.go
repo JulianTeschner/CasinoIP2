@@ -24,54 +24,8 @@ func setup() func() {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	persistence.NewClient()
 	router = SetupRouter()
-
-	// expected.ID = primitive.NewObjectID()
-	// expected.FirstName = "Test"
-	// expected.LastName = "Test"
-	// expected.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
-	// expected.Email = "test@test.com"
-	// expected.Balance = models.Balance{
-	// 	Amount:   100,
-	// 	Currency: "USD",
-	// 	AmountOnDate: []models.AmountOnDate{{
-	// 		Amount: 100,
-	// 		Date:   time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
-	// 	}},
-	// }
-	// expected.Address = models.Address{
-	// 	Street: "123 Main St",
-	// 	City:   "Anytown",
-	// 	State:  "CA",
-	// 	Zip:    "12345",
-	// }
-	//
-	// deleteMe := models.User{
-	// 	ID:          primitive.NewObjectID(),
-	// 	FirstName:   "Please",
-	// 	LastName:    "Delete",
-	// 	DateOfBirth: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
-	// 	Email:       "delete@me.com",
-	// 	Balance: models.Balance{
-	// 		Amount:   100,
-	// 		Currency: "USD",
-	// 		AmountOnDate: []models.AmountOnDate{{
-	// 			Amount: 100,
-	// 			Date:   time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
-	// 		}},
-	// 	},
-	// 	Address: models.Address{
-	// 		Street: "123 Main St",
-	// 		City:   "Anytown",
-	// 		State:  "CA",
-	// 		Zip:    "12345",
-	// 	},
-	// }
-	//
-	// persistence.Client.Database("api_test_db").Collection("users").InsertOne(ctx, &deleteMe)
-	// Return a function to teardown the test
 	return func() {
 		log.Println("teardown suite")
-		// client.Database("api_test_db").Collection("users").DeleteOne(ctx, &expected)
 		persistence.Client.Disconnect(ctx)
 	}
 }
