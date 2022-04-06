@@ -13,12 +13,14 @@ jobs:
         go-version: [1.17.x]
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
     - uses: actions/checkout@v3
-    - run: cd backend
     - run: echo $(pwd)
     - run: go test ./...
       
