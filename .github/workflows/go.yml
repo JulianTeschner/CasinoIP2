@@ -19,7 +19,6 @@ jobs:
       run:
         working-directory: ./backend
     steps:
-    - name: Setup Go Environment
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
