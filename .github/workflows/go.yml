@@ -21,9 +21,7 @@ jobs:
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
-    - uses: actions/checkout@v3
-      with:
-        os: ubuntu-latest
+    - uses: docker-practice/actions-setup-docker@latest
     - run: docker-compose up -d
       working-directory: ./database
     - uses: actions/checkout@v3
