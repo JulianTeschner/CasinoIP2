@@ -20,6 +20,6 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - uses: actions/checkout@v3
-    - run: echo $pwd
+    - run: echo $(pwd)
     - run: go test ./...
       
