@@ -21,7 +21,7 @@ jobs:
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
-    - uses: docker-practice/actions-setup-docker@latest
+    - uses: docker-practice/actions-setup-docker@master
     - run: docker-compose up -d
       working-directory: ./database
     - uses: actions/checkout@v3
