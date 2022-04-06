@@ -50,4 +50,5 @@ jobs:
             fi
     - name: Build
       run: go build -o myapp
+      working-directory: ./backend/cmd
 
