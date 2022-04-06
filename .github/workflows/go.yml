@@ -21,7 +21,10 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - uses: actions/checkout@v3
-    - run: echo $(pwd)
+    - run: docker-compose up -d
       working-directory: ./database
+    - uses: actions/checkout@v3
+ #   - run: echo $(pwd)
+#      working-directory: ./database
     - run: go test ./...
       
