@@ -55,8 +55,11 @@ func DeleteUser(c *gin.Context) {
 func SetupRouter() *gin.Engine {
 	log.Println("Setting up router")
 	router := gin.Default()
-	router.GET("/api/user/:name", GetUser)
-	router.POST("/api/user", PostUser)
-	router.DELETE("/api/user/:name", DeleteUser)
+	authorized := router.Group("/", gin.BasicAuth(gin.Accounts{
+		"admin": "admin",
+	}))
+	authorized.GET("/api/user/:name", GetUser)
+	authorized.POST("/api/user", PostUser)
+	authorized.DELETE("/api/user/:name", DeleteUser)
 	return router
 }
