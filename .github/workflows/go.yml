@@ -16,14 +16,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     defaults:
       run:
-        working-directory: ./backend
+        working-directory: backend
     steps:
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
     - uses: docker-practice/actions-setup-docker@master
     - run: docker-compose up -d
-      working-directory: ./database
+      working-directory: database
     - uses: actions/checkout@v3
  #   - run: echo $(pwd)
 #      working-directory: ./database
