@@ -7,6 +7,15 @@ on:
     branches: [ main ]
 
 jobs:
+  dbsetup:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./database
+    steps:
+    - uses: actions/setup-go@v3
+    - run: docker-compose up -d
+    
   test:
     strategy:
       matrix:
@@ -21,11 +30,5 @@ jobs:
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
-    - uses: actions/checkout@v3
-    - run: docker-compose up -d
-      working-directory: ./database
-    - uses: actions/checkout@v3
- #   - run: echo $(pwd)
-#      working-directory: ./database
     - run: go test ./...
       
