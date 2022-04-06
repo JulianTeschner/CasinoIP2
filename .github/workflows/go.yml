@@ -48,4 +48,6 @@ jobs:
                 echo "Failed"
                 exit 1
             fi
+    - name: Build
+      run: go build -o myapp
 
