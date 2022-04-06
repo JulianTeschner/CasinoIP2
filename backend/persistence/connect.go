@@ -71,3 +71,20 @@ func DeleteUser(database string,
 	}
 	return result, nil
 }
+
+// PutUserBalance updates a user's balance.
+func PutUserBalance(database string,
+	collection string,
+	key string,
+	value string,
+	amount float64) (*mongo.UpdateResult, error) {
+
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"balance.amount": amount}})
+	if err != nil {
+		log.Println("Update failed: ", err)
+		return result, err
+	}
+	return result, nil
+}
