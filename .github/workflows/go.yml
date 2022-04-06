@@ -30,6 +30,7 @@ jobs:
       working-directory: ./database
       
     - name: Run Tests
+    - uses: actions/checkout@v3
     - run: |
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
