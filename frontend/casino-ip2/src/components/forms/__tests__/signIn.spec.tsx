@@ -7,8 +7,8 @@ describe("SignIn", () => {
 		render(<SignIn/>);
 
 		const findHeadline = await screen.findByText(/Sign In/i);
-		const findUsername = await screen.findByText(/Username/i);
-		const findPassword = await screen.findByText(/Password/i);
+		const findUsername = await screen.findByText('Username');
+		const findPassword = await screen.findByText('Password');
 		
 		expect(findHeadline).toBeInTheDocument();
 		expect(findUsername).toBeInTheDocument();

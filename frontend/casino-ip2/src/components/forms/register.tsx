@@ -7,13 +7,14 @@ function Register() {
         <h2>Register</h2>
         <div>
           <form className="form-horizental">
-            Name: <input className="mt-3 form-control" type="text" name="name" data-testid="register-name" required />
-            Birthday: <input className="mt-3 form-control" type="date" name="birthday" data-testid="register-birthday" required />
-		    Username: <input className="mt-3 form-control" type="text" name="username" data-testid="register-username" required />
-   		    Password: <input className="mt-3 form-control" type="password" name="password" data-testid="register-password" required />
-            Repeat Password: <input className="mt-3 form-control" type="password" name="password-repeat" data-testid="register-password-repeat" required />
-		    <button className="mt-3 btn-block">Submit</button>
-		  </form>
+            <label>Firstname</label><input className="mb-3 form-control" type="text" name="firstname" data-testid="register-firstname" required />
+            <label>Lastname</label><input className="mb-3 form-control" type="text" name="lastname" data-testid="register-lastname" required />
+            <label>Birthday</label><input className="mb-3 form-control" type="date" name="birthday" data-testid="register-birthday" required />
+		        <label>Username</label><input className="mb-3 form-control" type="text" name="username" data-testid="register-username" required />
+   		      <label>Password</label> <input className="mb-3 form-control" type="password" name="password" data-testid="register-password" required />
+            <label>Repeat Password</label><input className="mb-3 form-control" type="password" name="password-repeat" data-testid="register-password-repeat" required />
+  		      <button className="mb-3 btn-block">Submit</button>
+		      </form>
         </div>
       </div>
     </div>
