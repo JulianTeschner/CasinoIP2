@@ -22,11 +22,13 @@ describe("SignIn", () => {
 
 		const inputUsername = await screen.getByTestId("signIn-username");
 		const inputPassword = await screen.getByTestId("signIn-password");
-		const button = await screen.getByRole("button", { name: 'Submit' });
+		const buttonSubmit = await screen.getByRole("button", { name: 'Submit' });
+		const buttonRegister = await screen.getByRole("button", { name: 'Register'});
 
 		expect(inputUsername).toHaveAttribute("type", "text");
 		expect(inputPassword).toHaveAttribute("type", "password");
-		expect(button).toBeInTheDocument();
+		expect(buttonSubmit).toBeInTheDocument();
+		expect(buttonRegister).toBeInTheDocument();
 	});
 });
 

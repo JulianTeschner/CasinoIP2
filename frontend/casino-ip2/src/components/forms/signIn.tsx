@@ -13,7 +13,7 @@ function SignIn() {
   function handleChange(e:any) {
     updateFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value.trim()
     });
   }
 
@@ -27,12 +27,13 @@ function SignIn() {
       <div className="SignIn-Content">
         <h2>Sign In</h2>
         <div>
-          <form className="form-horizental">
+          <form>
 		        <label>Username</label>
-            <input className="mb-3 form-control" type="text" name="username" data-testid="signIn-username" onChange={handleChange} />
+            <input type="text" name="username" data-testid="signIn-username" onChange={handleChange} />
    		      <label>Password</label>
-            <input className="mb-3 form-control" type="password" name="password" data-testid="signIn-password" onChange={handleChange}/>
-		        <button className="mb-3 btn-block" onClick={handleSignInSubmit}>Submit</button>
+            <input type="password" name="password" data-testid="signIn-password" onChange={handleChange}/>
+		        <button onClick={handleSignInSubmit}>Submit</button>
+            <button>Register</button>
 		      </form>
         </div>
       </div>
