@@ -152,6 +152,5 @@ func TestPostUserFail(t *testing.T) {
 func TestPutUserBalance(t *testing.T) {
 	PutUserBalance("api_test_db", "users", "last_name", "Test", 500)
 	user, _ := GetUser("api_test_db", "users", "last_name", "Test")
-	log.Println(user)
 	assert.Equal(t, float64(500), user.Balance.Amount)
 }
