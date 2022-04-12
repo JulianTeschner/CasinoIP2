@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Routes, Route, Link } from "react-router-dom";
 import Home from "./views/home/Home";
+import Blackjack from './views/blackjack/Blackjack';
+
 import './App.css';
 
 function App() {
@@ -13,7 +15,7 @@ function App() {
     </div>
     */
    <div className="App">
-     <Home />
+     <Blackjack />
    </div>
   );
 }
