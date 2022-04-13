@@ -6,6 +6,7 @@ import (
 
 	"github.com/JulianTeschner/CasinoIP2/models"
 	"github.com/JulianTeschner/CasinoIP2/persistence"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -50,17 +51,4 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, result)
-}
-
-func SetupRouter() *gin.Engine {
-	log.Println("Setting up router")
-	router := gin.Default()
-	authorized := router.Group("/", gin.BasicAuth(gin.Accounts{
-		"admin": "admin",
-	}))
-	authorized.GET("/api/user/:name", GetUser)
-
-	authorized.POST("/api/user", PostUser)
-	authorized.DELETE("/api/user/:name", DeleteUser)
-	return router
 }

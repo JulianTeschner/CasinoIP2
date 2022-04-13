@@ -13,17 +13,19 @@ import (
 
 	"github.com/JulianTeschner/CasinoIP2/models"
 	"github.com/JulianTeschner/CasinoIP2/persistence"
+	"github.com/JulianTeschner/CasinoIP2/router"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
+
 	_ "go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-var router *gin.Engine
+var r *gin.Engine
 
 func setup() func() {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	persistence.NewClient()
-	router = SetupRouter()
+	r = router.New()
 	return func() {
 		log.Println("teardown suite")
 		persistence.Client.Disconnect(ctx)
@@ -47,7 +49,7 @@ func TestGetUser(t *testing.T) {
 	w := httptest.NewRecorder()
 	resp, _ := http.NewRequest("GET", "/api/user/Doe", nil)
 	resp.Header.Add("Authorization", "Basic YWRtaW46YWRtaW4=")
-	router.ServeHTTP(w, resp)
+	r.ServeHTTP(w, resp)
 	assert.Equal(t, http.StatusOK, w.Code)
 }
 
@@ -56,7 +58,7 @@ func TestGetUserNotFound(t *testing.T) {
 	w := httptest.NewRecorder()
 	resp, _ := http.NewRequest("GET", "/api/user/NotFound", nil)
 	resp.Header.Add("Authorization", "Basic YWRtaW46YWRtaW4=")
-	router.ServeHTTP(w, resp)
+	r.ServeHTTP(w, resp)
 	assert.Equal(t, http.StatusNotFound, w.Code)
 }
 
@@ -72,7 +74,7 @@ func TestPostUser(t *testing.T) {
 	resp, _ := http.NewRequest("POST", "/api/user", bytes.NewBuffer(data))
 	resp.Header.Set("Content-Type", "application/json; charset=UTF-8")
 	resp.Header.Add("Authorization", "Basic YWRtaW46YWRtaW4=")
-	router.ServeHTTP(w, resp)
+	r.ServeHTTP(w, resp)
 	assert.Equal(t, http.StatusOK, w.Code)
 }
 
@@ -81,7 +83,7 @@ func TestDeleteUser(t *testing.T) {
 	w := httptest.NewRecorder()
 	resp, _ := http.NewRequest("DELETE", "/api/user/Post", nil)
 	resp.Header.Add("Authorization", "Basic YWRtaW46YWRtaW4=")
-	router.ServeHTTP(w, resp)
+	r.ServeHTTP(w, resp)
 	assert.Equal(t, http.StatusOK, w.Code)
 }
 
@@ -91,6 +93,6 @@ func TestDeleteUserNotFound(t *testing.T) {
 	persistence.Client.Disconnect(context.Background())
 	resp, _ := http.NewRequest("DELETE", "/api/user/NotFound", nil)
 	resp.Header.Add("Authorization", "Basic YWRtaW46YWRtaW4=")
-	router.ServeHTTP(w, resp)
+	r.ServeHTTP(w, resp)
 	assert.Equal(t, http.StatusNotFound, w.Code)
 }
