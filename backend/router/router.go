@@ -8,18 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/gwatts/gin-adapter"
-	"github.com/joho/godotenv"
 )
 
 // New returns a new router
 func New() *gin.Engine {
 	log.Println("Setting up router")
 	gin.ForceConsoleColor()
-
-	err := godotenv.Load("../.env")
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
 
 	r := gin.Default()
 

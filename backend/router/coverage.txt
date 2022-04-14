@@ -1,0 +1,2 @@
+mode: atomic
+github.com/JulianTeschner/CasinoIP2/router/router.go:14.24,28.2 8 1
