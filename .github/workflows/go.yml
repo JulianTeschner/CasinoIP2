@@ -29,6 +29,9 @@ jobs:
       working-directory: ./database
       
     - name: Run Tests
+      env:
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET  }}
       run: |
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
