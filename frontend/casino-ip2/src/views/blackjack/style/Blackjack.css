@@ -5,3 +5,11 @@
     box-shadow: 0 0 5px #000;
     padding: 10px;
 }
+
+.p-t10 {
+    padding-top: 10px;
+}
+
+.p-t40 {
+    padding-top: 40px;
+}

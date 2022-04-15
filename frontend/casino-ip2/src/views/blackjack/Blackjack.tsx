@@ -17,8 +17,12 @@ function Blackjack() {
 
     function randCard():object {
         var rand = Math.floor(Math.random() * deck_copy.length);
-        deck_copy[rand].Gespielt = 1;
-        return deck_copy[rand];
+        if(deck_copy[rand].Gespielt === 0) {
+            deck_copy[rand].Gespielt = 1;
+            return deck_copy[rand];
+        } else {
+            return randCard();
+        }
     }
 
     function addCards(cards:any):number {
@@ -68,6 +72,7 @@ function Blackjack() {
         setDealer([randCard()]);
         setUI(false);
         dealerPick.current = false;
+        deck_copy = [...deck];
     }
 
     function handleHit(e:any) {
@@ -79,36 +84,46 @@ function Blackjack() {
         e.preventDefault();
         setDealer([...dealer, randCard()]);
         dealerPick.current = true;
-        setRun(true);
     }
 
     useEffect(() => {
-        console.log('test');
         // dealer muss karten ziehen
-        if(dealerPick.current && addCards(dealer) < addCards(hand) && addCards(dealer) < 21) {
+        if(dealerPick.current && addCards(dealer) < addCards(hand) && addCards(dealer) < 21 && addCards(hand) <= 21) {
             setDealer([...dealer, randCard()]);
         } 
+        
+        // dealer hat gewonnen
+        else if(dealerPick.current && addCards(hand) > 21) {
+            dealerPick.current = false;
+            setRun(true);
+        }
 
         // dealer hat genug karten
-        else if(dealerPick.current && addCards(dealer) > addCards(hand)) {
+        else if(dealerPick.current && addCards(dealer) >= addCards(hand)) {
             dealerPick.current = false;
+            setRun(true);
         }
 
         // win logic
         if(run) {
+            debugger;
             // spieler gewinnt
-            if(addCards(hand) > addCards(dealer) && addCards(hand) <= 21) {
+            if(addCards(hand) <= 21 && (addCards(hand) > addCards(dealer) || addCards(dealer) > 21)) {
                 setGuthaben(guthaben + parseInt(einsatz));
                 setStatus('you win!');
                 setRun(false);
             }
 
             // dealer gewinnt
-            else if(addCards(hand) < addCards(dealer) && addCards(dealer) <= 21) {
+            else if(addCards(dealer) <= 21 && addCards(dealer) > addCards(hand) ) {
                 setGuthaben(guthaben - parseInt(einsatz));
                 setStatus('you lose!');
                 setRun(false);
-            } 
+            } else if(addCards(hand) > 21) {
+                setGuthaben(guthaben - parseInt(einsatz));
+                setStatus('you lose!');
+                setRun(false);
+            }
 
             // unentschieden
             else if(addCards(hand) === addCards(dealer) && addCards(hand) <= 21) {
@@ -122,14 +137,14 @@ function Blackjack() {
             <div>
             <div>
                 <h1>Blackjack</h1>
-                <div>
-                    <div>Guthaben: {guthaben}</div>
-                    <div>
+                <div className='p-t40'>
+                    <div><b>balance: {guthaben}</b></div>
+                    <div className='p-t10'>
                         <form onSubmit={handleSubmit}>
                             <Space>
                                 <label>Einsatz mind. 1 Credit</label>
                                 <input type="number" name="einsatz" />
-                                <Button type="primary">bet and go</Button>
+                                <Button disabled={ui} type="primary" htmlType='submit'>bet and go</Button>
                             </Space>
                         </form>                    
                     </div>
@@ -137,7 +152,8 @@ function Blackjack() {
             </div>
             {
                 !ui ? null :
-                <div>
+                <div className='p-t10'>
+                    <Space direction='vertical'>
                     <div>
                         <p><b>{status}</b></p>
                     </div>
@@ -157,8 +173,8 @@ function Blackjack() {
                                 }
                             </ul>
                             <Space>
-                                <Button type="primary" onClick={handleHit}>hit</Button>
-                                <Button type="primary" onClick={handleStay}>stay</Button>
+                                <Button disabled={addCards(hand) >= 21 || status !== ''} type="primary" onClick={handleHit}>hit</Button>
+                                <Button disabled={status !== ''} type="primary" onClick={handleStay}>stay</Button>
                             </Space>
                         </div>    
                     </div>
@@ -180,10 +196,11 @@ function Blackjack() {
                     </div>
                     </Space>
                     { status === '' ? null : 
-                        <div>
+                        <div className='p-t10'>
                             <Button type="primary" onClick={newGame}>new game</Button>
                         </div>
                     }
+                    </Space>
                 </div>
             }
         </div>
