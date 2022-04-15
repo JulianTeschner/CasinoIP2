@@ -9,6 +9,7 @@ import (
 
 	"github.com/JulianTeschner/CasinoIP2/models"
 	"github.com/stretchr/testify/assert"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -20,17 +21,15 @@ var client *mongo.Client
 func setup() func() {
 	NewClient()
 	expected.ID = primitive.NewObjectID()
+	expected.Username = "Test123"
 	expected.FirstName = "Test"
 	expected.LastName = "Test"
 	expected.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
 	expected.Email = "test@test.com"
 	expected.Balance = models.Balance{
-		Amount:   100,
-		Currency: "USD",
-		AmountOnDate: []models.AmountOnDate{{
-			Amount: 100,
-			Date:   time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
-		}},
+		Amount:      100,
+		Currency:    "USD",
+		LastDeposit: 100,
 	}
 	expected.Address = models.Address{
 		Street: "123 Main St",
@@ -46,12 +45,9 @@ func setup() func() {
 		DateOfBirth: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 		Email:       "delete@me.com",
 		Balance: models.Balance{
-			Amount:   100,
-			Currency: "USD",
-			AmountOnDate: []models.AmountOnDate{{
-				Amount: 100,
-				Date:   time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
-			}},
+			Amount:      100,
+			Currency:    "USD",
+			LastDeposit: 100,
 		},
 		Address: models.Address{
 			Street: "123 Main St",
@@ -70,7 +66,7 @@ func setup() func() {
 	// Return a function to teardown the test
 	return func() {
 		log.Println("teardown suite")
-		Client.Database("api_test_db").Collection("users").DeleteOne(ctx, &expected)
+		Client.Database("api_test_db").Collection("users").DeleteOne(ctx, bson.M{"last_name": "Test"})
 		Client.Disconnect(ctx)
 	}
 }
@@ -81,11 +77,10 @@ func TestMain(m *testing.M) {
 	// Run the tests
 	code := m.Run()
 	// Exit with the code
-	teardown()
 	log.Println("Tear down persistence tests")
+	teardown()
 
 	os.Exit(code)
-
 }
 
 func TestCreateClient(t *testing.T) {
@@ -95,25 +90,21 @@ func TestCreateClient(t *testing.T) {
 }
 
 func TestGetValue(t *testing.T) {
-
 	value, _ := GetUser("api_test_db", "users", "last_name", "Test")
 	assert.Equal(t, expected, value)
 }
 
 func TestGetNonExistingValue(t *testing.T) {
-
 	_, err := GetUser("api_test_db", "users", "last_name", "NotExisting")
 	assert.NotNil(t, err)
 }
 
 func TestDeleteMe(t *testing.T) {
-
 	value, _ := DeleteUser("api_test_db", "users", "last_name", "Delete")
 	assert.Equal(t, int64(1), value.DeletedCount)
 }
 
 func TestDeleteNoOne(t *testing.T) {
-
 	value, _ := DeleteUser("api_test_db", "users", "last_name", "NotExisting")
 	assert.Equal(t, int64(0), value.DeletedCount)
 }

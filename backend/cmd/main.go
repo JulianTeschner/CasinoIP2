@@ -5,8 +5,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/JulianTeschner/CasinoIP2/handlers"
 	"github.com/JulianTeschner/CasinoIP2/persistence"
+	"github.com/JulianTeschner/CasinoIP2/router"
+	"github.com/joho/godotenv"
 )
 
 var ctx context.Context
@@ -16,11 +17,15 @@ func init() {
 }
 
 func main() {
+	err := godotenv.Load("../.env")
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
 	persistence.NewClient()
 	defer persistence.Client.Disconnect(ctx)
 
-	router := handlers.SetupRouter()
-	err := router.Run(":8080")
+	r := router.New()
+	err = r.Run(":8080")
 	if err != nil {
 		log.Fatalln(err)
 	}
