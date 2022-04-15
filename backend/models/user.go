@@ -12,6 +12,7 @@ import (
 
 type User struct {
 	ID          primitive.ObjectID `bson:"_id, omitempty" json:"_id"`
+	Username    string             `bson:"username" json:"username"`
 	FirstName   string             `bson:"first_name, omitempty" json:"first_name"`
 	LastName    string             `bson:"last_name, omitempty" json:"last_name"`
 	Email       string             `bson:"email, omitempty" json:"email"`
@@ -25,6 +26,7 @@ func (u *User) UnmarshalBSON(data []byte) error {
 	// Unmarshal into a temporary type where the "ends" field is a string.
 	decoded := new(struct {
 		ID          primitive.ObjectID `bson:"_id"`
+		Username    string             `bson:"username"`
 		FirstName   string             `bson:"first_name"`
 		LastName    string             `bson:"last_name"`
 		Email       string             `bson:"email"`
@@ -38,6 +40,7 @@ func (u *User) UnmarshalBSON(data []byte) error {
 	}
 
 	u.ID = decoded.ID
+	u.Username = decoded.Username
 	u.FirstName = decoded.FirstName
 	u.LastName = decoded.LastName
 	u.Email = decoded.Email
@@ -55,6 +58,7 @@ func (u *User) UnmarshalBSON(data []byte) error {
 func (u *User) MarshalBSON() ([]byte, error) {
 	return bson.Marshal(struct {
 		ID          primitive.ObjectID `bson:"_id"`
+		Username    string             `bson:"username"`
 		FirstName   string             `bson:"first_name"`
 		LastName    string             `bson:"last_name"`
 		Email       string             `bson:"email"`
@@ -63,6 +67,7 @@ func (u *User) MarshalBSON() ([]byte, error) {
 		Balance     Balance            `bson:"balance"`
 	}{
 		ID:          u.ID,
+		Username:    u.Username,
 		FirstName:   u.FirstName,
 		LastName:    u.LastName,
 		Email:       u.Email,
@@ -78,6 +83,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	log.Println("UnmarshalJSON")
 	decoded := new(struct {
 		ID          primitive.ObjectID `json:"_id"`
+		Username    string             `json:"username"`
 		FirstName   string             `json:"first_name"`
 		LastName    string             `json:"last_name"`
 		Email       string             `json:"email"`
@@ -95,6 +101,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	} else {
 		u.ID = decoded.ID
 	}
+	u.Username = decoded.Username
 	u.FirstName = decoded.FirstName
 	u.LastName = decoded.LastName
 	u.Email = decoded.Email
@@ -111,6 +118,7 @@ func (u *User) UnmarshalJSON(data []byte) error {
 func (u *User) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
 		ID          primitive.ObjectID `json:"_id"`
+		Username    string             `json:"username"`
 		FirstName   string             `json:"first_name"`
 		LastName    string             `json:"last_name"`
 		Email       string             `json:"email"`
@@ -119,6 +127,7 @@ func (u *User) MarshalJSON() ([]byte, error) {
 		Balance     Balance            `json:"balance"`
 	}{
 		ID:          u.ID,
+		Username:    u.Username,
 		FirstName:   u.FirstName,
 		LastName:    u.LastName,
 		Email:       u.Email,
@@ -129,5 +138,5 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (user User) String() string {
-	return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n%s\n", user.FirstName, user.LastName, user.Email, user.DateOfBirth.Format("01-02-2006"), user.Address, user.Balance, user.Balance.AmountOnDate)
+	return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n", user.FirstName, user.LastName, user.Email, user.DateOfBirth.Format("01-02-2006"), user.Address, user.Balance)
 }
