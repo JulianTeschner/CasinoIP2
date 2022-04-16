@@ -1,14 +1,16 @@
 
-name: deploy
+name: Deploy
 
 on:
-  push:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["Run Tests"]
+    branches: [main]
+    types: 
+      - completed
 
 jobs:
   heroku-deploy:
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
