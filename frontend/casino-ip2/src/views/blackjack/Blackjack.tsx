@@ -138,9 +138,9 @@ function Blackjack() {
             <div>
                 <h1>Blackjack</h1>
                 <div className='p-t40'>
-                    <div><b>balance: {guthaben}</b></div>
+                    <div data-testid='balance'><b>balance: {guthaben}</b></div>
                     <div className='p-t10'>
-                        <form onSubmit={handleSubmit}>
+                        <form data-testid='bet-form' onSubmit={handleSubmit}>
                             <Space>
                                 <label>Einsatz mind. 1 Credit</label>
                                 <input type="number" name="einsatz" />
