@@ -14,6 +14,8 @@
     "@types/react-dom": "^17.0.14",
     "antd": "^4.19.5",
     "antd-dayjs-webpack-plugin": "^1.0.6",
+    "auth0-js": "^9.19.0",
+    "axios": "^0.26.1",
     "craco-less": "^2.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -45,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "msw": "^0.39.2"
   }
 }

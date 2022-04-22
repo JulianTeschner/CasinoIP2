@@ -18,15 +18,20 @@ describe("RequireAuth", () => {
         expect(headline).toBeInTheDocument();
     });
 
-    it("show page if logged in", async () => {
-        render(
-            <AllProviders>
-                <RequireAuth isLoggedIn>
-                    <h1>Overview</h1>
-                </RequireAuth>
-            </AllProviders>
-        );
-        const headline = await screen.findByText(/Overview/i);
-        expect(headline).toBeInTheDocument();
-    })
+    it("Should let us through if we are logged in", async () => {
+    const spy = jest
+      .spyOn(window.localStorage.__proto__, "getItem")
+      .mockImplementation(() => "asd");
+
+    render(
+      <AllProviders>
+        <RequireAuth>
+          <h1>Overview</h1>
+        </RequireAuth>
+      </AllProviders>
+    );
+    const headline = await screen.findByText(/Overview/i);
+    expect(headline).toBeInTheDocument();
+    spy.mockReset();
+  });
 })

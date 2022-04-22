@@ -1,31 +1,48 @@
-import * as React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
-
-const initialFormData = Object.freeze({
-  username: "",
-  password: ""
-});
+import { useState } from 'react';
+import { Alert, Button, Form, Input, message } from 'antd';
+import auth0 from '../../config/auth0';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 function SignIn() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
+  const locationState = location.state;
+  const navigate = useNavigate();
 
-  const [formData, updateFormData] = React.useState(initialFormData);
-  
-  function handleChange(e:any) {
-    updateFormData({
-      ...formData,
-      [e.target.name]: e.target.value.trim()
-    });
-  }
+  const handleSubmit = (values) => {
+    auth0.client.login(
+      {
+        realm: "Username-Password-Authentication",
+        username: values.username,
+        password: values.password,
+      },
+      (err, authResult) => {
+        if(err) {
+          setErrorMessage(`SignIn failed: ${err.description}`);
+          return;
+        }
+        message.success("SignIn successful");
+        localStorage.setItem("accessToken", authResult.accessToken);
 
-  function handleSignInSubmit(e:any) {
-    e.preventDefault();
-    console.log(formData)
-  }
+        if(locationState) {
+          navigate(locationState.from);
+        } else {
+          navigate("/");
+        }
+      }
+    );
+  };
 
   return (
     <div className="SignIn">
       <div className="SignIn-Content">
         <h2>Sign In</h2>
+
+        { errorMessage ? (
+          <div style={{ marginBottom: "24px" }}>
+            <Alert message={errorMessage} type="error" showIcon />
+          </div>
+        ) : null }
         
           <Form 
             name="basic"
@@ -33,6 +50,7 @@ function SignIn() {
             wrapperCol={{ span: 10 }}
             initialValues={{ remember: true }}
             autoComplete="off"
+            onFinish={handleSubmit}
           >
             <Form.Item 
               label="Username"
@@ -50,14 +68,6 @@ function SignIn() {
               rules={[{ required: true, message: "Please input your password!" }]}
             >
               <Input.Password />
-            </Form.Item>
-
-            <Form.Item
-              name="remember"
-              valuePropName="checked"
-              wrapperCol={{ offset: 8, span: 16 }}
-              >
-              <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
