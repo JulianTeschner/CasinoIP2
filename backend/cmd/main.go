@@ -10,6 +10,13 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// @title        CasinoApi
+// @version      1.0
+// @description  This is a simple API for the Casino Project.
+
+// @host      localhost:8080
+// @BasePath  https://localhost:8080/
+
 var ctx context.Context
 
 func init() {

@@ -18,11 +18,14 @@ func New() *gin.Engine {
 	r := gin.Default()
 
 	// Wrap the http handler with gin adapter
-	r.Use(adapter.Wrap(middleware.EnsureValidToken()))
-
-	r.GET("/user/:name", handlers.GetUser)
-	r.POST("/user", handlers.PostUser)
-	r.DELETE("/user/:name", handlers.DeleteUser)
+	user := r.Group("/user")
+	user.Use(adapter.Wrap(middleware.EnsureValidToken()))
+	{
+		user.GET("/:name", handlers.GetUser)
+		user.PATCH("/:name", handlers.PatchUser)
+		user.POST("/", handlers.PostUser)
+		user.DELETE("/:name", handlers.DeleteUser)
+	}
 
 	return r
 }

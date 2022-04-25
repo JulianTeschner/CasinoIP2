@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/JulianTeschner/CasinoIP2/models"
 	"github.com/JulianTeschner/CasinoIP2/persistence"
@@ -16,7 +17,7 @@ func GetUser(c *gin.Context) {
 	log.Println("GetUser: ", name)
 
 	var err error
-	user, err := persistence.GetUser("api_test_db", "users", "last_name", name)
+	user, err := persistence.GetUser("api_test_db", "users", "username", name)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
@@ -51,4 +52,30 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, result)
+}
+
+func PatchUser(c *gin.Context) {
+	log.Println("PutUserBalance")
+	name := c.Param("name")
+	c.Request.ParseForm()
+	var fields []string
+	var values []string
+
+	for k, v := range c.Request.PostForm {
+		fields = append(fields, k)
+		values = append(values, v[0])
+	}
+
+	value, err := strconv.ParseFloat(c.Request.FormValue(values[0]), 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	result, err := persistence.PutUserBalance("api_test_db", "users", "username", name, fields[0], value)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, result)
+
 }

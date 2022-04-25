@@ -77,11 +77,12 @@ func PutUserBalance(database string,
 	collection string,
 	key string,
 	value string,
+	field string,
 	amount float64) (*mongo.UpdateResult, error) {
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
-	result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"balance.amount": amount}})
+	result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{field: amount}})
 	if err != nil {
 		log.Println("Update failed: ", err)
 		return result, err
