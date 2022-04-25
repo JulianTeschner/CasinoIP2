@@ -11,3 +11,12 @@ Zum Aufsetzen der Database muss Docker und Docker-compose installiert sein. (Unt
 
 Ihr könnt zum Beispiel über MongoDB Compass auf die DB zugreifen über die URI:\
 mongodb://root:password@localhost:27017/?authSource=admin&readPreference=primary&directConnection=true&ssl=false 
+
+
+## Setup Backend
+
+Um das Backend zu starten muss Go installiert sein (https://go.dev/dl/).
+
+1. In das directory backend/cmd navigieren.
+2. Starten durch das comand: go run main.go
+3. Die Enpoints der Api befinden stehen im router.go file
