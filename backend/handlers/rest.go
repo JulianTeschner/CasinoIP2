@@ -46,7 +46,7 @@ func DeleteUser(c *gin.Context) {
 	name := c.Param("name")
 	log.Println("DeleteUser: ", name)
 
-	result, err := persistence.DeleteUser("api_test_db", "users", "last_name", name)
+	result, err := persistence.DeleteUser("api_test_db", "users", "username", name)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
@@ -54,28 +54,39 @@ func DeleteUser(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-func PatchUser(c *gin.Context) {
-	log.Println("PutUserBalance")
+func PatchUserBalance(c *gin.Context) {
+	log.Println("PatchUserBalance")
 	name := c.Param("name")
 	c.Request.ParseForm()
-	var fields []string
-	var values []string
 
-	for k, v := range c.Request.PostForm {
-		fields = append(fields, k)
-		values = append(values, v[0])
-	}
-
-	value, err := strconv.ParseFloat(c.Request.FormValue(values[0]), 64)
+	value, err := strconv.ParseFloat(c.PostForm("balance.amount"), 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	result, err := persistence.PutUserBalance("api_test_db", "users", "username", name, fields[0], value)
+	result, err := persistence.UpdateUserBalance("api_test_db", "users", "username", name, "balance.amount", value)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, result)
+}
 
+func PatchUserLastDeposit(c *gin.Context) {
+
+	log.Println("PatchUserLastDeposit")
+	name := c.Param("name")
+	c.Request.ParseForm()
+
+	value, err := strconv.ParseFloat(c.PostForm("balance.last_deposit"), 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	result, err := persistence.UpdateUserBalance("api_test_db", "users", "username", name, "balance.last_deposit", value)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, result)
 }

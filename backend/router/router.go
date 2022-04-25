@@ -22,7 +22,8 @@ func New() *gin.Engine {
 	user.Use(adapter.Wrap(middleware.EnsureValidToken()))
 	{
 		user.GET("/:name", handlers.GetUser)
-		user.PATCH("/:name", handlers.PatchUser)
+		user.PATCH("/balance/amount/:name", handlers.PatchUserBalance)
+		user.PATCH("/balance/lastdeposit/:name", handlers.PatchUserLastDeposit)
 		user.POST("/", handlers.PostUser)
 		user.DELETE("/:name", handlers.DeleteUser)
 	}

@@ -73,7 +73,7 @@ func DeleteUser(database string,
 }
 
 // PutUserBalance updates a user's balance.
-func PutUserBalance(database string,
+func UpdateUserBalance(database string,
 	collection string,
 	key string,
 	value string,
