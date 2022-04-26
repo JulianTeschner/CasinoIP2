@@ -3,7 +3,7 @@ package user
 import (
 	// "context"
 	// "encoding/json"
-	"io/ioutil"
+	// "io/ioutil"
 	"log"
 	"os"
 	"testing"
@@ -24,7 +24,7 @@ import (
 
 func TestMain(m *testing.M) {
 	log.Println("setup suite")
-	log.SetOutput(ioutil.Discard)
+	// log.SetOutput(ioutil.Discard)
 	NewClient()
 	teardownHandlers := setupHandlersTest()
 	// Run the tests
