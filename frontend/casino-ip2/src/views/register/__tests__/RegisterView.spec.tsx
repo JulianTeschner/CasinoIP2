@@ -15,4 +15,6 @@ describe("RegisterView", () => {
 
 		expect(findHeadline).toBeInTheDocument();
 	});
+
+	
 });

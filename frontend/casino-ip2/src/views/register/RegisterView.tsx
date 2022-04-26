@@ -1,18 +1,18 @@
 import React from 'react';
-import Register from "../../components/forms/register"
-import './style/Register.css'
+import './style/Register.css';
+import RegistrationForm from "./Register";
 
 function RegisterView() {
 	return (
-		<div>
-
-   		<div id="container"/>
-		<script>var mountNode = document.getElementById('container');</script>
+ 		
 
 		<div className="content">
-			<Register />
+			
+		<div id="container"/>
+		<RegistrationForm/>
+
 		</div>	
-		</div>	
+			
 	);
 }
 
