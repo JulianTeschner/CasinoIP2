@@ -3,8 +3,8 @@ package router
 import (
 	"log"
 
-	"github.com/JulianTeschner/CasinoIP2/handlers"
 	"github.com/JulianTeschner/CasinoIP2/middleware"
+	"github.com/JulianTeschner/CasinoIP2/user"
 	"github.com/gin-gonic/gin"
 
 	"github.com/gwatts/gin-adapter"
@@ -18,14 +18,14 @@ func New() *gin.Engine {
 	r := gin.Default()
 
 	// Wrap the http handler with gin adapter
-	user := r.Group("/user")
-	user.Use(adapter.Wrap(middleware.EnsureValidToken()))
+	userGroup := r.Group("/user")
+	userGroup.Use(adapter.Wrap(middleware.EnsureValidToken()))
 	{
-		user.GET("/:name", handlers.GetUser)
-		user.PATCH("/balance/amount/:name", handlers.PatchUserBalance)
-		user.PATCH("/balance/lastdeposit/:name", handlers.PatchUserLastDeposit)
-		user.POST("/", handlers.PostUser)
-		user.DELETE("/:name", handlers.DeleteUser)
+		userGroup.GET("/:name", user.GetUserHandler)
+		userGroup.PATCH("/balance/amount/:name", user.PatchUserBalanceHandler)
+		userGroup.PATCH("/balance/lastdeposit/:name", user.PatchUserLastDepositHandler)
+		userGroup.POST("/", user.PostUserHandler)
+		userGroup.DELETE("/:name", user.DeleteUserHandler)
 	}
 
 	return r

@@ -15,7 +15,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var expected User
 var ctx context.Context
 var client *mongo.Client
 
