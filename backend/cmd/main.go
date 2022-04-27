@@ -5,10 +5,17 @@ import (
 	"log"
 	"time"
 
-	"github.com/JulianTeschner/CasinoIP2/persistence"
 	"github.com/JulianTeschner/CasinoIP2/router"
+	"github.com/JulianTeschner/CasinoIP2/user"
 	"github.com/joho/godotenv"
 )
+
+// @title        CasinoApi
+// @version      1.0
+// @description  This is a simple API for the Casino Project.
+
+// @host      localhost:8080
+// @BasePath  https://localhost:8080/
 
 var ctx context.Context
 
@@ -21,8 +28,8 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
-	persistence.NewClient()
-	defer persistence.Client.Disconnect(ctx)
+	user.NewClient()
+	defer user.Client.Disconnect(ctx)
 
 	r := router.New()
 	err = r.Run(":8080")
