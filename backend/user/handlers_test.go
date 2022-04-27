@@ -36,11 +36,11 @@ func setupHandlersTest() func() {
 
 func TestGetUserHandler(t *testing.T) {
 	teardown := addDummyUserToDb()
+	defer teardown()
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/user/fish", nil)
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusOK, w.Code)
-	defer teardown()
 }
 
 func TestGetUserHandlerNotFound(t *testing.T) {
@@ -111,25 +111,76 @@ func TestDeleteUserHandlerNotFound(t *testing.T) {
 func TestPatchUserBalanceHandler(t *testing.T) {
 	w := httptest.NewRecorder()
 	teardown := addDummyUserToDb()
+	defer teardown()
 	payload := strings.NewReader("balance.amount=123")
 
 	req, _ := http.NewRequest("PATCH", "/user/balance/amount/fish", payload)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	r.ServeHTTP(w, req)
-	// user, _ := GetUser("api_test_db", "users", "username", "fish")
 	assert.Equal(t, http.StatusOK, w.Code)
-	defer teardown()
 }
 
 func TestPatchUserBalanceHandlerNoFloat(t *testing.T) {
 	w := httptest.NewRecorder()
 	teardown := addDummyUserToDb()
+	defer teardown()
 	payload := strings.NewReader("balance.amount=aaa")
 
 	req, _ := http.NewRequest("PATCH", "/user/balance/amount/fish", payload)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	r.ServeHTTP(w, req)
-	// user, _ := GetUser("api_test_db", "users", "username", "fish")
 	assert.Equal(t, http.StatusBadRequest, w.Code)
+}
+
+func TestPatchUserBalanceHandlerNoConnection(t *testing.T) {
+	w := httptest.NewRecorder()
+	Client.Disconnect(context.Background())
+	teardown := addDummyUserToDb()
 	defer teardown()
+	payload := strings.NewReader("balance.amount=123")
+
+	req, _ := http.NewRequest("PATCH", "/user/balance/amount/fish", payload)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusNotFound, w.Code)
+	defer teardown()
+	NewClient()
+}
+
+func TestPatchUserLastDepositHandler(t *testing.T) {
+	w := httptest.NewRecorder()
+	teardown := addDummyUserToDb()
+	defer teardown()
+	payload := strings.NewReader("balance.last_deposit=123")
+
+	req, _ := http.NewRequest("PATCH", "/user/balance/lastdeposit/fish", payload)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusOK, w.Code)
+}
+
+func TestPatchUserLastDepositNoFloat(t *testing.T) {
+	w := httptest.NewRecorder()
+	teardown := addDummyUserToDb()
+	defer teardown()
+	payload := strings.NewReader("balance.last_deposit=aaa")
+
+	req, _ := http.NewRequest("PATCH", "/user/balance/lastdeposit/fish", payload)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+}
+
+func TestPatchUserLastDepositNoConnection(t *testing.T) {
+	w := httptest.NewRecorder()
+	Client.Disconnect(ctx)
+	teardown := addDummyUserToDb()
+	defer teardown()
+	payload := strings.NewReader("balance.last_deposit=123")
+
+	req, _ := http.NewRequest("PATCH", "/user/balance/lastdeposit/fish", payload)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusNotFound, w.Code)
+	NewClient()
 }

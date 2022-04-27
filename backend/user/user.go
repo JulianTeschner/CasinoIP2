@@ -2,7 +2,6 @@ package user
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/JulianTeschner/CasinoIP2/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -137,6 +136,6 @@ func (u *User) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (user User) String() string {
-	return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n", user.FirstName, user.LastName, user.Email, user.DateOfBirth.Format("01-02-2006"), user.Address, user.Balance)
-}
+// func (user User) String() string {
+// 	return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n", user.FirstName, user.LastName, user.Email, user.DateOfBirth.Format("01-02-2006"), user.Address, user.Balance)
+// }
