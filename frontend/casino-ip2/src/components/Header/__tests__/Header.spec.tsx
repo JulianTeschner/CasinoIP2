@@ -1,4 +1,4 @@
-import { screen, render } from "@testing-library/react";
+import { screen, render, fireEvent, getByAltText, getByText, getByTestId } from "@testing-library/react";
 import Header from "../Header";
 import { AllProviders } from "../../../testUtils";
 
@@ -10,6 +10,9 @@ describe("Header", () => {
             </AllProviders>
         );
         const header = await screen.getByText(/Casino/i);
+        //fireEvent.mouseOver(getByTestId('icon'));
+
         expect(header).toBeInTheDocument();
+        //expect(getByText('Overview')).toEqual('localhost:3000/overview');
     })
 })

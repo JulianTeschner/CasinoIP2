@@ -23,7 +23,9 @@ function Overview() {
 							<Link to={`${RouteName.HOME}`}>
 								<Card hoverable
 									cover={<img alt="blackjack" src={require('./images/blackjack.jpg')} height="260px"/>}>
-										<Meta title="Blackjack" />
+										<Row justify="center">
+											<Meta title="Blackjack" />
+										</Row>
 								</Card>
           					</Link>
 						</Col>
@@ -31,7 +33,10 @@ function Overview() {
 							<Link to={`${RouteName.HOME}`}>
 								<Card hoverable 
 									cover={<img alt="slotmachine" src={require('./images/slotmaschine.jpg')} height="260px"/>}>
-										<Meta title="Slotmachine" />
+										<Row justify="center">
+											<Meta title="Slotmachine" />
+										</Row>
+										
 								</Card>
           					</Link>
 						</Col>
