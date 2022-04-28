@@ -1,0 +1,38 @@
+# syntax=docker/dockerfile:1
+
+# FROM golang:1.17-alpine
+#
+# WORKDIR /app
+#
+# COPY . /
+#
+#
+# RUN go mod download
+#
+# RUN cd /cmd && go build -o /casino
+#
+# EXPOSE 8080
+#
+# CMD [ "/casino" ]
+
+FROM golang:1.17
+
+# Set the Current Working Directory inside the container
+WORKDIR $GOPATH/src/github.com/JulianTeschner/CasinoIP2
+
+# Copy everything from the current directory to the PWD (Present Working Directory) inside the container
+COPY . .
+
+# Download all the dependencies
+RUN go get -d -v ./...
+
+# Install the package
+RUN go install -v ./...
+
+COPY .env $GOPATH/src/github.com/JulianTeschner/.env
+
+# This container exposes port 8080 to the outside world
+EXPOSE 8080
+
+# Run the executable
+CMD ["cmd"]
