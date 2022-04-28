@@ -1,20 +1,3 @@
-# syntax=docker/dockerfile:1
-
-# FROM golang:1.17-alpine
-#
-# WORKDIR /app
-#
-# COPY . /
-#
-#
-# RUN go mod download
-#
-# RUN cd /cmd && go build -o /casino
-#
-# EXPOSE 8080
-#
-# CMD [ "/casino" ]
-
 FROM golang:1.17
 
 # Set the Current Working Directory inside the container
