@@ -14,7 +14,7 @@ var Client *mongo.Client
 
 func NewClient() {
 	var err error
-	Client, err = mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
+	Client, err = mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@0.0.0.0:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	if err != nil {
 		log.Fatal(err)
