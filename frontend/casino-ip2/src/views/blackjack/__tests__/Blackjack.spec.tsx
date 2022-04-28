@@ -21,7 +21,7 @@ describe("blackjack game", () => {
 		expect(betform).toBeInTheDocument();		
 	});
 
-	it("tests the betting and play button", async () => {
+	it("tests the 'bet and play' button", async () => {
 		render(<Blackjack/>);
 
 		const btnplay = await screen.findByTestId('play');
@@ -134,4 +134,5 @@ describe("blackjack game", () => {
 
 		expect(btnhit).toBeInTheDocument();
 	})
+
 });
