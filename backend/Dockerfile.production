@@ -31,8 +31,8 @@ RUN go install -v ./...
 
 # COPY .env $GOPATH/src/github.com/JulianTeschner/.env
 
-ENV AUTH0_DOMAIN='dev-c7fbbyt.eu.auth0.com'
-ENV AUTH0_AUDIENCE='https://casino-api/' 
+ENV AUTH0_DOMAIN=dev-c7fbbyt.eu.auth0.com
+ENV AUTH0_AUDIENCE=https://casino-api/
  
  
 
