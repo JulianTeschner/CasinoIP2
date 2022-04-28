@@ -3,7 +3,7 @@ name: Deploy
 
 on:
   workflow_run:
-    workflows: ["Run Tests"]
+    workflows: ["Build Go Image"]
     branches: [main]
     types: 
       - completed
