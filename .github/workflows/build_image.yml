@@ -9,6 +9,9 @@ on:
 jobs:
   push_to_Docker_Hub:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
