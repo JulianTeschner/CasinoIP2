@@ -8,7 +8,7 @@ export default function RootRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path="*" element={
-                    <RequireAuth isLoggedIn>
+                    <RequireAuth isLoggedIn={false}>
                         <ProtectedLayout />
                     </RequireAuth>
                 }

@@ -13,5 +13,5 @@ export default function ProtectedRoute({ children }) {
     logout();
   }
 
-  return <Navigate to="/public/login" state={{ from: location }} />;
+  return <Navigate to="/public/home" state={{ from: location }} />;
 }
