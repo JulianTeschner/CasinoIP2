@@ -12,7 +12,7 @@ COPY . .
 # Install the package
 RUN go install -v ./...
 
-COPY .env $GOPATH/src/github.com/JulianTeschner/.env
+COPY .env $GOPATH/src/github.com/JulianTeschner
 
 # This container exposes port 8080 to the outside world
 EXPOSE 8080
