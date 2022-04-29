@@ -24,6 +24,8 @@ RUN mkdir /app
 ## We copy everything in the root directory
 ## into our /app directory
 ADD . /app
+
+RUN go mod download
 ## We specify that we now wish to execute 
 ## any further commands inside our /app
 ## directory
