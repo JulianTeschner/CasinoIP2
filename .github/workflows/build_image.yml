@@ -3,7 +3,7 @@ on:
   workflow_run:
     # only if the app build and test successfully
     workflows: ['Run Tests']
-    branches: [main]
+    branches: ['**']
     types:
       - completed
 jobs:
@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: ./Dockerfile
+          file: ./backend/Dockerfile.production
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/casino:latest
       # - name: Run the image in a container
