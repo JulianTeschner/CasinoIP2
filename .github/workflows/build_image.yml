@@ -3,7 +3,7 @@ on:
   workflow_run:
     # only if the app build and test successfully
     workflows: ['Run Tests']
-    branches: [main]
+    branches: ['**']
     types:
       - completed
 jobs:
