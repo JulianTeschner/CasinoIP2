@@ -1,0 +1,17 @@
+.app {
+    justify-content: center;
+    text-align: center;
+}
+
+.overview {
+    font-size: larger;
+    font-weight: 700;
+}
+
+.Loss {
+    color: red;
+}
+
+.Win {
+    color: green;
+}
