@@ -7,6 +7,18 @@ import renderer from 'react-test-renderer';
 
 describe("blackjack game", () => {
 
+	beforeEach(() => {
+		const fetchrespone = {
+			"balance": {
+			  "Amount": 100,
+			  "LastDeposit": 50
+		  }};
+		  
+		  global.fetch = jest.fn().mockReturnValue(Promise.resolve({
+			json: () => Promise.resolve(fetchrespone)
+		  }));
+	})
+
 	it("renders the blackjack game", async () => {
 		render(<Blackjack/>);
 		
@@ -24,6 +36,7 @@ describe("blackjack game", () => {
 	it("tests the 'bet and play' button", async () => {
 		render(<Blackjack/>);
 
+		
 		const btnplay = await screen.findByTestId('play');
 		const input = await screen.findByTestId('bet-input');
 
