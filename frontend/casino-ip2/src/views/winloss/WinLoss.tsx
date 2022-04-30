@@ -7,17 +7,23 @@ function WinLoss() {
   const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTMxODUwMSwiZXhwIjoxNjUxNDA0OTAxLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.viG4uKWiYfNDtMMF6ahHCAl8bQls2LYfH7coaAtaPzgw0otkVXOfC0_ZXECObvKLvuz_TjGssrwrrr2JboA6vm-gA2tl4sRYjHzaG5Z0f092MPrZVfK91OLq5R5tGFPCBfdycR6TX8uduY6f9Qy46D2yk63GWdF_hnbbqt2XabB3eOHT2lzeD9n0Wqbbhd-EHKmzU8daZjNn-AyZQjWgNi7Cf0pV8LI0Ngf_smAMKLJwcgTmdrDM08Ecvr3Z2XQ7EeXXgZjP523vcw68N-p4uATTsQDTFyayuhH5dxlUhyUuvW1UZHJu5ttHrwlA3i8-UiLIG5X1qN5arZWO_TYm9g"});
 
   async function getData() {
-    await fetch('http://localhost:8080/user/' + user.username, {
-            method: 'GET',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + user.token,
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => setData(data))
-        .catch(error => console.log(error));
+    try {
+      const req = await fetch('http://localhost:8080/user/' + user.username, {
+              method: 'GET',
+              headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'Authorization': 'Bearer ' + user.token,
+                  'Content-Type': 'application/json'
+              }
+          });
+
+        req.json().then(data => {
+          console.log(data);
+          setData(data)
+        }).catch(err => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
