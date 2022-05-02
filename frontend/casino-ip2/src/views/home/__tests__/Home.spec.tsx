@@ -12,7 +12,7 @@ describe("Home", () => {
 		);
 
 		const findImageLeft = await screen.findByTestId('image-left');
-		const findHeadline = await screen.findByText(/Sign In/i);
+		const findHeadline = await screen.findByText(/Login/i);
 		const findImageRight = await screen.findByTestId('image-right');
 
 		expect(findImageLeft).toBeInTheDocument();

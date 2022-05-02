@@ -3,7 +3,7 @@ import { Alert, Button, Form, Input, message } from 'antd';
 import auth0 from '../../config/auth0';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
-function SignIn() {
+export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
   const locationState = location.state;
@@ -17,14 +17,14 @@ function SignIn() {
         password: values.password,
       },
       (err, authResult) => {
-        if(err) {
-          setErrorMessage(`SignIn failed: ${err.description}`);
+        if (err) {
+          setErrorMessage(`Login failed: ${err.description}`);
           return;
         }
-        message.success("SignIn successful");
+        message.success("Login successful");
         localStorage.setItem("accessToken", authResult.accessToken);
 
-        if(locationState) {
+        if (locationState) {
           navigate(locationState.from);
         } else {
           navigate("/");
@@ -36,13 +36,13 @@ function SignIn() {
   return (
     <div className="SignIn">
       <div className="SignIn-Content">
-        <h2>Sign In</h2>
+        <h2>Login</h2>
 
-        { errorMessage ? (
+        {errorMessage ? (
           <div style={{ marginBottom: "24px" }}>
             <Alert message={errorMessage} type="error" showIcon />
           </div>
-        ) : null }
+        ) : null}
         
           <Form 
             name="basic"
@@ -88,5 +88,3 @@ function SignIn() {
   );
   
 }
-
-export default SignIn;

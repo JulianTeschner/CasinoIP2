@@ -16,12 +16,12 @@ describe("SignIn", () => {
 			</AllProviders>
 		);
 		
-		const headline = await screen.findByText(/Sign In/i);
+		const headline = await screen.findByText(/Login/i);
 		const username = await screen.findAllByLabelText(/Username/i);
 		const password = await screen.findAllByLabelText(/Password/i);
 		const submit = await screen.findByRole("button", { name: /submit/i });
 		const registerFirst = await screen.findByRole("button", { name: /register first/i });
-		const text = await screen.findByText(/SignIn successful/i);
+		const text = await screen.findByText(/Login successful/i);
 
 		expect(headline).toBeInTheDocument();
 		userEvent.type(username, "test");
@@ -45,12 +45,12 @@ describe("SignIn", () => {
 			</AllProviders>
 		);
 
-		const headline = await screen.findByText(/Sign In/i);
+		const headline = await screen.findByText(/Login/i);
 		const username = await screen.findAllByLabelText(/Username/i);
 		const password = await screen.findAllByLabelText(/Password/i);
 		const submit = await screen.findByRole("button", { name: /submit/i });
 		const registerFirst = await screen.findByRole("button", { name: /register first/i });
-		const text = await screen.findByText(/SignIn failed: NEIN/i);
+		const text = await screen.findByText(/Login failed: NEIN/i);
 
 		expect(headline).toBeInTheDocument();
 		userEvent.type(username, "test");
