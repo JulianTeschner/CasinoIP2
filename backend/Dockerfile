@@ -1,19 +1,34 @@
-FROM golang:1.17
+FROM golang:1.17 as builder
 
 # Set the Current Working Directory inside the container
 WORKDIR $GOPATH/src/github.com/JulianTeschner/CasinoIP2
 
 # Copy everything from the current directory to the PWD (Present Working Directory) inside the container
-COPY . .
+COPY . . 
 
 # # Download all the dependencies
 # RUN go get -d -v ./...
 
 # Install the package
-RUN go install -v ./...
+
+WORKDIR $GOPATH/src/github.com/JulianTeschner/CasinoIP2/cmd
+
+RUN CGO_ENABLED=0 go build -v  .
+
+FROM alpine:3.6
+
+# RUN apk add --no-cache bash
+
+WORKDIR /backend
+
+COPY ./.env ./
+
+WORKDIR /backend/bin
+
+COPY --from=builder go/src/github.com/JulianTeschner/CasinoIP2/cmd ./
 
 # This container exposes port 8080 to the outside world
 EXPOSE 8080
 
 # Run the executable
-CMD ["cmd"]
+CMD ["./cmd"]
