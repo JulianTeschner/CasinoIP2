@@ -3,4 +3,5 @@ export const RouteName = {
     HOME: "/home",
     OVERVIEW: "/overview",
     REGISTER: "/register",
+    ABOUTUS: "/aboutus",    
 }
