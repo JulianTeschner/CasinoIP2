@@ -7,21 +7,18 @@ export default function Header() {
     return(
       <Row>
         <Col span={9}>
-          <PageHeader
-            title="Casino"
-            className="site-page-header"
-            avatar={{ src: 'https://findicons.com/files/icons/903/travel/256/casino.png' }}>  
-          </PageHeader>
+          <Link to={`${RouteName.OVERVIEW}`}>
+            <PageHeader
+              title="Casino"
+              className="site-page-header"
+              avatar={{ src: 'https://findicons.com/files/icons/903/travel/256/casino.png' }}>  
+            </PageHeader>
+          </Link>
         </Col>
         <Col span={3} offset={12}>
           <Menu mode="horizontal" style={{background: 'transparent'}} data-testId="dropdown-menu">
               <Menu.SubMenu key="SubMenu" icon={<MenuOutlined style={{ fontSize: '24px' }}/>} data-testid="icon">
                 <Menu.ItemGroup>
-                  <Menu.Item key="Overview">
-                    <Link to={`${RouteName.OVERVIEW}`}>
-                      Overview
-                    </Link>
-                  </Menu.Item>
                   <Menu.Item key="Balance">
                     <Link to={`${RouteName.OVERVIEW}`}>
                       Balance

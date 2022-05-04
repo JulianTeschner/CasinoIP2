@@ -39,8 +39,7 @@ describe("Header", () => {
         fireEvent.mouseOver(screen.getByTestId('icon'));
 
         //await waitFor(() => screen.getByText('Overview'));
-
-        //expect(screen.findByText('Overview')).toBeInTheDocument();
+        
         //expect(screen.getByText('Balance')).toBeVisible();
         //expect(screen.getByText('Account')).toBeVisible();
         //expect(screen.getByText('Logout')).toBeVisible();

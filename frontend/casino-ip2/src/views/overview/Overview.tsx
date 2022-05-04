@@ -20,9 +20,9 @@ function Overview() {
 					</Title>
 					<Row gutter={[18,18]}>
 						<Col sm={{span:24}} md={{span:12}}>
-							<Link to={`${RouteName.HOME}`}>
+							<Link to={`${RouteName.HOME}`} data-testId="blackjack-link">
 								<Card hoverable
-									cover={<img alt="blackjack" src={require('./images/blackjack.jpg')} height="260px"/>}>
+									cover={<img alt="blackjack" src={require('./images/blackjack.jpg')} height="260px" data-testId="blackjack-card"/>}>
 										<Row justify="center">
 											<Meta title="Blackjack" />
 										</Row>
@@ -30,9 +30,9 @@ function Overview() {
           					</Link>
 						</Col>
 						<Col sm={{span:24}} md={{span:12}}>
-							<Link to={`${RouteName.HOME}`}>
+							<Link to={`${RouteName.HOME}`} data-testId="slotmachine-link">
 								<Card hoverable 
-									cover={<img alt="slotmachine" src={require('./images/slotmaschine.jpg')} height="260px"/>}>
+									cover={<img alt="slotmachine" src={require('./images/slotmaschine.jpg')} height="260px" data-testId="slotmachine-card"/>}>
 										<Row justify="center">
 											<Meta title="Slotmachine" />
 										</Row>

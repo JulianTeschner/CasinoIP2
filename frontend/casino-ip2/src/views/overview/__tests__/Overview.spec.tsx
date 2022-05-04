@@ -14,17 +14,38 @@ describe("Overview", () => {
 		const findTitle = await screen.findByText(/Overview/i);
 		const findSubTitle = await screen.findByText(/Games/i);
 
+		const findBlackjackCard = await screen.findByTestId('blackjack-card');
+		const findSlotmachineCard = await screen.findByTestId('slotmachine-card');
+
 		const findBlackjack = await screen.findByText(/Blackjack/i);
 		const findSlotmachine = await screen.findByText(/Slotmachine/i);
 
-		const findBlackjackImage = screen.getAllByAltText('blackjack');
-		const findSlotmachineImage = screen.getAllByAltText('slotmachine');
+		const findBlackjackImage = screen.getByAltText('blackjack');
+		const findSlotmachineImage = screen.getByAltText('slotmachine');
 
 		expect(findTitle).toBeInTheDocument();
 		expect(findSubTitle).toBeInTheDocument();
 		expect(findBlackjack).toBeInTheDocument();
 		expect(findSlotmachine).toBeInTheDocument();
-		//expect(findBlackjackImage).toHaveAttribute('src', './images/blackjack.jpg');
-		//expect(findSlotmachineImage).toHaveAttribute('src','./images/slotmachine.jpg');
+
+		expect(findBlackjackCard).toBeInTheDocument();
+		expect(findSlotmachineCard).toBeInTheDocument();
+		expect(findBlackjackCard).toHaveAttribute('height', '260px');
+		expect(findSlotmachineCard).toHaveAttribute('height', '260px');
+		
+		expect(findBlackjackImage).toHaveAttribute('src', 'blackjack.jpg');
+		expect(findSlotmachineImage).toHaveAttribute('src','slotmaschine.jpg');
+	});
+
+	it("should navigate to the games", async () =>{
+		render(
+			<AllProviders>
+				<Overview/>
+			</AllProviders>
+		);
+
+		const blackjackLink = screen.getByTestId('blackjack-link');
+		const slotmachineLink = screen.getByTestId('slotmachine-link');
+
 	});
 });
