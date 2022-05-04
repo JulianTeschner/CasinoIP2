@@ -7,10 +7,15 @@ import (
 	"time"
 
 	"github.com/JulianTeschner/CasinoIP2/models"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 func TestMain(m *testing.M) {
+	err := godotenv.Load("../.env")
+	if err != nil {
+		log.Println("No .env file found, using default values")
+	}
 	log.Println("setup suite")
 	// log.SetOutput(ioutil.Discard)
 	NewClient()

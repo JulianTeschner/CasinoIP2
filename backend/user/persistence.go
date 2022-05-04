@@ -14,14 +14,23 @@ import (
 var Client *mongo.Client
 
 func NewClient() {
+	// var err error
+	// Client, err = mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+	// ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	// if err != nil {
+	// 	log.Fatalf("Client wasn't created: %s", err)
+	// 	// return client, err
+	// }
+	// Client.Connect(ctx)
 	var err error
-	Client, err = mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
+	clientOptions := options.Client().ApplyURI(os.Getenv("MONGODB_URI")).SetServerAPIOptions(serverAPIOptions)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	Client, err = mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		log.Fatal(err)
-		// return client, err
 	}
-	Client.Connect(ctx)
 }
 
 // GetUser returns a user from the database. If the user does not exist, it returns an empty user.

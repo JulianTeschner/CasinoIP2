@@ -6,6 +6,7 @@ WORKDIR $GOPATH/src/github.com/JulianTeschner/CasinoIP2
 # Copy everything from the current directory to the PWD (Present Working Directory) inside the container
 COPY . . 
 
+
 # # Download all the dependencies
 # RUN go get -d -v ./...
 
@@ -22,6 +23,10 @@ FROM alpine:3.6
 WORKDIR /backend
 
 COPY ./.env ./
+
+ENV AUTH0_DOMAIN=$AUTH0_DOMAIN
+ENV AUTH0_AUDIENCE=$AUTH0_AUDIENCE
+ENV MONGODB_URI=$MONGODB_URI
 
 WORKDIR /backend/bin
 
