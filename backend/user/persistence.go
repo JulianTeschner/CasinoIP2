@@ -23,6 +23,7 @@ func NewClient() {
 	// }
 	// Client.Connect(ctx)
 	var err error
+	log.Printf("Connecting to mongo at %s", os.Getenv("MONGO_URI"))
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGODB_URI")).SetServerAPIOptions(serverAPIOptions)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
