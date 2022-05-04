@@ -28,6 +28,7 @@ jobs:
       working-directory: ./database
       
     - name: Run Tests
+      shell: bash
       env:
         MONGODB_URI: ${{ secrets.MONGODB_URI  }}
         AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
