@@ -14,28 +14,32 @@ export default function Header() {
           </PageHeader>
         </Col>
         <Col span={3} offset={12}>
-          <Menu mode="horizontal" style={{background: 'transparent'}}>
+          <Menu mode="horizontal" style={{background: 'transparent'}} data-testId="dropdown-menu">
               <Menu.SubMenu key="SubMenu" icon={<MenuOutlined style={{ fontSize: '24px' }}/>} data-testid="icon">
-                <Menu.Item key="Overview">
-                  <Link to={`${RouteName.OVERVIEW}`}>
-                    Overview
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="Balance">
-                  <Link to={`${RouteName.OVERVIEW}`}>
-                    Balance
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="Account">
-                  <Link to={`${RouteName.OVERVIEW}`}>
-                    Account
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="Logout">
-                  <Link to={`${RouteName.OVERVIEW}`}>
-                    Logout
-                  </Link>
-                </Menu.Item>
+                <Menu.ItemGroup>
+                  <Menu.Item key="Overview">
+                    <Link to={`${RouteName.OVERVIEW}`}>
+                      Overview
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="Balance">
+                    <Link to={`${RouteName.OVERVIEW}`}>
+                      Balance
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="Account">
+                    <Link to={`${RouteName.OVERVIEW}`}>
+                      Account
+                    </Link>
+                  </Menu.Item>
+                </Menu.ItemGroup>
+                <Menu.ItemGroup>
+                  <Menu.Item key="Logout">
+                    <Link to={`${RouteName.OVERVIEW}`}>
+                      Logout
+                    </Link>
+                  </Menu.Item>
+                </Menu.ItemGroup>
               </Menu.SubMenu>
             </Menu>
         </Col>           

@@ -8,7 +8,7 @@ describe("Footer", () => {
                 <Footer />
             </>
         );
-        const footer = await screen.getByText(/Internetprogrammierung/i);
+        const footer = await screen.getByText(/Internetprogrammierung Sommersemester 2022/i);
         expect(footer).toBeInTheDocument();
     });
 });
