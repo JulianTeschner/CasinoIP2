@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 	"time"
-	"os"
 
 	"github.com/JulianTeschner/CasinoIP2/router"
 	"github.com/JulianTeschner/CasinoIP2/user"
@@ -29,7 +28,7 @@ func main() {
 	if err != nil {
 		log.Println("No .env file found, using default values")
 	}
-	log.Println(os.Getenv("GITHUB_EVENT_NAME"))
+
 	user.NewClient()
 	defer user.Client.Disconnect(ctx)
 
