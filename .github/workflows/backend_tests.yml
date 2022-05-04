@@ -31,6 +31,9 @@ jobs:
       env:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET  }}
+        MONGODB_URI: ${{ secrets.MONGODB_URI  }}
+        AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE  }} 
+        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN  }} 
       run: |
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
