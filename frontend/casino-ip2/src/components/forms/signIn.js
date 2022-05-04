@@ -27,7 +27,7 @@ export default function SignIn() {
         if (locationState) {
           navigate(locationState.from);
         } else {
-          navigate("/");
+          navigate("/overview");
         }
       }
     );
