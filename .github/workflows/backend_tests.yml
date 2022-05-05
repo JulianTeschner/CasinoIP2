@@ -23,9 +23,9 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - uses: actions/checkout@v3
     
-    - name: Setup Mongo DB in Docker
-      run: docker-compose up -d
-      working-directory: ./database
+#    - name: Setup Mongo DB in Docker
+#      run: docker-compose up -d
+#      working-directory: ./database
       
     - name: Run Tests
       shell: bash
