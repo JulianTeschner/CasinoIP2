@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	"github.com/JulianTeschner/CasinoIP2/router"
@@ -33,7 +34,11 @@ func main() {
 	defer user.Client.Disconnect(ctx)
 
 	r := router.New()
-	err = r.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	err = r.Run(":" + port)
 	if err != nil {
 		log.Fatalln(err)
 	}
