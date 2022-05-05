@@ -3,7 +3,7 @@ import { Space, Button } from 'antd';
 import './style/Blackjack.css';
 
 function Blackjack() {
-    const deck = [{"Farbe": "Herz", "Wert": "2", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "3", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "4", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "5", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "6", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "7", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "8", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "9", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "10", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "Bube", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "Dame", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "König", "Gespielt": 0}, {"Farbe": "Herz", "Wert": "Ass", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "2", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "3", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "4", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "5", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "6", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "7", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "8", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "9", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "10", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "Bube", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "Dame", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "König", "Gespielt": 0}, {"Farbe": "Kreuz", "Wert": "Ass", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "2", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "3", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "4", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "5", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "6", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "7", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "8", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "9", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "10", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "Bube", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "Dame", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "König", "Gespielt": 0}, {"Farbe": "Karo", "Wert": "Ass", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "2", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "3", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "4", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "5", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "6", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "7", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "8", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "9", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "10", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "Bube", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "Dame", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "König", "Gespielt": 0}, {"Farbe": "Pik", "Wert": "Ass", "Gespielt": 0}];
+    const deck = [{"Farbe": "♥", "Wert": "2", "Gespielt": 0}, {"Farbe": "♥", "Wert": "3", "Gespielt": 0}, {"Farbe": "♥", "Wert": "4", "Gespielt": 0}, {"Farbe": "♥", "Wert": "5", "Gespielt": 0}, {"Farbe": "♥", "Wert": "6", "Gespielt": 0}, {"Farbe": "♥", "Wert": "7", "Gespielt": 0}, {"Farbe": "♥", "Wert": "8", "Gespielt": 0}, {"Farbe": "♥", "Wert": "9", "Gespielt": 0}, {"Farbe": "♥", "Wert": "10", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♥", "Wert": "King", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♣", "Wert": "2", "Gespielt": 0}, {"Farbe": "♣", "Wert": "3", "Gespielt": 0}, {"Farbe": "♣", "Wert": "4", "Gespielt": 0}, {"Farbe": "♣", "Wert": "5", "Gespielt": 0}, {"Farbe": "♣", "Wert": "6", "Gespielt": 0}, {"Farbe": "♣", "Wert": "7", "Gespielt": 0}, {"Farbe": "♣", "Wert": "8", "Gespielt": 0}, {"Farbe": "♣", "Wert": "9", "Gespielt": 0}, {"Farbe": "♣", "Wert": "10", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♣", "Wert": "King", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♦", "Wert": "2", "Gespielt": 0}, {"Farbe": "♦", "Wert": "3", "Gespielt": 0}, {"Farbe": "♦", "Wert": "4", "Gespielt": 0}, {"Farbe": "♦", "Wert": "5", "Gespielt": 0}, {"Farbe": "♦", "Wert": "6", "Gespielt": 0}, {"Farbe": "♦", "Wert": "7", "Gespielt": 0}, {"Farbe": "♦", "Wert": "8", "Gespielt": 0}, {"Farbe": "♦", "Wert": "9", "Gespielt": 0}, {"Farbe": "♦", "Wert": "10", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♦", "Wert": "King", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♠", "Wert": "2", "Gespielt": 0}, {"Farbe": "♠", "Wert": "3", "Gespielt": 0}, {"Farbe": "♠", "Wert": "4", "Gespielt": 0}, {"Farbe": "♠", "Wert": "5", "Gespielt": 0}, {"Farbe": "♠", "Wert": "6", "Gespielt": 0}, {"Farbe": "♠", "Wert": "7", "Gespielt": 0}, {"Farbe": "♠", "Wert": "8", "Gespielt": 0}, {"Farbe": "♠", "Wert": "9", "Gespielt": 0}, {"Farbe": "♠", "Wert": "10", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♠", "Wert": "King", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Ace", "Gespielt": 0}];
 
     const deck_copy = useRef(deck);
     const [guthaben, setGuthaben] = React.useState<any>(' ');
@@ -22,9 +22,9 @@ function Blackjack() {
     function addCards(cards:any):number {
         var sum = 0;
         for (var i = 0; i < cards.length; i++) {
-            if(cards[i].Wert === "Bube" || cards[i].Wert === "Dame" || cards[i].Wert === "König" ) {
+            if(cards[i].Wert === "Jack" || cards[i].Wert === "Queen" || cards[i].Wert === "King" ) {
                 sum += 10;
-            } else if (cards[i].Wert === "Ass") {
+            } else if (cards[i].Wert === "Ace") {
                 if(sum + 11 > 21) {
                     sum += 1;
                 } else {
@@ -156,6 +156,11 @@ function Blackjack() {
             run.current = true;
         }
 
+        // player wins
+        else if(!dealerPick.current && addCards(hand) === 21) {
+            run.current = true;
+        }
+
     }, [dealer, hand, dealerPick]);
 
     useEffect(() => {        
@@ -197,7 +202,7 @@ function Blackjack() {
                     <div className='p-t10'>
                         <form data-testid='bet-form' onSubmit={handleSubmit}>
                             <Space>
-                                <label>Einsatz mind. 1 Credit</label>
+                                <label>min. bet amount 1 Credit</label>
                                 <input data-testid='bet-input' type="number" name="einsatz" />
                                 <Button data-testid='play' disabled={showUI.current} type="primary" htmlType='submit'>bet and go</Button>
                             </Space>
@@ -221,7 +226,11 @@ function Blackjack() {
                                     hand.map((card:any, index:any) => {
                                         return (                                            
                                             <li key={index}>
-                                                {card.Farbe} {card.Wert}
+                                                {card.Farbe === '♥' || card.Farbe === '♦' ?
+                                                    <span className='red'>{card.Farbe} </span> 
+                                                    :
+                                                    <span>{card.Farbe} </span>
+                                                }
                                             </li>
                                         );
                                     })
@@ -241,7 +250,12 @@ function Blackjack() {
                                     dealer.map((card:any, index:any) => {
                                         return (                                            
                                             <li key={index}>
-                                                {card.Farbe} {card.Wert}
+                                                {card.Farbe === '♥' || card.Farbe === '♦' ?
+                                                    <span className='red'>{card.Farbe} </span> 
+                                                    :
+                                                    <span>{card.Farbe} </span>
+                                                }
+                                                {card.Wert}
                                             </li>
                                         );
                                     })
