@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './style/WinLoss.css';
-import { Space } from 'antd';
+import { Space, Button } from 'antd';
+import Popup from 'reactjs-popup';
 
 function WinLoss() {
   const [data, setData] = useState<any>('');
-  const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTMxODUwMSwiZXhwIjoxNjUxNDA0OTAxLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.viG4uKWiYfNDtMMF6ahHCAl8bQls2LYfH7coaAtaPzgw0otkVXOfC0_ZXECObvKLvuz_TjGssrwrrr2JboA6vm-gA2tl4sRYjHzaG5Z0f092MPrZVfK91OLq5R5tGFPCBfdycR6TX8uduY6f9Qy46D2yk63GWdF_hnbbqt2XabB3eOHT2lzeD9n0Wqbbhd-EHKmzU8daZjNn-AyZQjWgNi7Cf0pV8LI0Ngf_smAMKLJwcgTmdrDM08Ecvr3Z2XQ7EeXXgZjP523vcw68N-p4uATTsQDTFyayuhH5dxlUhyUuvW1UZHJu5ttHrwlA3i8-UiLIG5X1qN5arZWO_TYm9g"});
+  const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTc2NjE4MiwiZXhwIjoxNjUxODUyNTgyLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.WvSrKkTRs4y7l5MbjAH99WFAIPQ3dpWnjwQMHBzS4BxUtH6k4RaRDVYwsvlOheimTu0J_RlFRfyB2WPIEi885YUkJFdsEy3iSFCsS1Bo4BIy5USCrrB1YefgqyPvnNxdHTDZZZgPbIO5bX6waYe5XplmX6HM5CnqGQ_9_6hYNBGjn5xM1cE6hMp4nn6qR-2daf_loEcmYLcOO9gPg0DQmuA8o9KJxEY0ztoLY_PFuQDjBGmHWLG5g6Ae5A9ao5LUX5JIaI-QgnY0C7pAZCXkU8iElwU8alEbf3MOmr9OguyuYSK771iswlkgxnQBF3ivMF65qD5ej2n9rQEbgTe6YA"});
 
   async function getData() {
     try {
@@ -17,10 +18,11 @@ function WinLoss() {
               }
           });
 
-        req.json().then(data => {
-          console.log(data);
-          setData(data)
-        }).catch(err => console.log(err));
+      req.json().then(data => {
+        console.log(data);
+        setData(data)
+      }).catch(err => console.log(err));
+
     } catch (err) {
       console.log(err);
     }
@@ -32,39 +34,49 @@ function WinLoss() {
 
   return (
     <div className='app'>
-      <div>
-        <h1>Win-Loss Overview</h1>
-      </div>
-      { data === '' ? null :
-      <div className='overview'>
-        <Space direction='vertical' size={10}>
-          <Space size={20}>
+      <Popup trigger={open => (<Button className="button">print stats</Button>  )} position="right center" modal closeOnDocumentClick>
+      {(close: any) => (
+      <div className='modal'>
+        <div>
+          <h1>Win-Loss Overview</h1>
+        </div>
+        <div>
+        <button className="close" onClick={close}>  
+        </button>
+        </div>
+        { data === '' ? null :
+        <div className='overview'>
+          <Space direction='vertical' size={10}>
+            <Space size={20}>
+              <div>
+                Last deposit: {data.balance.LastDeposit}
+              </div>
+              <div>
+                Current amount: {data.balance.Amount}
+              </div>
+            </Space>
             <div>
-              Last deposit: {data.balance.LastDeposit}
-            </div>
-            <div>
-              Current amount: {data.balance.Amount}
+              {
+              data.balance.LastDeposit > data.balance.Amount ?
+                <p>
+                  <span className='Loss'>Difference: {data.balance.LastDeposit - data.balance.Amount}</span>
+                  <br />
+                  <span className='Loss'>no lucky today!</span>
+                </p>
+                :            
+                <p>
+                  <span className='Win'>Difference: {data.balance.Amount - data.balance.LastDeposit}</span>
+                  <br />
+                  <span className='Win'>Lucky!</span> 
+                </p>           
+              }
             </div>
           </Space>
-          <div>
-            {
-            data.balance.LastDeposit > data.balance.Amount ?
-              <p>
-                <span className='Loss'>Difference: {data.balance.LastDeposit - data.balance.Amount}</span>
-                <br />
-                <span className='Loss'>no lucky today!</span>
-              </p>
-              :            
-              <p>
-                <span className='Win'>Difference: {data.balance.Amount - data.balance.LastDeposit}</span>
-                <br />
-                <span className='Win'>Lucky!</span> 
-              </p>           
-            }
-          </div>
-        </Space>
+        </div>
+        }
       </div>
-      }
+      )}
+      </Popup>
     </div>
   );
 }
