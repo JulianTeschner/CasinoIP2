@@ -1,0 +1,15 @@
+.overlay {
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #000;
+    padding: 10px;
+}
+
+.p-t10 {
+    padding-top: 10px;
+}
+
+.p-t40 {
+    padding-top: 40px;
+}

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {Routes, Route, Link } from "react-router-dom";
 import Home from "./views/home/Home";
+
 import './App.css';
+import Blackjack from './views/blackjack/Blackjack';
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
     </div>
     */
    <div className="App">
-     <Home />
+     <Blackjack/>
    </div>
   );
 }
