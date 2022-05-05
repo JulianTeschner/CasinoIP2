@@ -20,13 +20,9 @@ describe("SignIn", () => {
 	it("render the form for the sign-in process - check types", async () => {
 		render(<SignIn/>);
 
-		const inputUsername = await screen.getByTestId("signIn-username");
-		const inputPassword = await screen.getByTestId("signIn-password");
 		const buttonSubmit = await screen.getByRole("button", { name: 'Submit' });
-		const buttonRegister = await screen.getByRole("button", { name: 'Register'});
+		const buttonRegister = await screen.getByRole("button", { name: 'Register First'});
 
-		expect(inputUsername).toHaveAttribute("type", "text");
-		expect(inputPassword).toHaveAttribute("type", "password");
 		expect(buttonSubmit).toBeInTheDocument();
 		expect(buttonRegister).toBeInTheDocument();
 	});

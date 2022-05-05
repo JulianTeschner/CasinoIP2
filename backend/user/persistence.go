@@ -1,11 +1,10 @@
-package persistence
+package user
 
 import (
 	"context"
 	"log"
 	"time"
 
-	"github.com/JulianTeschner/CasinoIP2/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -14,23 +13,32 @@ import (
 var Client *mongo.Client
 
 func NewClient() {
+	// var err error
+	// Client, err = mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+	// ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	// if err != nil {
+	// 	log.Fatalf("Client wasn't created: %s", err)
+	// 	// return client, err
+	// }
+	// Client.Connect(ctx)
 	var err error
-	Client, err = mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
+	clientOptions := options.Client().ApplyURI("mongodb+srv://admin:EYfttKQbgEho23PdW8kH@casino.s3loq.mongodb.net").SetServerAPIOptions(serverAPIOptions)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	Client, err = mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		log.Fatal(err)
-		// return client, err
 	}
-	Client.Connect(ctx)
 }
 
 // GetUser returns a user from the database. If the user does not exist, it returns an empty user.
 func GetUser(database string,
 	collection string,
 	key string,
-	value string) (models.User, error) {
+	value string) (User, error) {
 
-	var user models.User
+	var user User
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
 	err := Client.Database(database).Collection(collection).FindOne(ctx, bson.M{key: value}).Decode(&user)
@@ -44,7 +52,7 @@ func GetUser(database string,
 // PostUser adds a user to the database.
 func PostUser(database string,
 	collection string,
-	user *models.User) (*mongo.InsertOneResult, error) {
+	user *User) (*mongo.InsertOneResult, error) {
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
@@ -73,15 +81,16 @@ func DeleteUser(database string,
 }
 
 // PutUserBalance updates a user's balance.
-func PutUserBalance(database string,
+func UpdateUserBalance(database string,
 	collection string,
 	key string,
 	value string,
+	field string,
 	amount float64) (*mongo.UpdateResult, error) {
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
-	result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"balance.amount": amount}})
+	result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{field: amount}})
 	if err != nil {
 		log.Println("Update failed: ", err)
 		return result, err

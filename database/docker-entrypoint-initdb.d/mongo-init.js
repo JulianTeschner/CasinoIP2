@@ -11,6 +11,7 @@ db.createUser({
 db.createCollection('users');
 db.users.insert({
   _id: new ObjectId(),
+  username: 'fish123',
   first_name: 'John',
   last_name: 'Doe',
   email: 'something@something.com',
@@ -24,16 +25,7 @@ db.users.insert({
   balance: {
     amount: 100,
     currency: 'USD',
-    amount_on_date: [
-      {
-        date: '01-02-2020',
-        amount: 100,
-      },
-      {
-        date: '02-02-2020',
-        amount: 200,
-      },
-    ],
+    last_deposit: 100,
   },
 });
 

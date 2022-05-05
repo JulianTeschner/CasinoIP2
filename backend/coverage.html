@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>handlers: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/JulianTeschner/CasinoIP2/handlers/rest.go (23.1%)</option>
+				
+				<option value="file1">github.com/JulianTeschner/CasinoIP2/middleware/jwt.go (52.9%)</option>
+				
+				<option value="file2">github.com/JulianTeschner/CasinoIP2/models/address.go (0.0%)</option>
+				
+				<option value="file3">github.com/JulianTeschner/CasinoIP2/models/amountOnDate.go (38.1%)</option>
+				
+				<option value="file4">github.com/JulianTeschner/CasinoIP2/models/balance.go (0.0%)</option>
+				
+				<option value="file5">github.com/JulianTeschner/CasinoIP2/models/user.go (38.2%)</option>
+				
+				<option value="file6">github.com/JulianTeschner/CasinoIP2/persistence/connect.go (32.3%)</option>
+				
+				<option value="file7">github.com/JulianTeschner/CasinoIP2/router/router.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">no coverage</span>
+				<span class="cov1">low coverage</span>
+				<span class="cov2">*</span>
+				<span class="cov3">*</span>
+				<span class="cov4">*</span>
+				<span class="cov5">*</span>
+				<span class="cov6">*</span>
+				<span class="cov7">*</span>
+				<span class="cov8">*</span>
+				<span class="cov9">*</span>
+				<span class="cov10">high coverage</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package handlers
+
+import (
+        "log"
+        "net/http"
+
+        "github.com/JulianTeschner/CasinoIP2/models"
+        "github.com/JulianTeschner/CasinoIP2/persistence"
+
+        "github.com/gin-gonic/gin"
+)
+
+// GetUser is the handler for the GET api/user/* route
+func GetUser(c *gin.Context) <span class="cov8" title="1">{
+        name := c.Param("name")
+        log.Println("GetUser: ", name)
+
+        var err error
+        user, err := persistence.GetUser("api_test_db", "users", "last_name", name)
+        if err != nil </span><span class="cov0" title="0">{
+                c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+                return
+        }</span>
+        <span class="cov8" title="1">c.JSON(http.StatusOK, &amp;user)</span>
+}
+
+// PostUser is the handler for the POST api/user/* route
+func PostUser(c *gin.Context) <span class="cov0" title="0">{
+        var user models.User
+        c.Request.ParseForm()
+        err := c.BindJSON(&amp;user)
+        if err != nil </span><span class="cov0" title="0">{
+                c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+                return
+        }</span>
+        <span class="cov0" title="0">_, err = persistence.PostUser("api_test_db", "users", &amp;user)
+        if err != nil </span><span class="cov0" title="0">{
+                c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+                return
+        }</span>
+        <span class="cov0" title="0">c.JSON(http.StatusOK, &amp;user)</span>
+}
+
+func DeleteUser(c *gin.Context) <span class="cov0" title="0">{
+        name := c.Param("name")
+        log.Println("DeleteUser: ", name)
+
+        result, err := persistence.DeleteUser("api_test_db", "users", "last_name", name)
+        if err != nil </span><span class="cov0" title="0">{
+                c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+                return
+        }</span>
+        <span class="cov0" title="0">c.JSON(http.StatusOK, result)</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package middleware
+
+import (
+        "context"
+        "log"
+        "net/http"
+        "net/url"
+        "os"
+        "time"
+
+        "github.com/auth0/go-jwt-middleware/v2"
+        "github.com/auth0/go-jwt-middleware/v2/jwks"
+        "github.com/auth0/go-jwt-middleware/v2/validator"
+)
+
+// CustomClaims contains custom data we want from the token.
+type CustomClaims struct {
+        Scope string `json:"scope"`
+}
+
+// Validate does nothing for this example, but we need
+// it to satisfy validator.CustomClaims interface.
+func (c CustomClaims) Validate(ctx context.Context) error <span class="cov0" title="0">{
+        return nil
+}</span>
+
+// EnsureValidToken is a middleware that will check the validity of our JWT.
+func EnsureValidToken() func(next http.Handler) http.Handler <span class="cov8" title="1">{
+        issuerURL, err := url.Parse("https://" + os.Getenv("AUTH0_DOMAIN") + "/")
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatalf("Failed to parse the issuer url: %v", err)
+        }</span>
+
+        <span class="cov8" title="1">provider := jwks.NewCachingProvider(issuerURL, 5*time.Minute)
+
+        jwtValidator, err := validator.New(
+                provider.KeyFunc,
+                validator.RS256,
+                issuerURL.String(),
+                []string{os.Getenv("AUTH0_AUDIENCE")},
+                validator.WithCustomClaims(
+                        func() validator.CustomClaims </span><span class="cov0" title="0">{
+                                return &amp;CustomClaims{}
+                        }</span>,
+                ),
+                validator.WithAllowedClockSkew(time.Minute),
+        )
+        <span class="cov8" title="1">if err != nil </span><span class="cov0" title="0">{
+                log.Fatalf("Failed to set up the jwt validator")
+        }</span>
+
+        <span class="cov8" title="1">errorHandler := func(w http.ResponseWriter, r *http.Request, err error) </span><span class="cov0" title="0">{
+                log.Printf("Encountered error while validating JWT: %v", err)
+
+                w.Header().Set("Content-Type", "application/json")
+                w.WriteHeader(http.StatusUnauthorized)
+                w.Write([]byte(`{"message":"Failed to validate JWT."}`))
+        }</span>
+
+        <span class="cov8" title="1">middleware := jwtmiddleware.New(
+                jwtValidator.ValidateToken,
+                jwtmiddleware.WithErrorHandler(errorHandler),
+        )
+
+        return func(next http.Handler) http.Handler </span><span class="cov8" title="1">{
+                return middleware.CheckJWT(next)
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package models
+
+import "fmt"
+
+type Address struct {
+        Street string `bson:"street, omitempty"`
+        City   string `bson:"city, omitempty"`
+        State  string `bson:"state, omitempty"`
+        Zip    string `bson:"zip, omitempty"`
+}
+
+func (address Address) String() string <span class="cov0" title="0">{
+        return fmt.Sprintf("%s\n%s\n%s\n%s\n", address.Street, address.City, address.State, address.Zip)
+}</span>
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package models
+
+import (
+        "encoding/json"
+        "fmt"
+        "time"
+
+        "go.mongodb.org/mongo-driver/bson"
+)
+
+type AmountOnDate struct {
+        Date   time.Time `bson:"date"`
+        Amount float64   `bson:"amount"`
+}
+
+func (amountOnDate AmountOnDate) String() string <span class="cov0" title="0">{
+        return fmt.Sprintf("%s: %f\n", amountOnDate.Date.Format("01-02-2006"), amountOnDate.Amount)
+}</span>
+
+// UnmarshalBSON is a custom unmarshaller for AmountOnDate
+func (a *AmountOnDate) UnmarshalBSON(data []byte) error <span class="cov10" title="2">{
+        decoded := new(struct {
+                Date   string  `bson:"date"`
+                Amount float64 `bson:"amount"`
+        })
+
+        if err := bson.Unmarshal(data, decoded); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov10" title="2">date, err := time.Parse("01-02-2006", decoded.Date)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov10" title="2">a.Date = date
+        a.Amount = decoded.Amount
+
+        return nil</span>
+}
+
+// MarshalBSON is a custom marshaller for AmountOnDate
+func (a *AmountOnDate) MarshalBSON() ([]byte, error) <span class="cov0" title="0">{
+        return bson.Marshal(struct {
+                Date   string  `bson:"date"`
+                Amount float64 `bson:"amount"`
+        }{
+                Date:   a.Date.Format("01-02-2006"),
+                Amount: a.Amount,
+        })
+}</span>
+
+// UnmarshalJSON is a custom unmarshaller for AmountOnDate
+func (a *AmountOnDate) UnmarshalJSON(data []byte) error <span class="cov0" title="0">{
+        decoded := new(struct {
+                Date   string  `bson:"date"`
+                Amount float64 `bson:"amount"`
+        })
+
+        if err := json.Unmarshal(data, decoded); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">date, err := time.Parse("01-02-2006", decoded.Date)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">a.Date = date
+        a.Amount = decoded.Amount
+
+        return nil</span>
+}
+
+func (a *AmountOnDate) MarshalJSON() ([]byte, error) <span class="cov10" title="2">{
+        return json.Marshal(struct {
+                Date   string  `bson:"date"`
+                Amount float64 `bson:"amount"`
+        }{
+                Date:   a.Date.Format("01-02-2006"),
+                Amount: a.Amount,
+        })
+}</span>
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package models
+
+import "fmt"
+
+type Balance struct {
+        Amount       float64        `bson:"amount, omitempty"`
+        Currency     string         `bson:"currency, omitempty"`
+        AmountOnDate []AmountOnDate `bson:"amount_on_date"`
+}
+
+func (balance Balance) String() string <span class="cov0" title="0">{
+        s := fmt.Sprintf("%f %s\n", balance.Amount, balance.Currency)
+        return s
+}</span>
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package models
+
+import (
+        "encoding/json"
+        "fmt"
+        "log"
+        "time"
+
+        "go.mongodb.org/mongo-driver/bson"
+        "go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+type User struct {
+        ID          primitive.ObjectID `bson:"_id, omitempty" json:"_id"`
+        FirstName   string             `bson:"first_name, omitempty" json:"first_name"`
+        LastName    string             `bson:"last_name, omitempty" json:"last_name"`
+        Email       string             `bson:"email, omitempty" json:"email"`
+        DateOfBirth time.Time          `bson:"date_of_birth, omitempty" json:"date_of_birth"`
+        Address     Address            `bson:"address, omitempty, inline" json:"address"`
+        Balance     Balance            `bson:"balance, omitempty, inline" json:"balance"`
+}
+
+// UnmarshalBSON is a custom bson unmarshaler for User
+func (u *User) UnmarshalBSON(data []byte) error <span class="cov8" title="1">{
+        // Unmarshal into a temporary type where the "ends" field is a string.
+        decoded := new(struct {
+                ID          primitive.ObjectID `bson:"_id"`
+                FirstName   string             `bson:"first_name"`
+                LastName    string             `bson:"last_name"`
+                Email       string             `bson:"email"`
+                DateOfBirth string             `bson:"date_of_birth"`
+                Address     Address            `bson:"address"`
+                Balance     Balance            `bson:"balance"`
+        })
+
+        if err := bson.Unmarshal(data, decoded); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">u.ID = decoded.ID
+        u.FirstName = decoded.FirstName
+        u.LastName = decoded.LastName
+        u.Email = decoded.Email
+        date, err := time.Parse("01-02-2006", decoded.DateOfBirth)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+        <span class="cov8" title="1">u.DateOfBirth = date
+        u.Address = decoded.Address
+        u.Balance = decoded.Balance
+        return nil</span>
+}
+
+// MarshalBSON is a custom bson marshaler for User
+func (u *User) MarshalBSON() ([]byte, error) <span class="cov0" title="0">{
+        return bson.Marshal(struct {
+                ID          primitive.ObjectID `bson:"_id"`
+                FirstName   string             `bson:"first_name"`
+                LastName    string             `bson:"last_name"`
+                Email       string             `bson:"email"`
+                DateOfBirth string             `bson:"date_of_birth"`
+                Address     Address            `bson:"address"`
+                Balance     Balance            `bson:"balance"`
+        }{
+                ID:          u.ID,
+                FirstName:   u.FirstName,
+                LastName:    u.LastName,
+                Email:       u.Email,
+                DateOfBirth: u.DateOfBirth.Format("01-02-2006"),
+                Address:     u.Address,
+                Balance:     u.Balance,
+        })
+}</span>
+
+// UnmarshalJSON is a custom json unmarshaler for User
+func (u *User) UnmarshalJSON(data []byte) error <span class="cov0" title="0">{
+        // Unmarshal into a temporary type where the "ends" field is a string.
+        log.Println("UnmarshalJSON")
+        decoded := new(struct {
+                ID          primitive.ObjectID `json:"_id"`
+                FirstName   string             `json:"first_name"`
+                LastName    string             `json:"last_name"`
+                Email       string             `json:"email"`
+                DateOfBirth string             `json:"date_of_birth"`
+                Address     Address            `json:"address"`
+                Balance     Balance            `json:"balance"`
+        })
+
+        if err := json.Unmarshal(data, decoded); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">if decoded.ID == primitive.NilObjectID </span><span class="cov0" title="0">{
+                u.ID = primitive.NewObjectID()
+        }</span> else<span class="cov0" title="0"> {
+                u.ID = decoded.ID
+        }</span>
+        <span class="cov0" title="0">u.FirstName = decoded.FirstName
+        u.LastName = decoded.LastName
+        u.Email = decoded.Email
+        date, err := time.Parse("01-02-2006", decoded.DateOfBirth)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+        <span class="cov0" title="0">u.DateOfBirth = date
+        u.Address = decoded.Address
+        u.Balance = decoded.Balance
+        return nil</span>
+}
+
+func (u *User) MarshalJSON() ([]byte, error) <span class="cov8" title="1">{
+        return json.Marshal(struct {
+                ID          primitive.ObjectID `json:"_id"`
+                FirstName   string             `json:"first_name"`
+                LastName    string             `json:"last_name"`
+                Email       string             `json:"email"`
+                DateOfBirth string             `json:"date_of_birth"`
+                Address     Address            `json:"address"`
+                Balance     Balance            `json:"balance"`
+        }{
+                ID:          u.ID,
+                FirstName:   u.FirstName,
+                LastName:    u.LastName,
+                Email:       u.Email,
+                DateOfBirth: u.DateOfBirth.Format("01-02-2006"),
+                Address:     u.Address,
+                Balance:     u.Balance,
+        })
+}</span>
+
+func (user User) String() string <span class="cov0" title="0">{
+        return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n%s\n", user.FirstName, user.LastName, user.Email, user.DateOfBirth.Format("01-02-2006"), user.Address, user.Balance, user.Balance.AmountOnDate)
+}</span>
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package persistence
+
+import (
+        "context"
+        "log"
+        "time"
+
+        "github.com/JulianTeschner/CasinoIP2/models"
+        "go.mongodb.org/mongo-driver/bson"
+        "go.mongodb.org/mongo-driver/mongo"
+        "go.mongodb.org/mongo-driver/mongo/options"
+)
+
+var Client *mongo.Client
+
+func NewClient() <span class="cov8" title="1">{
+        var err error
+        Client, err = mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@localhost:27017/?authSource=admin&amp;readPreference=primary&amp;appname=MongoDB%20Compass&amp;directConnection=true&amp;ssl=false"))
+        ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Fatal(err)
+                // return client, err
+        }</span>
+        <span class="cov8" title="1">Client.Connect(ctx)</span>
+}
+
+// GetUser returns a user from the database. If the user does not exist, it returns an empty user.
+func GetUser(database string,
+        collection string,
+        key string,
+        value string) (models.User, error) <span class="cov8" title="1">{
+
+        var user models.User
+        ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+        err := Client.Database(database).Collection(collection).FindOne(ctx, bson.M{key: value}).Decode(&amp;user)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println("User not found: ", err)
+                return user, err
+        }</span>
+        <span class="cov8" title="1">return user, nil</span>
+}
+
+// PostUser adds a user to the database.
+func PostUser(database string,
+        collection string,
+        user *models.User) (*mongo.InsertOneResult, error) <span class="cov0" title="0">{
+
+        ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+        result, err := Client.Database(database).Collection(collection).InsertOne(ctx, user)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println("User could not be added: ", err)
+                return result, err
+        }</span>
+        <span class="cov0" title="0">return result, nil</span>
+}
+
+// DeleteUser deletes a user from the database.
+func DeleteUser(database string,
+        collection string,
+        key string,
+        value string) (*mongo.DeleteResult, error) <span class="cov0" title="0">{
+
+        ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+        result, err := Client.Database(database).Collection(collection).DeleteOne(ctx, bson.M{key: value})
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println("Deletion failed: ", err)
+                return result, err
+        }</span>
+        <span class="cov0" title="0">return result, nil</span>
+}
+
+// PutUserBalance updates a user's balance.
+func PutUserBalance(database string,
+        collection string,
+        key string,
+        value string,
+        amount float64) (*mongo.UpdateResult, error) <span class="cov0" title="0">{
+
+        ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+        result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"balance.amount": amount}})
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println("Update failed: ", err)
+                return result, err
+        }</span>
+        <span class="cov0" title="0">return result, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package router
+
+import (
+        "log"
+
+        "github.com/JulianTeschner/CasinoIP2/handlers"
+        "github.com/JulianTeschner/CasinoIP2/middleware"
+        "github.com/gin-gonic/gin"
+
+        "github.com/gwatts/gin-adapter"
+)
+
+// New returns a new router
+func New() *gin.Engine <span class="cov8" title="1">{
+        log.Println("Setting up router")
+        gin.ForceConsoleColor()
+
+        r := gin.Default()
+
+        // Wrap the http handler with gin adapter
+        r.Use(adapter.Wrap(middleware.EnsureValidToken()))
+
+        r.GET("/user/:name", handlers.GetUser)
+        r.POST("/user", handlers.PostUser)
+        r.DELETE("/user/:name", handlers.DeleteUser)
+
+        return r
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

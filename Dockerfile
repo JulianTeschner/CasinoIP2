@@ -1,0 +1,1 @@
+FROM mataleao/casino:latest

@@ -1,21 +1,14 @@
-import * as React from 'react';
-import {Routes, Route, Link } from "react-router-dom";
-import Home from "./views/home/Home";
-
-import './App.css';
-import Blackjack from './views/blackjack/Blackjack';
+import RootRoutes from "./routes/root.routes";
+import './App.less';
+import { ThemeProvider } from "@emotion/react";
+import defaultTheme from "./themes/default";
 
 function App() {
   return (
-    /*
-    <div className="App">
-      <header className="App-header">
-        <h1>App</h1>
-      </header>
-    </div>
-    */
    <div className="App">
-     <Blackjack/>
+     <ThemeProvider theme={defaultTheme}>
+       <RootRoutes />
+     </ThemeProvider>
    </div>
   );
 }
