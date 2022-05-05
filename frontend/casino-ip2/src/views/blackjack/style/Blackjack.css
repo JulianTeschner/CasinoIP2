@@ -6,10 +6,18 @@
     padding: 10px;
 }
 
+.blackjack {
+    text-align: center;
+}
+
 .p-t10 {
     padding-top: 10px;
 }
 
-.p-t40 {
-    padding-top: 40px;
+.p-t20 {
+    padding-top: 20px;
+}
+
+.red {
+    color: #ff0000;
 }
