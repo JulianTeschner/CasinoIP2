@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 	"log"
-	"os"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -23,10 +22,8 @@ func NewClient() {
 	// }
 	// Client.Connect(ctx)
 	var err error
-	log.Printf("Connecting to mongo at %s", os.Getenv("MONGODB_URI"))
-	log.Println(os.Getenv("GITHUB_EVENT_NAME"))
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
-	clientOptions := options.Client().ApplyURI(os.Getenv("MONGODB_URI")).SetServerAPIOptions(serverAPIOptions)
+	clientOptions := options.Client().ApplyURI("mongodb+srv://admin:EYfttKQbgEho23PdW8kH@casino.s3loq.mongodb.net").SetServerAPIOptions(serverAPIOptions)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	Client, err = mongo.Connect(ctx, clientOptions)
