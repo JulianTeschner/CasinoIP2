@@ -1,13 +1,51 @@
 import React from 'react';
 import { render, screen } from "@testing-library/react";
 import Overview from "../Overview";
+import { AllProviders } from '../../../testUtils';
 
 describe("Overview", () => {
-	it("renders a div", async () => {
-		render(<Overview/>);
+	it("should render the Overview", async () => {
+		render(
+			<AllProviders>
+				<Overview/>
+			</AllProviders>
+		);
 
-		const findDiv = await screen.findByText(/Overview/i);
+		const findTitle = await screen.findByText(/Overview/i);
+		const findSubTitle = await screen.findByText(/Games/i);
 
-		expect(findDiv).toBeInTheDocument();
+		const findBlackjackCard = await screen.findByTestId('blackjack-card');
+		const findSlotmachineCard = await screen.findByTestId('slotmachine-card');
+
+		const findBlackjack = await screen.findByText(/Blackjack/i);
+		const findSlotmachine = await screen.findByText(/Slotmachine/i);
+
+		const findBlackjackImage = screen.getByAltText('blackjack');
+		const findSlotmachineImage = screen.getByAltText('slotmachine');
+
+		expect(findTitle).toBeInTheDocument();
+		expect(findSubTitle).toBeInTheDocument();
+		expect(findBlackjack).toBeInTheDocument();
+		expect(findSlotmachine).toBeInTheDocument();
+
+		expect(findBlackjackCard).toBeInTheDocument();
+		expect(findSlotmachineCard).toBeInTheDocument();
+		expect(findBlackjackCard).toHaveAttribute('height', '260px');
+		expect(findSlotmachineCard).toHaveAttribute('height', '260px');
+		
+		expect(findBlackjackImage).toHaveAttribute('src', 'blackjack.jpg');
+		expect(findSlotmachineImage).toHaveAttribute('src','slotmaschine.jpg');
+	});
+
+	it("should navigate to the games", async () =>{
+		render(
+			<AllProviders>
+				<Overview/>
+			</AllProviders>
+		);
+
+		const blackjackLink = screen.getByTestId('blackjack-link');
+		const slotmachineLink = screen.getByTestId('slotmachine-link');
+
 	});
 });

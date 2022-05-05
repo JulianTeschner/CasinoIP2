@@ -6,7 +6,7 @@ import Footer from "../components/Footer/Footer";
 export default function ProtectedLayout() {
     return (
         <Layout>
-            <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+            <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                 <div style={{ flexGrow: 0 }}>
                     <Header />
                 </div>
