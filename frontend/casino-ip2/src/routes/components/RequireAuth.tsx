@@ -1,10 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-export default function ProtectedRoute({ children }) {
+export default function ProtectedRoute( {children}:any ) {
   const location = useLocation();
 
   const logout = async () => {
-    localStorage.clear("accessToken");
+    localStorage.removeItem("accessToken");
   };
 
   if (localStorage.getItem("accessToken")) {
