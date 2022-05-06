@@ -1,9 +1,10 @@
-import { Menu, Row, PageHeader, Col } from 'antd';
+import { Menu, Row, PageHeader, Col, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { RouteName } from '../../routes/routesnames';
 
 export default function Header() {
+  const navigate = useNavigate();
     return(
       <Row>
         <Col span={9}>
@@ -32,9 +33,14 @@ export default function Header() {
                 </Menu.ItemGroup>
                 <Menu.ItemGroup>
                   <Menu.Item key="Logout">
-                    <Link to={`${RouteName.OVERVIEW}`}>
+                    <Button type="link" 
+                      onClick={  async () => {
+                        localStorage.removeItem("accessToken");
+                        navigate('/public/home');
+                        }
+                      }>
                       Logout
-                    </Link>
+                    </Button>
                   </Menu.Item>
                 </Menu.ItemGroup>
               </Menu.SubMenu>
