@@ -59,7 +59,13 @@ jobs:
         AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
         TEST: ${{ env.APP_PORT }}
       run: |
+        echo ######################################
         echo $MONGO_INITDB_ROOT_USERNAME
+        echo ${MONGO_INITDB_ROOT_USERNAME}
+        echo ${ env.APP_PORT}
+        export NAME=VALUE
+        echo $NAME
+        echo ######################################
 
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
