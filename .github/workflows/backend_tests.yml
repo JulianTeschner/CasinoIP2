@@ -62,9 +62,10 @@ jobs:
         echo ######################################
         echo $MONGO_INITDB_ROOT_USERNAME
         echo ${MONGO_INITDB_ROOT_USERNAME}
-        echo ${ env.APP_PORT}
+        echo env.APP_PORT
         export NAME=VALUE
         echo $NAME
+        echo ${{ env.APP_PORT}}
         echo ######################################
 
         sudo go test ./... -coverprofile coverage.out -covermode count
