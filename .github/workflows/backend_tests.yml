@@ -28,11 +28,11 @@ jobs:
       mongodb:
         image: mongo
         env:
-          MONGO_INITDB_ROOT_USERNAME: ${ APP_MONGO_USER }
-          MONGO_INITDB_ROOT_PASSWORD: ${ APP_MONGO_PASSWORD }
-          MONGO_INITDB_ROOT_DATABASE: ${ APP_MONGO_DB }
-          MONGO_INITDB_ROOT_HOST: ${ APP_MONGO_HOST }
-          MONGO_INITDB_ROOT_PORT: ${ APP_MONGO_PORT }
+          MONGO_INITDB_ROOT_USERNAME: ${ MONGO_INITDB_ROOT_USERNAME }
+          MONGO_INITDB_ROOT_PASSWORD: ${ MONGO_INITDB_ROOT_PASSWORD }
+          MONGO_INITDB_ROOT_DATABASE: ${ MONGO_INITDB_ROOT_DATABASE }
+          MONGO_INITDB_ROOT_HOST: ${ MONGO_INITDB_ROOT_HOST }
+          MONGO_INITDB_ROOT_PORT: ${ MONGO_INITDB_ROOT_PORT }
         options: >-
           --health-cmd mongo
           --health-interval 10s
@@ -45,11 +45,6 @@ jobs:
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
-        MONGO_INITDB_ROOT_USERNAME: ${ APP_MONGO_USER }
-        MONGO_INITDB_ROOT_PASSWORD: ${ APP_MONGO_PASSWORD }
-        MONGO_INITDB_ROOT_DATABASE: ${ APP_MONGO_DB }
-        MONGO_INITDB_ROOT_HOST: ${ APP_MONGO_HOST }
-        MONGO_INITDB_ROOT_PORT: ${ APP_MONGO_PORT }
     - uses: actions/checkout@v3
     
 #    - name: Setup Mongo DB in Docker
@@ -62,6 +57,11 @@ jobs:
         MONGODB_URI: ${{ secrets.MONGODB_URI  }}
         AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
         AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+        MONGO_INITDB_ROOT_USERNAME: ${ MONGO_INITDB_ROOT_USERNAME }
+        MONGO_INITDB_ROOT_PASSWORD: ${ MONGO_INITDB_ROOT_PASSWORD }
+        MONGO_INITDB_ROOT_DATABASE: ${ MONGO_INITDB_ROOT_DATABASE }
+        MONGO_INITDB_ROOT_HOST: ${ MONGO_INITDB_ROOT_HOST }
+        MONGO_INITDB_ROOT_PORT: ${ MONGO_INITDB_ROOT_PORT }
       run: |
         echo $MONGO_INITDB_ROOT_USERNAME
 
