@@ -79,7 +79,7 @@ export default function SignIn() {
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button>
-                <Link to={`${RouteName.REGISTER}`}>
+                <Link to="/public/register">
                   Register First
                 </Link>
               </Button>
