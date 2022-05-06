@@ -19,4 +19,4 @@ go.work
 
 *.token
 
-.env
+*.env

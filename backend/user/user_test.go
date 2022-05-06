@@ -32,9 +32,9 @@ func TestMain(m *testing.M) {
 
 func addDummyUserToDb() func() {
 	dummyUser := createDummyUser()
-	Client.Database("api_test_db").Collection("users").InsertOne(ctx, &dummyUser)
+	Client.Database(os.Getenv("MONGO_INITDB_ROOT_DATABASE")).Collection("users").InsertOne(ctx, &dummyUser)
 	return func() {
-		Client.Database("api_test_db").Collection("users").DeleteOne(ctx, bson.M{"username": "fish"})
+		Client.Database(os.Getenv("MONGO_INITDB_ROOT_DATABASE")).Collection("users").DeleteOne(ctx, bson.M{"username": "fish"})
 	}
 }
 func createDummyUser() User {
