@@ -17,6 +17,12 @@ func TestMain(m *testing.M) {
 		log.Println("No .env file found, using default values")
 	}
 	log.Println("setup suite")
+	log.Printf("PRINT THAT FUCKING VAR %s\n", os.Getenv("GOPATH"))
+	val := os.Environ()
+	for _, v := range val {
+		log.Println(v)
+	}
+
 	// log.SetOutput(ioutil.Discard)
 	NewClient()
 	teardownHandlers := setupHandlersTest()
