@@ -57,6 +57,7 @@ jobs:
         MONGODB_URI: ${{ secrets.MONGODB_URI  }}
         AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
         AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+        TEST: ${{ env.APP_PORT }}
       run: |
         echo $MONGO_INITDB_ROOT_USERNAME
 
