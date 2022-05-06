@@ -1,22 +1,23 @@
 import { useState } from 'react';
 import { Alert, Button, Form, Input, message } from 'antd';
 import auth0 from '../../config/auth0';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { RouteName } from '../../routes/routesnames';
 
 export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
-  const locationState = location.state;
+  const locationState:any = location.state;
   const navigate = useNavigate();
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values:any) => {
     auth0.client.login(
       {
         realm: "Username-Password-Authentication",
         username: values.username,
         password: values.password,
       },
-      (err, authResult) => {
+      (err:any, authResult:any) => {
         if (err) {
           setErrorMessage(`Login failed: ${err.description}`);
           return;
@@ -77,8 +78,10 @@ export default function SignIn() {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary">
-                Register First
+              <Button>
+                <Link to={`${RouteName.REGISTER}`}>
+                  Register First
+                </Link>
               </Button>
             </Form.Item>
           </Form>
