@@ -46,18 +46,8 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - uses: actions/checkout@v3
-    
-#    - name: Setup Mongo DB in Docker
-#      run: docker-compose up -d
-#      working-directory: ./database
-      
     - name: Run Tests
       shell: bash
-      env:
-        MONGODB_URI: ${{ secrets.MONGODB_URI  }}
-        AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
-        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-        TEST: ${{ env.APP_PORT }}
       run: |
         echo ######################################
         echo $MONGO_INITDB_ROOT_USERNAME
@@ -70,6 +60,17 @@ jobs:
 
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI  }}
+        AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+        TEST: ${{ env.APP_PORT }}
+        
+        
+#    - name: Setup Mongo DB in Docker
+#      run: docker-compose up -d
+#      working-directory: ./database
+      
         
     - name: Quality Gate - Test coverage shall be above threshold
       env:
