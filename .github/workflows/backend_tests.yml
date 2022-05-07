@@ -47,18 +47,15 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - name: Run Tests
-      run: env
+      run: |
+        sudo go test ./... -coverprofile coverage.out -covermode count
+        sudo go tool cover -func coverage.out
       env:
         MONGO_INITDB_ROOT_USERNAME: ${{ env.APP_USERNAME }}
         MONGO_INITDB_ROOT_PASSWORD: ${{ env.APP_PASSWORD }}
         MONGO_INITDB_ROOT_DATABASE: ${{ env.APP_DATABASE }}
         MONGO_INITDB_ROOT_HOST: ${{ env.APP_HOST }}
         MONGO_INITDB_ROOT_PORT: ${{ env.APP_PORT }}
-#      run: |
-
-#        sudo go test ./... -coverprofile coverage.out -covermode count
- #       sudo go tool cover -func coverage.out
-
         
 #    - name: Setup Mongo DB in Docker
 #      run: docker-compose up -d
