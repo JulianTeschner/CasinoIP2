@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  APP_MONGO_USER: root
-  APP_MONGO_PASSWORD: root
-  APP_MONGO_DB: test
-
 jobs:
   test:
     strategy:
@@ -22,20 +17,6 @@ jobs:
     defaults:
       run:
         working-directory: ./backend
-    services:
-      mongodb:
-        image: mongo
-        env:
-          MONGO_INITDB_ROOT_USERNAME: ${ APP_MONGO_USER }
-          MONGO_INITDB_ROOT_PASSWORD: ${ APP_MONGO_PASSWORD }
-          MONGO_INITDB_ROOT_DB: ${ APP_MONGO_DB }
-        options: >-
-          --health-cmd mongo
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 27017:27017
     steps:
     - uses: actions/setup-go@v3
       with:
@@ -48,6 +29,10 @@ jobs:
       
     - name: Run Tests
       shell: bash
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI  }}
+        AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       run: |
         printenv
         sudo go test ./... -coverprofile coverage.out -covermode count
