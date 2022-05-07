@@ -42,22 +42,13 @@ jobs:
           - 27017:27017            
     
     steps:
+    - uses: actions/checkout@v3
     - uses: actions/setup-go@v3
       with:
         go-version: ${{ matrix.go-version }}
-    - uses: actions/checkout@v3
     - name: Run Tests
       shell: bash
       run: |
-        echo ######################################
-        echo $MONGO_INITDB_ROOT_USERNAME
-        echo ${MONGO_INITDB_ROOT_USERNAME}
-        echo env.APP_PORT
-        export NAME=VALUE
-        echo $NAME
-        echo ${{ env.APP_PORT}}
-        echo ######################################
-
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
       env:
@@ -65,6 +56,11 @@ jobs:
         AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
         AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
         TEST: ${{ env.APP_PORT }}
+        MONGO_INITDB_ROOT_USERNAME: ${ APP_USERNAME }
+        MONGO_INITDB_ROOT_PASSWORD: ${ APP_PASSWORD }
+        MONGO_INITDB_ROOT_DATABASE: ${ APP_DATABASE }
+        MONGO_INITDB_ROOT_HOST: ${ APP_HOST }
+        MONGO_INITDB_ROOT_PORT: ${ APP_PORT }
         
         
 #    - name: Setup Mongo DB in Docker
