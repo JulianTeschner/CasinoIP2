@@ -49,19 +49,10 @@ jobs:
     - name: Run Tests
       shell: bash
       run: |
+        run: env
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
-      env:
-        MONGODB_URI: ${{ secrets.MONGODB_URI  }}
-        AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
-        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-        TEST: ${{ env.APP_PORT }}
-        MONGO_INITDB_ROOT_USERNAME: ${ APP_USERNAME }
-        MONGO_INITDB_ROOT_PASSWORD: ${ APP_PASSWORD }
-        MONGO_INITDB_ROOT_DATABASE: ${ APP_DATABASE }
-        MONGO_INITDB_ROOT_HOST: ${ APP_HOST }
-        MONGO_INITDB_ROOT_PORT: ${ APP_PORT }
-        
+
         
 #    - name: Setup Mongo DB in Docker
 #      run: docker-compose up -d
