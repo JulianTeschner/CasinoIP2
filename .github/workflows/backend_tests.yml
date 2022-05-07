@@ -28,11 +28,11 @@ jobs:
       mongodb:
         image: mongo
         env:
-          MONGO_INITDB_ROOT_USERNAME: ${ APP_USERNAME }
-          MONGO_INITDB_ROOT_PASSWORD: ${ APP_PASSWORD }
-          MONGO_INITDB_ROOT_DATABASE: ${ APP_DATABASE }
-          MONGO_INITDB_ROOT_HOST: ${ APP_HOST }
-          MONGO_INITDB_ROOT_PORT: ${ APP_PORT }
+          MONGO_INITDB_ROOT_USERNAME: ${ env.APP_USERNAME }
+          MONGO_INITDB_ROOT_PASSWORD: ${ env.APP_PASSWORD }
+          MONGO_INITDB_ROOT_DATABASE: ${ env.APP_DATABASE }
+          MONGO_INITDB_ROOT_HOST: ${ env.APP_HOST }
+          MONGO_INITDB_ROOT_PORT: ${ env.APP_PORT }
         options: >-
           --health-cmd mongo
           --health-interval 10s
@@ -49,11 +49,11 @@ jobs:
     - name: Run Tests
       run: env
       env:
-        MONGO_INITDB_ROOT_USERNAME: ${ APP_USERNAME }
-        MONGO_INITDB_ROOT_PASSWORD: ${ APP_PASSWORD }
-        MONGO_INITDB_ROOT_DATABASE: ${ APP_DATABASE }
-        MONGO_INITDB_ROOT_HOST: ${ APP_HOST }
-        MONGO_INITDB_ROOT_PORT: ${ APP_PORT }
+        MONGO_INITDB_ROOT_USERNAME: ${ env.APP_USERNAME }
+        MONGO_INITDB_ROOT_PASSWORD: ${ env.APP_PASSWORD }
+        MONGO_INITDB_ROOT_DATABASE: ${ env.APP_DATABASE }
+        MONGO_INITDB_ROOT_HOST: ${ env.APP_HOST }
+        MONGO_INITDB_ROOT_PORT: ${ env.APP_PORT }
 #      run: |
 
 #        sudo go test ./... -coverprofile coverage.out -covermode count
