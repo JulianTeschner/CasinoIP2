@@ -34,7 +34,7 @@ function WinLoss() {
 
   return (
     <div className='app'>
-      <Popup trigger={open => (<Button className="button">print stats</Button>  )} position="right center" modal closeOnDocumentClick>
+      <Popup trigger={<Button className="button">Show Win/Loss Overview</Button>} position="right center" modal closeOnDocumentClick>
       {(close: any) => (
       <div className='modal'>
         <div>
@@ -44,7 +44,8 @@ function WinLoss() {
         <button className="close" onClick={close}>  
         </button>
         </div>
-        { data === '' ? null :
+        { data === '' ? 
+        <div> Loading Data... </div> :
         <div className='overview'>
           <Space direction='vertical' size={10}>
             <Space size={20}>

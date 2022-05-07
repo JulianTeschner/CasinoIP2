@@ -1,3 +1,4 @@
+/* istanbul ignore this file */
 import { Route, Routes } from "react-router-dom";
 import WinLoss from "./WinLoss";
 

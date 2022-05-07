@@ -6,9 +6,7 @@ import WinLoss from "./views/winloss/WinLoss";
 
 function App() {
   return (
-   <div className="App">
-     <WinLoss />
-   </div>
+    <WinLoss />	
   );
 }
 

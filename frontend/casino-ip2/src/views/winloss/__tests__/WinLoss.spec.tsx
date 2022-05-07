@@ -16,6 +16,10 @@ describe('win/loss overview', () => {
       
       render(<WinLoss />);
 
+      const btn = await screen.findByText('Show Win/Loss Overview');
+
+      btn.click();
+
       const amount = await screen.findByText('Current amount: 100');
       const lastdeposit = await screen.findByText('Last deposit: 50');
       const difference = await screen.findByText('Difference: 50');
