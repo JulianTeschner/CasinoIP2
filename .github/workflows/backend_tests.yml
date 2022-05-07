@@ -47,11 +47,11 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - name: Run Tests
-      shell: bash
-      run: |
-        run: env
-        sudo go test ./... -coverprofile coverage.out -covermode count
-        sudo go tool cover -func coverage.out
+      run: env
+#      run: |
+
+#        sudo go test ./... -coverprofile coverage.out -covermode count
+ #       sudo go tool cover -func coverage.out
 
         
 #    - name: Setup Mongo DB in Docker
