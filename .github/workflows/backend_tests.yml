@@ -48,6 +48,12 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - name: Run Tests
       run: env
+      env:
+        MONGO_INITDB_ROOT_USERNAME: ${ APP_USERNAME }
+        MONGO_INITDB_ROOT_PASSWORD: ${ APP_PASSWORD }
+        MONGO_INITDB_ROOT_DATABASE: ${ APP_DATABASE }
+        MONGO_INITDB_ROOT_HOST: ${ APP_HOST }
+        MONGO_INITDB_ROOT_PORT: ${ APP_PORT }
 #      run: |
 
 #        sudo go test ./... -coverprofile coverage.out -covermode count
