@@ -48,9 +48,9 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - name: Run Tests
       run: |
-        sudo printenv
-        sudo go test ./... -coverprofile coverage.out -covermode count
-        sudo go tool cover -func coverage.out
+        printenv
+        go test ./... -coverprofile coverage.out -covermode count
+        go tool cover -func coverage.out
       env:
         MONGO_INITDB_ROOT_USERNAME: ${{ env.APP_USERNAME }}
         MONGO_INITDB_ROOT_PASSWORD: ${{ env.APP_PASSWORD }}
