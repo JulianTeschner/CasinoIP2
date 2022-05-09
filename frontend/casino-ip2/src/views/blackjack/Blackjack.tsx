@@ -223,22 +223,23 @@ function Blackjack() {
                         <p><b>{status}</b></p>
                     </div>
                     <Space>
-                    <div data-testid='overlay-player' className='overlay'>
+                    <div data-testid='overlay-player' className='overlay-player'>
                         <div>
                             <p><b>sum: {addCards(hand)}</b></p>
-                            <ul>
+                            <ul className='cards'>
                                 {
-                                    hand.map((card:any, index:any) => {
-                                        return (                                            
-                                            <li key={index}>
-                                                {card.Farbe === '♥' || card.Farbe === '♦' ?
-                                                    <span className='red'>{card.Farbe} </span> 
-                                                    :
-                                                    <span>{card.Farbe} </span>
-                                                }
-                                            </li>
-                                        );
-                                    })
+                                  hand.map((card:any, index:any) => {
+                                      return (                                            
+                                          <li key={index}>
+                                              {card.Farbe === '♥' || card.Farbe === '♦' ?
+                                                  <span className='red'>{card.Farbe} </span> 
+                                                  :
+                                                  <span>{card.Farbe} </span>
+                                              }
+                                              {card.Wert}
+                                          </li>
+                                      );
+                                  })
                                 }
                             </ul>
                             <Space>
@@ -249,21 +250,24 @@ function Blackjack() {
                     </div>
                     <div data-testid='overlay-dealer' className='overlay'>
                         <div>
-                            <p><b>sum: {addCards(dealer)}</b></p>
-                            <ul>
+                            <p>
+                              <b>Dealer</b><br />
+                              <b>sum: {addCards(dealer)}</b>
+                            </p>
+                            <ul className='cards'>
                                 {
-                                    dealer.map((card:any, index:any) => {
-                                        return (                                            
-                                            <li key={index}>
-                                                {card.Farbe === '♥' || card.Farbe === '♦' ?
-                                                    <span className='red'>{card.Farbe} </span> 
-                                                    :
-                                                    <span>{card.Farbe} </span>
-                                                }
-                                                {card.Wert}
-                                            </li>
-                                        );
-                                    })
+                                  dealer.map((card:any, index:any) => {
+                                      return (                                            
+                                          <li key={index}>
+                                              {card.Farbe === '♥' || card.Farbe === '♦' ?
+                                                  <span className='red'>{card.Farbe} </span> 
+                                                  :
+                                                  <span>{card.Farbe} </span>
+                                              }
+                                              {card.Wert}
+                                          </li>
+                                      );
+                                  })
                                 }
                             </ul>
                         </div>
