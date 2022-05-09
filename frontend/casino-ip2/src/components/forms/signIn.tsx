@@ -25,11 +25,7 @@ export default function SignIn() {
         message.success("Login successful");
         localStorage.setItem("accessToken", authResult.accessToken);
 
-        if (locationState) {
-          navigate(locationState.from);
-        } else {
-          navigate("/overview");
-        }
+        navigate("/overview");
       }
     );
   };
