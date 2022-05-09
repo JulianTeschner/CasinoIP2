@@ -1,9 +1,13 @@
-import { Menu, Row, PageHeader, Col } from 'antd';
+import { Menu, Row, PageHeader, Col, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RouteName } from '../../routes/routesnames';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Title from 'antd/lib/typography/Title';
 
 export default function Header() {
+  const navigate = useNavigate();
     return(
       <Row>
         <Col span={9}>
@@ -32,9 +36,24 @@ export default function Header() {
                 </Menu.ItemGroup>
                 <Menu.ItemGroup>
                   <Menu.Item key="Logout">
-                    <Link to={`${RouteName.OVERVIEW}`}>
-                      Logout
-                    </Link>
+                    <Popup contentStyle={{textAlign:"center"}} nested modal trigger={
+                      <Button type="link">Logout</Button>
+                    }>
+                      <div className="modal">
+                        <Title level={3} className="header">Logout</Title>
+                        <div>
+                          Do you really want to logout from the casino-app?
+                        </div>
+                        <Button 
+                          onClick={  async () => {
+                            localStorage.removeItem("accessToken");
+                            navigate('/public/home');
+                          }
+                        }>
+                          Logout
+                        </Button>
+                      </div>
+                    </Popup>
                   </Menu.Item>
                 </Menu.ItemGroup>
               </Menu.SubMenu>

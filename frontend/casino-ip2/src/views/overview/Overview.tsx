@@ -20,7 +20,7 @@ function Overview() {
 					</Title>
 					<Row gutter={[18,18]}>
 						<Col sm={{span:24}} md={{span:12}}>
-							<Link to={`${RouteName.HOME}`} data-testId="blackjack-link">
+							<Link to={`${RouteName.BLACKJACK}`} data-testId="blackjack-link">
 								<Card hoverable
 									cover={<img alt="blackjack" src={require('./images/blackjack.jpg')} height="260px" data-testId="blackjack-card"/>}>
 										<Row justify="center">
@@ -30,7 +30,7 @@ function Overview() {
           					</Link>
 						</Col>
 						<Col sm={{span:24}} md={{span:12}}>
-							<Link to={`${RouteName.HOME}`} data-testId="slotmachine-link">
+							<Link to={`${RouteName.SLOTMACHINE}`} data-testId="slotmachine-link">
 								<Card hoverable 
 									cover={<img alt="slotmachine" src={require('./images/slotmaschine.jpg')} height="260px" data-testId="slotmachine-card"/>}>
 										<Row justify="center">

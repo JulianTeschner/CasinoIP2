@@ -1,7 +1,9 @@
 export const RouteName = {
     INDEX: "/",
     HOME: "/home",
-    OVERVIEW: "/overview",
     REGISTER: "/register",
-    ABOUTUS: "/aboutus",    
+    OVERVIEW: "/overview",
+    BLACKJACK: "/games/blackjack",
+    SLOTMACHINE: "/games/slotmachine",
+    ABOUTUS: "/aboutus",
 }
