@@ -48,6 +48,7 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - name: Run Tests
       run: |
+        printenv
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
       env:
