@@ -1,5 +1,4 @@
-
-name: Go
+name: Run Tests
 
 on:
   push:
@@ -24,12 +23,18 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - uses: actions/checkout@v3
     
-    - name: Setup Mongo DB in Docker
-      run: docker-compose up -d
-      working-directory: ./database
+#    - name: Setup Mongo DB in Docker
+#      run: docker-compose up -d
+#      working-directory: ./database
       
     - name: Run Tests
+      shell: bash
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI  }}
+        AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       run: |
+        printenv
         sudo go test ./... -coverprofile coverage.out -covermode count
         sudo go tool cover -func coverage.out
         

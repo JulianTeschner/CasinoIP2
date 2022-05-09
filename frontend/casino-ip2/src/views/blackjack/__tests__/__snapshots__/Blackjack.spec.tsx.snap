@@ -1,20 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`blackjack game nothing should happen if input 0 1`] = `
-<div>
+<div
+  className="blackjack"
+>
   <div>
     <h1>
       Blackjack
     </h1>
     <div
-      className="p-t40"
+      className="p-t20"
     >
       <div
         data-testid="balance"
       >
         <b>
           balance: 
-          100
+           
         </b>
       </div>
       <div
@@ -37,7 +39,7 @@ exports[`blackjack game nothing should happen if input 0 1`] = `
               }
             >
               <label>
-                Einsatz mind. 1 Credit
+                min. bet amount 1 Credit
               </label>
             </div>
             <div
@@ -79,20 +81,22 @@ exports[`blackjack game nothing should happen if input 0 1`] = `
 `;
 
 exports[`blackjack game nothing should happen if input greater than balance 1`] = `
-<div>
+<div
+  className="blackjack"
+>
   <div>
     <h1>
       Blackjack
     </h1>
     <div
-      className="p-t40"
+      className="p-t20"
     >
       <div
         data-testid="balance"
       >
         <b>
           balance: 
-          100
+           
         </b>
       </div>
       <div
@@ -115,7 +119,7 @@ exports[`blackjack game nothing should happen if input greater than balance 1`] 
               }
             >
               <label>
-                Einsatz mind. 1 Credit
+                min. bet amount 1 Credit
               </label>
             </div>
             <div

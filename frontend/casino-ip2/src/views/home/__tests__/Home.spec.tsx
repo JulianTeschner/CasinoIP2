@@ -1,10 +1,15 @@
 import React from 'react';
 import { render, screen } from "@testing-library/react";
 import Home from "../Home";
+import { AllProviders } from '../../../testUtils';
 
 describe("Home", () => {
 	it("renders a headline", async () => {
-		render(<Home/>);
+		render(
+			<AllProviders>
+				<Home/>
+			</AllProviders>
+		);
 
 		const findImageLeft = await screen.findByTestId('image-left');
 		const findHeadline = await screen.findByText(/Sign In/i);

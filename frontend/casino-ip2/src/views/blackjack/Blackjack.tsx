@@ -17,7 +17,7 @@ function Blackjack() {
     
 
     // test
-    const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTEzNzg0OCwiZXhwIjoxNjUxMjI0MjQ4LCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.RVFRTz9I6jpRzfKhk_kLoCaQfQYTKcXbsOV88ztHujR0i3P7NjlsjmAcePLItO_hz5jMLdMmqADS4oSw5dQd3XanowewA4gM8VZW18FDyt4xnIyHEgfHzB86PFe68rxS-MF6juonMgzTLP7VOGPaHz9qe-A0Q11pL7io_Ie0EYBFh6KkYPq0SjH8b_EI-8ny0cXOpIa41OOD7R5V2L7xHOZ-ImBPAVoyYS3w2Me9u75H9P5qTfx2xedps_1FEp5N5nUdqpqta6tolGqywvIoywONhFGyNRNz8egv9UWBTNhVO5yN-WxtatY6wMfXNnxP5avx-V9xasNwlyRmigP0yA"});
+    const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTc3NjI4MCwiZXhwIjoxNjUxODYyNjgwLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.Oau7zdJbfXkdV5kQdNY74tGaSmYI8PLucOlDFm3GA1ycvFFXhfHt8vuupgBOCI2DJk6eB4Qu2JOZPBHSnu0A8V_ZCGf20hx9QbGAgWiKi8ULdAUF_6e9mAmXyc2lmeLdZTD5O0lJKAi3lJtRMXdcpRET8UnECLILWa-NS8vzETE5Suozg9SFq7m2hXJZ2W-Uv8pjJkUq2gO1W_unMT8kXOUBoXm-uioCuMlZXX0muhqZC9oKgI1e6eb9DkQsyUhGzHAq-ajGKilVj021uXajMj2h3EFnITTk5_pljuxPhPBW8Y52LqKx7NtwzSUjQV70fWJdyfoFm5LQB6ZR_qFxgQ"});
 
     function addCards(cards:any):number {
         var sum = 0;
@@ -154,6 +154,11 @@ function Blackjack() {
         else if(dealerPick.current && addCards(dealer) >= addCards(hand)) {
             dealerPick.current = false;
             run.current = true;
+        } 
+        
+        // player wins
+        else if(!dealerPick.current && addCards(hand) === 21) {
+            run.current = true;
         }
 
         // player wins
@@ -194,10 +199,10 @@ function Blackjack() {
     }, [dealer, guthaben, hand, run]);
 
     return (
-            <div>
+            <div className='blackjack'>
             <div>
                 <h1>Blackjack</h1>
-                <div className='p-t40'>
+                <div className='p-t20'>
                     <div data-testid='balance'><b>balance: {guthaben}</b></div>
                     <div className='p-t10'>
                         <form data-testid='bet-form' onSubmit={handleSubmit}>

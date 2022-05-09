@@ -5,6 +5,8 @@
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@testing-library/jest-dom": "^5.16.4",
+    "@ant-design/icons": "^4.7.0",
+    "@emotion/react": "^11.9.0",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
@@ -23,8 +25,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -47,6 +49,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-test-renderer": "^18.0.0"
+    "@types/react-test-renderer": "^18.0.0",
+    "@craco/craco": "^6.4.3",
+    "craco-swc": "^0.5.1"
   }
 }
