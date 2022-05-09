@@ -1,5 +1,4 @@
 import React from 'react';
-import './style/Register.css';
 import SlotmachineForm from "./Slotmachine";
 
 function SlotmachineView() {
