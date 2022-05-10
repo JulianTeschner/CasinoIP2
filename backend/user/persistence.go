@@ -15,6 +15,7 @@ import (
 var Client *mongo.Client
 
 func NewClient() {
+	log.Println("Connecting to database...")
 	var err error
 	var url string
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
@@ -25,7 +26,6 @@ func NewClient() {
 		url = fmt.Sprintf("mongodb+srv://%s:%s@%s", os.Getenv("MONGO_INITDB_ROOT_USERNAME"), os.Getenv("MONGO_INITDB_ROOT_PASSWORD"), os.Getenv("MONGO_INITDB_ROOT_HOST"))
 	}
 
-	log.Println(url)
 	clientOptions := options.Client().ApplyURI(url).SetServerAPIOptions(serverAPIOptions)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()

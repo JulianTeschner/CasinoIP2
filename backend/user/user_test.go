@@ -1,7 +1,7 @@
 package user
 
 import (
-	"io/ioutil"
+	// "io/ioutil"
 	"log"
 	"os"
 	"testing"
@@ -18,7 +18,7 @@ func TestMain(m *testing.M) {
 		log.Println("No .env file found, using default values")
 	}
 
-	log.SetOutput(ioutil.Discard)
+	// log.SetOutput(ioutil.Discard)
 	NewClient()
 	teardownHandlers := setupHandlersTest()
 	// Run the tests
