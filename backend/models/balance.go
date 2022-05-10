@@ -1,9 +1,9 @@
 package models
 
 type Balance struct {
-	Amount      float64 `bson:"amount, omitempty"`
-	Currency    string  `bson:"currency, omitempty"`
-	LastDeposit float64 `bson:"last_deposit, omitempty"`
+	Amount      float64 `bson:"amount, omitempty" json:"amount"`
+	Currency    string  `bson:"currency, omitempty" json:"currency"`
+	LastDeposit float64 `bson:"last_deposit, omitempty" json:"last_deposit"`
 }
 
 // func (balance Balance) String() string {
