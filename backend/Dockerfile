@@ -22,7 +22,7 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /backend
 
-COPY ./.env ./
+# COPY ./.env ./
 
 WORKDIR /backend/bin
 

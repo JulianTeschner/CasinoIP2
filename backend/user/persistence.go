@@ -2,7 +2,9 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -13,17 +15,18 @@ import (
 var Client *mongo.Client
 
 func NewClient() {
-	// var err error
-	// Client, err = mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
-	// ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	// if err != nil {
-	// 	log.Fatalf("Client wasn't created: %s", err)
-	// 	// return client, err
-	// }
-	// Client.Connect(ctx)
+	log.Println("Connecting to database...")
 	var err error
+	var url string
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
-	clientOptions := options.Client().ApplyURI("mongodb+srv://admin:EYfttKQbgEho23PdW8kH@casino.s3loq.mongodb.net").SetServerAPIOptions(serverAPIOptions)
+
+	if os.Getenv("MONGO_INITDB_ROOT_PORT") != "" {
+		url = fmt.Sprintf("mongodb://%s:%s@%s:%s", os.Getenv("MONGO_INITDB_ROOT_USERNAME"), os.Getenv("MONGO_INITDB_ROOT_PASSWORD"), os.Getenv("MONGO_INITDB_ROOT_HOST"), os.Getenv("MONGO_INITDB_ROOT_PORT"))
+	} else {
+		url = fmt.Sprintf("mongodb+srv://%s:%s@%s", os.Getenv("MONGO_INITDB_ROOT_USERNAME"), os.Getenv("MONGO_INITDB_ROOT_PASSWORD"), os.Getenv("MONGO_INITDB_ROOT_HOST"))
+	}
+
+	clientOptions := options.Client().ApplyURI(url).SetServerAPIOptions(serverAPIOptions)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	Client, err = mongo.Connect(ctx, clientOptions)

@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"os"
 	"testing"
 	"time"
 
@@ -20,30 +21,30 @@ func TestCreateClient(t *testing.T) {
 
 func TestGetValue(t *testing.T) {
 	teardown := addDummyUserToDb()
-	value, _ := GetUser("api_test_db", "users", "username", "Test")
+	value, _ := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "Test")
 	assert.Equal(t, expected, value)
 	defer teardown()
 }
 
 func TestGetNonExistingValue(t *testing.T) {
-	_, err := GetUser("api_test_db", "users", "username", "NotExisting")
+	_, err := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "NotExisting")
 	assert.NotNil(t, err)
 }
 
 func TestDeleteMe(t *testing.T) {
 	addDummyUserToDb()
-	value, _ := DeleteUser("api_test_db", "users", "username", "fish")
+	value, _ := DeleteUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
 	assert.Equal(t, int64(1), value.DeletedCount)
 }
 
 func TestDeleteNoOne(t *testing.T) {
-	value, _ := DeleteUser("api_test_db", "users", "username", "NotExisting")
+	value, _ := DeleteUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "NotExisting")
 	assert.Equal(t, int64(0), value.DeletedCount)
 }
 
 func TestDeletionFail(t *testing.T) {
 	Client.Disconnect(ctx)
-	_, err := DeleteUser("api_test_db", "users", "username", "Please")
+	_, err := DeleteUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "Please")
 	NewClient()
 	assert.Error(t, err)
 
@@ -56,8 +57,8 @@ func TestPostUser(t *testing.T) {
 	user.FirstName = "Post"
 	user.LastName = "Me"
 	user.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
-	result, _ := PostUser("api_test_db", "users", &user)
-	DeleteUser("api_test_db", "users", "username", "Me")
+	result, _ := PostUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", &user)
+	DeleteUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "Me")
 	assert.Equal(t, user.ID, result.InsertedID)
 }
 
@@ -68,22 +69,22 @@ func TestPostUserFail(t *testing.T) {
 	user.FirstName = "Post"
 	user.LastName = "Me"
 	user.DateOfBirth = time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)
-	_, err := PostUser("api_test_db", "users", &user)
+	_, err := PostUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", &user)
 	NewClient()
 	assert.Error(t, err)
 }
 
 func TestPutUserBalance(t *testing.T) {
 	teardown := addDummyUserToDb()
-	UpdateUserBalance("api_test_db", "users", "username", "fish", "balance.amount", 500)
-	user, _ := GetUser("api_test_db", "users", "username", "fish")
+	UpdateUserBalance(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish", "balance.amount", 500)
+	user, _ := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
 	assert.Equal(t, float64(500), user.Balance.Amount)
 	defer teardown()
 }
 
 func TestPutUserBalanceFail(t *testing.T) {
 	Client.Disconnect(ctx)
-	_, err := UpdateUserBalance("api_test_db", "users", "username", "fish", "balance.amount", 500)
+	_, err := UpdateUserBalance(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish", "balance.amount", 500)
 	assert.Error(t, err)
 	NewClient()
 }
