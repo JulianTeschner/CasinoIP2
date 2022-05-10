@@ -44,16 +44,29 @@ jobs:
           - 27017:27017            
     
     steps:
-    - uses: actions/checkout@v3
-    
-    - uses: actions/cache@v3
+
+    # Get values for cache paths to be used in later steps
+    - id: go-cache-paths
+      run: |
+        echo "::set-output name=go-build::$(go env GOCACHE)"
+        echo "::set-output name=go-mod::$(go env GOMODCACHE)"
+        
+    - name: checkout
+      uses: actions/checkout@v3
+
+    # Cache go build cache, used to speedup go test
+    - name: Go Build Cache
+      uses: actions/cache@v2
       with:
-        path: |
-          ~/.cache/go-build
-          ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
+        path: ${{ steps.go-cache-paths.outputs.go-build }}
+        key: ${{ runner.os }}-go-build-${{ hashFiles('**/go.sum') }}
+
+    # Cache go mod cache, used to speedup builds
+    - name: Go Mod Cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.go-cache-paths.outputs.go-mod }}
+        key: ${{ runner.os }}-go-mod-${{ hashFiles('**/go.sum') }}
         
     - uses: actions/setup-go@v3
       with:
