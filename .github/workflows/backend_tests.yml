@@ -48,7 +48,6 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - name: Run Tests
       run: |
-        printenv
         go test ./... -coverprofile coverage.out -covermode count
         go tool cover -func coverage.out
       env:
@@ -57,10 +56,6 @@ jobs:
         MONGO_INITDB_ROOT_DATABASE: ${{ env.APP_DATABASE }}
         MONGO_INITDB_ROOT_HOST: ${{ env.APP_HOST }}
         MONGO_INITDB_ROOT_PORT: ${{ env.APP_PORT }}
-        
-#    - name: Setup Mongo DB in Docker
-#      run: docker-compose up -d
-#      working-directory: ./database
       
         
     - name: Quality Gate - Test coverage shall be above threshold
