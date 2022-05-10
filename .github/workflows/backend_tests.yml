@@ -12,7 +12,7 @@ env:
   APP_DATABASE: test
   APP_TEST_DATABASE: test
   APP_HOST: 127.0.0.1
-  APP_PORT: 27017
+ # APP_PORT: 27017
 
 jobs:
   test:
@@ -34,7 +34,7 @@ jobs:
           MONGO_INITDB_ROOT_DATABASE: ${{ env.APP_DATABASE }}
           MONGO_INITDB_TEST_DATABASE: ${{ env.APP_TEST_DATABASE }}
           MONGO_INITDB_ROOT_HOST: ${{ env.APP_HOST }}
-          MONGO_INITDB_ROOT_PORT: ${{ env.APP_PORT }}
+      #    MONGO_INITDB_ROOT_PORT: ${{ env.APP_PORT }}
         options: >-
           --health-cmd mongo
           --health-interval 10s
@@ -70,7 +70,7 @@ jobs:
         MONGO_INITDB_ROOT_DATABASE: ${{ env.APP_DATABASE }}
         MONGO_INITDB_TEST_DATABASE: ${{ env.APP_TEST_DATABASE }}
         MONGO_INITDB_ROOT_HOST: ${{ env.APP_HOST }}
-        MONGO_INITDB_ROOT_PORT: ${{ env.APP_PORT }}
+   #     MONGO_INITDB_ROOT_PORT: ${{ env.APP_PORT }}
       
         
     - name: Quality Gate - Test coverage shall be above threshold
