@@ -1,7 +1,8 @@
+import React from 'react';
 import { screen, render, fireEvent, getByAltText, getByText, getByTestId, waitFor } from "@testing-library/react";
 import Header from "../Header";
+import '@testing-library/jest-dom';
 import { AllProviders } from "../../../testUtils";
-import { userInfo } from "os";
 import userEvent from "@testing-library/user-event";
 
 describe("Header", () => {
@@ -36,12 +37,20 @@ describe("Header", () => {
             </AllProviders>
         );
 
-        fireEvent.mouseOver(screen.getByTestId('icon'));
+        const menuIcon = await screen.findByTestId('icon');
+        
+        userEvent.hover(menuIcon);
+        
+        //const balance = await screen.getByText(/Balance/i);
+        //const account = await screen.getByText(/Account/i);
+        //const logout = await screen.getByText(/Logout/i);
+
+        //fireEvent.mouseOver(screen.getByTestId('icon'));
 
         //await waitFor(() => screen.getByText('Overview'));
         
-        //expect(screen.getByText('Balance')).toBeVisible();
-        //expect(screen.getByText('Account')).toBeVisible();
-        //expect(screen.getByText('Logout')).toBeVisible();
+        //expect(balance).toBeInTheDocument();
+        //expect(account).toBeVisible();
+        //expect(logout).toBeVisible();
     });
 })
