@@ -30,4 +30,16 @@ describe('win/loss overview', () => {
       expect(lastdeposit).toBeInTheDocument();
       expect(difference).toBeInTheDocument();
     });
+
+    it('should show loading data because there is no connection', async () => {
+      render(<WinLoss />);
+      
+      const btn = await screen.findByText('Show Win/Loss Overview');
+
+      btn.click();
+
+      const loading = await screen.findByText("Loading Data...");
+
+      expect(loading).toBeInTheDocument();
+    })
 })
