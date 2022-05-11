@@ -1,39 +1,35 @@
-FROM golang:1.17
+FROM golang:1.17 as builder
 
-# # Set the Current Working Directory inside the container
-# WORKDIR $GOPATH/src/github.com/JulianTeschner/CasinoIP2
-#
-# # Copy everything from the current directory to the PWD (Present Working Directory) inside the container
-# COPY . .
-#
-# # # Download all the dependencies
-# # RUN go get -d -v ./...
-#
-# # Install the package
-# RUN go install -v ./...
-#
-# COPY .env $GOPATH/src/github.com/JulianTeschner
-#
-# # This container exposes port 8080 to the outside world
-# EXPOSE 8080
-#
-# # Run the executable
-# CMD ["cmd"]
+# Set the Current Working Directory inside the container
+WORKDIR $GOPATH/src/github.com/JulianTeschner/CasinoIP2
 
+# Copy everything from the current directory to the PWD (Present Working Directory) inside the container
+COPY . . 
 
-RUN mkdir /app
+# Install the package
 
-WORKDIR /app
+WORKDIR $GOPATH/src/github.com/JulianTeschner/CasinoIP2/cmd
 
-COPY go.mod ./
-COPY go.sum ./
+RUN CGO_ENABLED=0 go build -v  .
 
-RUN go mod download && go mod verify
+### Second Stage
 
-COPY . .
+FROM alpine:3.8 as runner
 
-WORKDIR /app/cmd
+# RUN apk add --no-cache bash
 
-RUN go build -v -o /usr/local/bin/app ./... 
+RUN apk --no-cache add ca-certificates
 
-CMD ["app"]
+WORKDIR /backend
+
+# COPY ./.env ./
+
+WORKDIR /backend/bin
+
+COPY --from=builder go/src/github.com/JulianTeschner/CasinoIP2/cmd ./
+
+# This container exposes port 8080 to the outside world
+EXPOSE 8080
+
+# Run the executable
+CMD ["./cmd"]

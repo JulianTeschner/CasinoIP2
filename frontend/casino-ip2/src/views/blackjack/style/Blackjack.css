@@ -1,0 +1,41 @@
+.overlay {
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #000;
+    padding: 10px;
+    min-width: 130px;
+    min-height: 150px;
+    margin-left: 20px;
+}
+
+.overlay-player {
+    background-color: #fff;
+    border: 1px solid rgb(36, 159, 181);
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgb(36, 159, 181);
+    padding: 10px;
+    min-width: 130px;
+    min-height: 150px;
+}
+
+.cards {
+    text-align: left;
+}
+
+.blackjack {
+    text-align: center;
+    height: 76vh;
+}
+
+.p-t10 {
+    padding-top: 10px;
+}
+
+.p-t40 {
+    padding-top: 40px;
+}
+
+.red {
+    color: #ff0000;
+}

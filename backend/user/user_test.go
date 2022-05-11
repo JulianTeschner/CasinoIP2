@@ -1,17 +1,23 @@
 package user
 
 import (
+	// "io/ioutil"
 	"log"
 	"os"
 	"testing"
 	"time"
 
 	"github.com/JulianTeschner/CasinoIP2/models"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 func TestMain(m *testing.M) {
-	log.Println("setup suite")
+	err := godotenv.Load("../.env")
+	if err != nil {
+		log.Println("No .env file found, using default values")
+	}
+
 	// log.SetOutput(ioutil.Discard)
 	NewClient()
 	teardownHandlers := setupHandlersTest()
@@ -27,9 +33,9 @@ func TestMain(m *testing.M) {
 
 func addDummyUserToDb() func() {
 	dummyUser := createDummyUser()
-	Client.Database("api_test_db").Collection("users").InsertOne(ctx, &dummyUser)
+	Client.Database(os.Getenv("MONGO_INITDB_ROOT_DATABASE")).Collection("users").InsertOne(ctx, &dummyUser)
 	return func() {
-		Client.Database("api_test_db").Collection("users").DeleteOne(ctx, bson.M{"username": "fish"})
+		Client.Database(os.Getenv("MONGO_INITDB_ROOT_DATABASE")).Collection("users").DeleteOne(ctx, bson.M{"username": "fish"})
 	}
 }
 func createDummyUser() User {

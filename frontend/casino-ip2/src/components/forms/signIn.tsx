@@ -1,31 +1,45 @@
-import * as React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { useState } from 'react';
+import { Alert, Button, Form, Input, message } from 'antd';
+import auth0 from '../../config/auth0';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { RouteName } from '../../routes/routesnames';
 
-const initialFormData = Object.freeze({
-  username: "",
-  password: ""
-});
+export default function SignIn() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
+  const locationState:any = location.state;
+  const navigate = useNavigate();
 
-function SignIn() {
+  const handleSubmit = (values:any) => {
+    auth0.client.login(
+      {
+        realm: "Username-Password-Authentication",
+        username: values.username,
+        password: values.password,
+      },
+      (err:any, authResult:any) => {
+        if (err) {
+          setErrorMessage(`Login failed: ${err.description}`);
+          return;
+        }
+        message.success("Login successful");
+        localStorage.setItem("accessToken", authResult.accessToken);
 
-  const [formData, updateFormData] = React.useState(initialFormData);
-  
-  function handleChange(e:any) {
-    updateFormData({
-      ...formData,
-      [e.target.name]: e.target.value.trim()
-    });
-  }
-
-  function handleSignInSubmit(e:any) {
-    e.preventDefault();
-    console.log(formData)
-  }
+        navigate("/overview");
+      }
+    );
+  };
 
   return (
     <div className="SignIn">
       <div className="SignIn-Content">
-        <h2>Sign In</h2>
+        <h2>Login</h2>
+
+        {errorMessage ? (
+          <div style={{ marginBottom: "24px" }}>
+            <Alert message={errorMessage} type="error" showIcon />
+          </div>
+        ) : null}
         
           <Form 
             name="basic"
@@ -33,6 +47,7 @@ function SignIn() {
             wrapperCol={{ span: 10 }}
             initialValues={{ remember: true }}
             autoComplete="off"
+            onFinish={handleSubmit}
           >
             <Form.Item 
               label="Username"
@@ -52,14 +67,6 @@ function SignIn() {
               <Input.Password />
             </Form.Item>
 
-            <Form.Item
-              name="remember"
-              valuePropName="checked"
-              wrapperCol={{ offset: 8, span: 16 }}
-              >
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
                 Submit
@@ -67,8 +74,10 @@ function SignIn() {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary">
-                Register First
+              <Button>
+                <Link to="/public/register">
+                  Register First
+                </Link>
               </Button>
             </Form.Item>
           </Form>
@@ -78,5 +87,3 @@ function SignIn() {
   );
   
 }
-
-export default SignIn;

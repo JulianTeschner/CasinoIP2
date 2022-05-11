@@ -4,7 +4,7 @@ import { Layout } from "antd";
 export default function PublicLayout() {
     return (
         <Layout>
-            <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+            <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                 <div style={{ flexGrow: 1 }}>
                     <Layout.Content>
                         <PublicRoutes />

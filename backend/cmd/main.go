@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	"github.com/JulianTeschner/CasinoIP2/router"
@@ -26,13 +27,18 @@ func init() {
 func main() {
 	err := godotenv.Load("../.env")
 	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+		log.Println("No .env file found, using default values")
 	}
+
 	user.NewClient()
 	defer user.Client.Disconnect(ctx)
 
 	r := router.New()
-	err = r.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	err = r.Run(":" + port)
 	if err != nil {
 		log.Fatalln(err)
 	}
