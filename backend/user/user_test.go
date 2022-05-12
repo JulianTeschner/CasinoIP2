@@ -13,7 +13,7 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	err := godotenv.Load("../.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Println("No .env file found, using default values")
 	}
