@@ -5,11 +5,9 @@ import defaultTheme from "./themes/default";
 
 function App() {
   return (
-   <div className="App">
-     <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={defaultTheme}>
        <RootRoutes />
      </ThemeProvider>
-   </div>
   );
 }
 
