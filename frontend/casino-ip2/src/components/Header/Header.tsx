@@ -5,6 +5,7 @@ import { RouteName } from '../../routes/routesnames';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import Title from 'antd/lib/typography/Title';
+import WinLoss from '../../views/winloss/WinLoss';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ export default function Header() {
                     <Link to={`${RouteName.OVERVIEW}`}>
                       Account
                     </Link>
+                  </Menu.Item>
+                  <Menu.Item key="Win/Loss">
+                    <WinLoss />
                   </Menu.Item>
                 </Menu.ItemGroup>
                 <Menu.ItemGroup>

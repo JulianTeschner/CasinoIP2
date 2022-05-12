@@ -34,7 +34,7 @@ function WinLoss() {
 
   return (
     <div className='app'>
-      <Popup trigger={<Button className="button">Show Win/Loss Overview</Button>} position="right center" modal closeOnDocumentClick>
+      <Popup trigger={<Button type='link' className="button">Win/Loss Overview</Button>} position="right center" modal closeOnDocumentClick>
       {(close: any) => (
       <div className='modal'>
         <div>
