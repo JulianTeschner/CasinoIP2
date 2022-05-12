@@ -6,7 +6,7 @@ import { RouteName } from '../../routes/routesnames';
 
 export default function Footer() {
     const [isDarkMode, setIsDarkMode] = React.useState();
-    const { switcher, currentTheme, status, themes } = useThemeSwitcher();
+    const { switcher, status, themes } = useThemeSwitcher();
 
     const toggleTheme = (isChecked:any) => {
         setIsDarkMode(isChecked);
