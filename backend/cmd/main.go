@@ -25,7 +25,9 @@ func init() {
 }
 
 func main() {
-	err := godotenv.Load(".env")
+	path, _ := os.Getwd()
+	path = path + "/.env"
+	err := godotenv.Load(path)
 	if err != nil {
 		log.Println("No .env file found, using default values")
 	}
