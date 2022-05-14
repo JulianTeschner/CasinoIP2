@@ -34,10 +34,11 @@ jobs:
     
     # - name: run test
     #   run: npm run test -- --watchAll=false --coverage
-    - uses: artiomtr/jest-coverage-report-action@v2
+    - name: test coverage
+      uses: artiomtr/jest-coverage-report-action@v2
       with:
         skip-step: install
-        working-directory: frontend/casino-ip2
+        working-directory: ./frontend/casino-ip2
         github-token: ${{ secrets.GITHUB_TOKEN }}
         test-script: npm run test -- --watchAll=false --coverage --testLocationInResults --json --outputFile="report.json"
         threshold: 75
