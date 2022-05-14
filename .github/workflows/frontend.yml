@@ -51,8 +51,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
     
-    - name: run test
-      run: npm run test -- --watchAll=false --coverage
+    # - name: run test
+    #   run: npm run test -- --watchAll=false --coverage
+    - uses: artiomtr/jest-coverage-report-action@v2
+      with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          threshold: 75
 
   #TODO
   #deploy:
