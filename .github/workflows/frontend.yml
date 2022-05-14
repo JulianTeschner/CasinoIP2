@@ -1,0 +1,36 @@
+name: frontend pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run: 
+        working-directory: frontend/casino-ip2
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3.1.1
+      with: 
+        node-version: 18.x
+    
+    - name: install node dependencies
+      run: npm install
+    
+    - name: run test
+      run: npm run test -- --watchAll=false --coverage
