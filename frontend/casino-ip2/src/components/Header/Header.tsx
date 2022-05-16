@@ -12,7 +12,7 @@ export default function Header() {
     return(
       <Row>
         <Col span={9}>
-          <Link to={`${RouteName.OVERVIEW}`}>
+          <Link to={`${RouteName.OVERVIEW}`} data-testId="header-link">
             <PageHeader
               title="Casino"
               className="site-page-header"

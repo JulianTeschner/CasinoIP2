@@ -13,8 +13,15 @@ describe("Header", () => {
             </AllProviders>
         );
         const header = await screen.getByText(/Casino/i);
+        const headerLink = await screen.getByTestId('header-link');
         
         expect(header).toBeInTheDocument();
+
+        userEvent.click(headerLink);
+
+        const overviewHeadline = await screen.getByText(/Casino/i);
+
+        expect(overviewHeadline).toBeInTheDocument();
     });
 
     it("should render the dropdown-icon", async () => {
@@ -53,4 +60,14 @@ describe("Header", () => {
         //expect(account).toBeVisible();
         //expect(logout).toBeVisible();
     });
+
+    it("should logout the user", async() => {
+        render(
+            <AllProviders>
+                <Header />
+            </AllProviders>
+        );
+        //const logout = await screen.findByText(/Logout/i);
+        
+    })
 })

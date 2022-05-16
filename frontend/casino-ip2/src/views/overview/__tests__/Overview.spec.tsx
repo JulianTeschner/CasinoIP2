@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from "@testing-library/react";
 import Overview from "../Overview";
 import { AllProviders } from '../../../testUtils';
+import userEvent from '@testing-library/user-event';
 
 describe("Overview", () => {
 	it("should render the Overview", async () => {
@@ -37,7 +38,7 @@ describe("Overview", () => {
 		expect(findSlotmachineImage).toHaveAttribute('src','slotmaschine.jpg');
 	});
 
-	it("should navigate to the games", async () =>{
+	it("should navigate to blackjack", async () =>{
 		render(
 			<AllProviders>
 				<Overview/>
@@ -45,7 +46,29 @@ describe("Overview", () => {
 		);
 
 		const blackjackLink = screen.getByTestId('blackjack-link');
+
+		userEvent.click(blackjackLink);
+
+		const blackJackHeadline = await screen.findByText(/Blackjack/i);
+
+		expect(blackJackHeadline).toBeInTheDocument();
+
+	});
+
+	it("should navigate to slotmachine", async () =>{
+		render(
+			<AllProviders>
+				<Overview/>
+			</AllProviders>
+		);
+
 		const slotmachineLink = screen.getByTestId('slotmachine-link');
+
+		userEvent.click(slotmachineLink);
+
+		const slotmachineHeadline = await screen.findByText(/Slotmachine/i);
+		
+		expect(slotmachineHeadline).toBeInTheDocument();
 
 	});
 });
