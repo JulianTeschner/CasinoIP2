@@ -22,7 +22,7 @@ export default function Footer() {
             <Link to={`${RouteName.ABOUTUS}`}>
                 <small>Internetprogrammierung Sommersemester 2022</small>
             </Link>
-            <Switch style={{position: 'absolute', right: '20px'}} checked={isDarkMode} onChange={toggleTheme} />
+            <Switch style={{position: 'absolute', right: '20px'}} checked={isDarkMode} onChange={toggleTheme} data-testId="toggle-theme"/>
         </Row>
 
     )

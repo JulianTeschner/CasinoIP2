@@ -5,6 +5,26 @@ import { AllProviders } from "../../../testUtils";
 import auth0 from "../../../config/auth0";
 
 describe("SignIn", () => {
+	it("should render the signIn view", async () => {
+		render(
+			<AllProviders>
+				<SignIn/>
+			</AllProviders>
+		);
+		
+		const headline = await screen.findByText(/Login/i);
+		const username = await screen.findByTestId("signIn-email");
+		const password = await screen.findByTestId("signIn-password");
+		const submit = await screen.findByRole("button", { name: /submit/i });
+		const registerFirst = await screen.findByRole("button", { name: /register first/i });
+
+		expect(headline).toBeInTheDocument();
+		expect(username).toBeInTheDocument();
+		expect(password).toBeInTheDocument();
+		expect(submit).toBeInTheDocument();
+		expect(registerFirst).toBeInTheDocument();
+	});
+
 	it("should enable a user login", async () => {
 		const spy = jest
 			.spyOn(auth0.client, "login")
@@ -16,14 +36,10 @@ describe("SignIn", () => {
 			</AllProviders>
 		);
 		
-		const headline = await screen.findByText(/Login/i);
-		const username:any = await screen.findAllByLabelText(/Username/i);
+		const username:any = await screen.findAllByLabelText(/Email/i);
 		const password:any = await screen.findAllByLabelText(/Password/i);
 		const submit = await screen.findByRole("button", { name: /submit/i });
-		const registerFirst = await screen.findByRole("button", { name: /register first/i });
 
-		expect(headline).toBeInTheDocument();
-		expect(registerFirst).toBeInTheDocument();
 		userEvent.type(username, "test");
 		userEvent.type(password, "test");
 		userEvent.click(submit);
@@ -46,14 +62,10 @@ describe("SignIn", () => {
 			</AllProviders>
 		);
 
-		const headline = await screen.findByText(/Login/i);
-		const username:any = await screen.findAllByLabelText(/Username/i);
+		const username:any = await screen.findAllByLabelText(/Email/i);
 		const password:any = await screen.findAllByLabelText(/Password/i);
 		const submit = await screen.findByRole("button", { name: /submit/i });
-		const registerFirst = await screen.findByRole("button", { name: /register first/i });
 
-		expect(headline).toBeInTheDocument();
-		expect(registerFirst).toBeInTheDocument();
 		userEvent.type(username, "test");
 		userEvent.type(password, "test");
 		userEvent.click(submit);
