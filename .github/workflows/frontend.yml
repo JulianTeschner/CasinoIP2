@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run: 
@@ -30,7 +30,10 @@ jobs:
         node-version: 18.x
     
     - name: install node dependencies
-      run: npm install --force
+      run: npm install 
+      
+    - name: build app
+      run: npm run build
     
     # - name: run test
     #   run: npm run test -- --watchAll=false --coverage
