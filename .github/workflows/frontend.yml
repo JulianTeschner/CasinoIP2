@@ -7,11 +7,37 @@ on:
     branches: [ main ]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run: 
+        working-directory: ./frontend/casino-ip2
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: test coverage
+      uses: artiomtr/jest-coverage-report-action@v2
+      with:
+        working-directory: ./frontend/casino-ip2
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        test-script: npm run test -- --watchAll=false --coverage --testLocationInResults --json --outputFile="report.json"
+        threshold: 50
+
   build:
     runs-on: ubuntu-latest
     defaults:
       run: 
-        working-directory: frontend/casino-ip2
+        working-directory: ./frontend/casino-ip2
+
+    needs: test
 
     steps:
     - name: checkout
@@ -32,36 +58,25 @@ jobs:
     - name: install node dependencies
       run: npm install --force
       
-    #- name: build app
-    #  run: npm run build
-    
-    # - name: run test
-    #   run: npm run test -- --watchAll=false --coverage
+    - name: build app
+      run: npm run build
 
-  test:
+  deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: ./frontend/casino-ip2
-    
     needs: build
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
 
-    - name: test coverage
-      uses: artiomtr/jest-coverage-report-action@v2
-      with:
-        working-directory: ./frontend/casino-ip2
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        test-script: npm run test -- --watchAll=false --coverage --testLocationInResults --json --outputFile="report.json"
-        threshold: 50
+    steps:
+      - uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_KEY}}  
+          heroku_app_name: "casino-frontend1"
+          heroku_email: ${{secrets.HEROKU_MAIL}} 
+          buildpack: "https://github.com/mars/create-react-app-buildpack"
+          appdir: "./frontend/casino-ip2"
+          usedocker: false
+
+    
 
   #TODO
   #deploy:
