@@ -33,7 +33,7 @@ jobs:
       run: npm install --force
     
     - name: run test
-      run: npm run test #-- --watchAll=false --coverage
+      run: npm run test -- --env=jsdom --watchAll=false --coverage
     
     - name: check test coverage
       uses: codecov/codecov-action@v2
