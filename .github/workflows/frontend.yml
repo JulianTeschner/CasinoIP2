@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     defaults:
       run: 
@@ -31,38 +31,24 @@ jobs:
     
     - name: install node dependencies
       run: npm install --force
-      
+    
+    - name: test coverage
+      uses: artiomtr/jest-coverage-report-action@v2
+      with:
+        skip-step: install
+        working-directory: ./frontend/casino-ip2/
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        test-script: npm run test -- --watchAll=false --coverage --testLocationInResults --json --outputFile="report.json"
+        threshold: 75
+
     #- name: build app
     #  run: npm run build
     
     # - name: run test
     #   run: npm run test -- --watchAll=false --coverage
 
-  test:
-    runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: ./frontend/casino-ip2
-    
-    needs: build
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
 
-    - name: test coverage
-      uses: artiomtr/jest-coverage-report-action@v2
-      with:
-        skip-step: install
-        working-directory: ./frontend/casino-ip2
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        test-script: npm run test -- --watchAll=false --coverage --testLocationInResults --json --outputFile="report.json"
-        threshold: 75
+    
 
   #TODO
   #deploy:
