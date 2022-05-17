@@ -7,63 +7,63 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: ./frontend/casino-ip2
+  # test:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run: 
+  #       working-directory: ./frontend/casino-ip2
 
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+  #   steps:
+  #   - name: checkout
+  #     uses: actions/checkout@v3
+  #   - uses: actions/cache@v3
+  #     with:
+  #       path: ~/.npm
+  #       key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #       restore-keys: |
+  #         ${{ runner.os }}-node-
 
-    - name: test coverage
-      uses: artiomtr/jest-coverage-report-action@v2
-      with:
-        working-directory: ./frontend/casino-ip2
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        test-script: npm run test -- --watchAll=false --coverage --testLocationInResults --json --outputFile="report.json"
-        threshold: 50
+  #   - name: test coverage
+  #     uses: artiomtr/jest-coverage-report-action@v2
+  #     with:
+  #       working-directory: ./frontend/casino-ip2
+  #       github-token: ${{ secrets.GITHUB_TOKEN }}
+  #       test-script: npm run test -- --watchAll=false --coverage --testLocationInResults --json --outputFile="report.json"
+  #       threshold: 50
 
-  build:
-    runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: ./frontend/casino-ip2
+  # build:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run: 
+  #       working-directory: ./frontend/casino-ip2
 
-    needs: test
+  #   needs: test
 
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
+  #   steps:
+  #   - name: checkout
+  #     uses: actions/checkout@v3
 
-    - uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+  #   - uses: actions/cache@v3
+  #     with:
+  #       path: ~/.npm
+  #       key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #       restore-keys: |
+  #         ${{ runner.os }}-node-
 
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v3.1.1
-      with: 
-        node-version: 18.x
+  #   - name: Setup Node.js environment
+  #     uses: actions/setup-node@v3.1.1
+  #     with: 
+  #       node-version: 18.x
     
-    - name: install node dependencies
-      run: npm install --force
+  #   - name: install node dependencies
+  #     run: npm install --force
       
-    - name: build app
-      run: npm run build
+  #   - name: build app
+  #     run: npm run build
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+   #needs: build
 
     steps:
       - uses: actions/checkout@v3
