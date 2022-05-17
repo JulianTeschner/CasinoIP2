@@ -32,8 +32,8 @@ jobs:
     - name: install node dependencies
       run: npm install --force
       
-    - name: build app
-      run: npm run build
+    #- name: build app
+    #  run: npm run build
     
     # - name: run test
     #   run: npm run test -- --watchAll=false --coverage
