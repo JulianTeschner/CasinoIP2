@@ -30,7 +30,7 @@ jobs:
         node-version: 18.x
     
     - name: install node dependencies
-      run: npm install --force
+      run: npm install
     
     - name: run test
       run: npm run test -- --env=jsdom --watchAll=false --coverage
