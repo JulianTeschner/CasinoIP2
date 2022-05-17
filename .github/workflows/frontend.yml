@@ -28,7 +28,7 @@ jobs:
     
     - name: install node dependencies
       working-directory: ./frontend/casino-ip2
-      run: npm install
+      run: npm install --legacy-peer-deps
     
     - name: run test
       run: npm run test -- --env=jsdom --watchAll=false --coverage
