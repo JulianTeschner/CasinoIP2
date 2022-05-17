@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run: 
-        working-directory: frontend/casino-ip2
+        working-directory: ./frontend/casino-ip2
 
     steps:
     - name: checkout
@@ -32,34 +32,17 @@ jobs:
     - name: install node dependencies
       run: npm install --force
     
-    # - name: run test
-    #   run: npm run test -- --watchAll=false --coverage
-
-  test:
-    runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: frontend/casino-ip2
+    - name: run test
+      run: npm run test -- --watchAll=false --coverage
     
-    needs: build
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    - uses: actions/cache@v3
+    - name: check test coverage
+      uses: codecov/codecov-action@v2
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
-    - name: test coverage
-      uses: artiomtr/jest-coverage-report-action@v2
-      with:
-        skip-step: install
-        working-directory: ./frontend/casino-ip2
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        test-script: npm run test -- --watchAll=false --coverage --testLocationInResults --json --outputFile="report.json"
-        threshold: 75
+        token: ${{ secrets.CODECOV_TOKEN }} 
+        files: ./coverage/clover.xml # optional
+        flags: unittests # optional
+        name: codecov-umbrella # optional
+  
 
   #TODO
   #deploy:
