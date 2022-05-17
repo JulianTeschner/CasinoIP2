@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: ./frontend/casino-ip2
 
     steps:
     - name: checkout
@@ -30,6 +27,7 @@ jobs:
         node-version: 18.x
     
     - name: install node dependencies
+      working-directory: ./frontend/casino-ip2
       run: npm install
     
     - name: run test
@@ -42,6 +40,10 @@ jobs:
         files: ./coverage/clover.xml # optional
         flags: unittests # optional
         name: codecov-umbrella # optional
+
+    - name: build app
+      working-directory: ./frontend/casino-ip2
+      run: npm run build
   
 
   #TODO
