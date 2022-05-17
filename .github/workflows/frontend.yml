@@ -30,7 +30,7 @@ jobs:
         node-version: 18.x
     
     - name: install node dependencies
-      run: npm install 
+      run: npm install --force
       
     - name: build app
       run: npm run build
