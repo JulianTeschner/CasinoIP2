@@ -48,7 +48,6 @@ describe("Header", () => {
         
         userEvent.hover(menuIcon);
         
-        //const balance = await screen.getByText(/Balance/i);
         //const account = await screen.getByText(/Account/i);
         //const logout = await screen.getByText(/Logout/i);
 
@@ -56,7 +55,6 @@ describe("Header", () => {
 
         //await waitFor(() => screen.getByText('Overview'));
         
-        //expect(balance).toBeInTheDocument();
         //expect(account).toBeVisible();
         //expect(logout).toBeVisible();
     });
