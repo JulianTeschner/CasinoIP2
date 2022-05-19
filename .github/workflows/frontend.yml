@@ -62,9 +62,9 @@ jobs:
     - name: coverage
       uses: codecov/codecov-action@v2
       with:
-        directory: ./frontend/casino-ip2
+        directory: ./frontend/casino-ip2/coverage
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage/clover.xml
+        file: clover.xml
         flags: unittests # optional
         name: codecov-umbrella # optional
 
