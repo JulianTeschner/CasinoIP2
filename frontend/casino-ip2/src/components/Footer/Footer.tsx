@@ -1,28 +1,17 @@
 import { Row, Switch } from 'antd';
-import React from 'react';
-import { useThemeSwitcher } from 'react-css-theme-switcher';
 import { Link } from 'react-router-dom';
 import { RouteName } from '../../routes/routesnames';
+import { useTheme } from '../../themes/use-theme';
 
 export default function Footer() {
-    const [isDarkMode, setIsDarkMode] = React.useState();
-    const { switcher, status, themes } = useThemeSwitcher();
-
-    const toggleTheme = (isChecked:any) => {
-        setIsDarkMode(isChecked);
-        switcher({ theme: isChecked ? themes.dark: themes.light });
-    };
-
-    if (status === "loading"){
-        return null;
-    }
+    const [darkMode, setDarkMode] = useTheme();
 
     return (
         <Row justify="center">
             <Link to={`${RouteName.ABOUTUS}`}>
                 <small>Internetprogrammierung Sommersemester 2022</small>
             </Link>
-            <Switch style={{position: 'absolute', right: '20px'}} checked={isDarkMode} onChange={toggleTheme} data-testId="toggle-theme"/>
+            <Switch style={{position: 'absolute', right: '20px'}} checked={darkMode} onChange={setDarkMode} data-testId="toggle-theme"/>
         </Row>
 
     )

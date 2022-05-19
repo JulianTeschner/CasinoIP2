@@ -20,7 +20,6 @@
     "craco-less": "^2.0.0",
     "react": "^18.0.0",
     "react-3d-cube": "^1.0.5",
-    "react-css-theme-switcher": "^0.3.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
