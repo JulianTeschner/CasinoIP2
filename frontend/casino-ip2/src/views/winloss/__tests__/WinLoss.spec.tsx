@@ -16,7 +16,7 @@ describe('win/loss overview', () => {
       
       render(<WinLoss />);
 
-      const btn = await screen.findByText('Show Win/Loss Overview');
+      const btn = await screen.findByText('Win/Loss Overview');
 
       btn.click();
 
@@ -34,7 +34,7 @@ describe('win/loss overview', () => {
     it('should show loading data because there is no connection', async () => {
       render(<WinLoss />);
       
-      const btn = await screen.findByText('Show Win/Loss Overview');
+      const btn = await screen.findByText('Win/Loss Overview');
 
       btn.click();
 
