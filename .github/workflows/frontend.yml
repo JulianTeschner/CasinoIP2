@@ -68,8 +68,8 @@ jobs:
         flags: unittests # optional
         name: codecov-umbrella # optional
 
-    - name: build app
-      run: npm run build
+    # - name: build app
+    #   run: npm run build
 
   
   deploy:
