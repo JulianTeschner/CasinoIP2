@@ -32,6 +32,12 @@ describe('win/loss overview', () => {
     });
 
     it('should show loading data because there is no connection', async () => {
+      const fetchrespone = {};
+      
+      global.fetch = jest.fn().mockReturnValue(Promise.resolve({
+        json: () => Promise.reject(fetchrespone)
+      }));
+      
       render(<WinLoss />);
       
       const btn = await screen.findByText('Win/Loss Overview');
