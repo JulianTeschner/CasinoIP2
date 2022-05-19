@@ -19,6 +19,7 @@ function Logout() {
                         </div>
                         <div data-testId="logout-text"> Do you really want to logout from the casino-app? </div>
                         <Button 
+                            data-testId="logout-button"
                             onClick={  async () => {
                             localStorage.removeItem("accessToken");
                             navigate('/public/home');
