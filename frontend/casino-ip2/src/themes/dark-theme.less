@@ -1,6 +1,7 @@
 @import "~antd/dist/antd.dark.less";
 
 @primary-color: #bfbfbf;
+@font-color-secondary: rgba(0,0,0,0.85);
 
 @component-background: #303030;
 @body-background: #303030;
@@ -13,11 +14,11 @@
 @table-header-sort-active-bg: #424242;
 
 .modal {
-    color: rgba(0,0,0,0.85);
+    color: @font-color-secondary;
     div, h1, h2, h3, h4, h5, h6, div h1, div h2, div h3, button span, button {
-        color: rgba(0,0,0,0.85);
+        color: @font-color-secondary;
     }
 }
 input {
-    color: rgba(0,0,0,0.85);
+    color: @font-color-secondary;
 }
