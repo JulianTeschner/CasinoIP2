@@ -4,23 +4,30 @@ import Blackjack from "../Blackjack";
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import renderer from 'react-test-renderer';
+import axios from "axios";
+
+jest.mock("axios");
+
 
 describe("blackjack game", () => {
 
 	beforeEach(() => {
-		const fetchrespone = {
+		const res = {
 			"balance": {
 			  "Amount": 100,
 			  "LastDeposit": 50
 		  }};
 		  
-		  global.fetch = jest.fn().mockReturnValue(Promise.resolve({
-			json: () => Promise.resolve(fetchrespone)
-		  }));
+		  axios.mockResolvedValue({ data: res,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+      });
 	})
 
-	it("renders the blackjack game", async () => {
-		render(<Blackjack/>);
+	it("renders the blackjack game", async () => {    
+    render(<Blackjack/>);
 		
 		const balance = await screen.findByTestId('balance');
 		const betform = await screen.findByTestId('bet-form');
@@ -33,9 +40,8 @@ describe("blackjack game", () => {
 		expect(betform).toBeInTheDocument();		
 	});
 
-	it("tests the 'bet and play' button", async () => {
-		render(<Blackjack/>);
-
+	it("tests the 'bet and play' button", async () => {    
+    render(<Blackjack/>);
 		
 		const btnplay = await screen.findByTestId('play');
 		const input = await screen.findByTestId('bet-input');
@@ -50,8 +56,8 @@ describe("blackjack game", () => {
 		expect(btnhit).toBeInTheDocument();
 	});
 
-	it('should the player and dealers hand', async () => {
-		render(<Blackjack/>);
+	it('should the player and dealers hand', async () => {    
+    render(<Blackjack/>);
 
 		const btnplay = await screen.findByTestId('play');
 		const input = await screen.findByTestId('bet-input');
@@ -68,8 +74,8 @@ describe("blackjack game", () => {
 		expect(overlayDealer).toBeInTheDocument();
 	});
 
-	it('should render a status msg if game won or lost', async () => {
-		render(<Blackjack/>);
+	it('should render a status msg if game won or lost', async () => {    
+    render(<Blackjack/>);
 
 		const btnplay = await screen.findByTestId('play');
 		const input = await screen.findByTestId('bet-input');

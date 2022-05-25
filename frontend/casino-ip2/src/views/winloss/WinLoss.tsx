@@ -22,8 +22,8 @@ function WinLoss() {
               method: 'GET',
               headers: process.env.NODE_ENV === 'development' ? headerGetDev : headerGet,
       }).then(data => {
-        console.log(data.data);
-        setData(data)
+        console.log('data:', data.data);
+        setData(data.data)
       }).catch(err => console.log(err));
   }
 
