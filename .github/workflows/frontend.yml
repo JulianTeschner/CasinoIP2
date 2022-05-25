@@ -69,4 +69,4 @@ jobs:
         name: codecov-umbrella # optional
 
     - name: build app
-      run: npm run build
+      run: CI='' npm run build
