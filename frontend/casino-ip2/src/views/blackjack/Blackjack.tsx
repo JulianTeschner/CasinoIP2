@@ -2,15 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import { Space, Button } from 'antd';
 import './style/Blackjack.css';
 import axios from 'axios';
-
-const URL = process.env.NODE_ENV === 'development' ? 
-      'http://localhost:8080/user/' :
-      'https://casinoip2.herokuapp.com/user/';
+import { URL_ENDPOINT } from '../../config/env';
 
 const headerGetDev = {
   'Access-Control-Allow-Origin': '*',
   'Content-Type': 'application/json'
 } 
+
 const headerGet = {
   'Content-Type': 'application/json'
 }
@@ -74,7 +72,7 @@ function Blackjack() {
     }
 
     async function getBalance() {
-        await axios(URL + user.username, {
+        await axios(URL_ENDPOINT + user.username, {
             method: 'GET',
             headers: process.env.NODE_ENV === 'development' ? headerGetDev : headerGet
         })
@@ -83,7 +81,7 @@ function Blackjack() {
     }
 
     async function patchBalance(val:any) {
-        await axios(URL + 'balance/amount/' + user.username, {
+        await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
             method: 'PATCH',
             headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
             data: new URLSearchParams({
