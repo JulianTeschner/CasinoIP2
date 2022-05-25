@@ -9,7 +9,8 @@ const envConfig = {
   export const isDev = envConfig.NODE_ENV === "development";
   export const isTest = envConfig.NODE_ENV === "test";
   export const isProd = envConfig.NODE_ENV === "production";
-  
+  export const URL_ENDPOINT = isDev === true ? "http://localhost:8080/user/" : "https://casinoip2.herokuapp.com/user/";
+
   const baseUrlArray = envConfig.API_ENDPOINT.split("/");
   export const baseUrl = `${baseUrlArray[0]}//${baseUrlArray[2]}`;
   

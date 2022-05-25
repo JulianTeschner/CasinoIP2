@@ -13,8 +13,15 @@ describe("Header", () => {
             </AllProviders>
         );
         const header = await screen.getByText(/Casino/i);
+        const headerLink = await screen.getByTestId('header-link');
         
         expect(header).toBeInTheDocument();
+
+        userEvent.click(headerLink);
+
+        const overviewHeadline = await screen.getByText(/Casino/i);
+
+        expect(overviewHeadline).toBeInTheDocument();
     });
 
     it("should render the dropdown-icon", async () => {
@@ -41,7 +48,6 @@ describe("Header", () => {
         
         userEvent.hover(menuIcon);
         
-        //const balance = await screen.getByText(/Balance/i);
         //const account = await screen.getByText(/Account/i);
         //const logout = await screen.getByText(/Logout/i);
 
@@ -49,8 +55,17 @@ describe("Header", () => {
 
         //await waitFor(() => screen.getByText('Overview'));
         
-        //expect(balance).toBeInTheDocument();
         //expect(account).toBeVisible();
         //expect(logout).toBeVisible();
     });
+
+    it("should logout the user", async() => {
+        render(
+            <AllProviders>
+                <Header />
+            </AllProviders>
+        );
+        //const logout = await screen.findByText(/Logout/i);
+        
+    })
 })

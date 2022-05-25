@@ -1,6 +1,7 @@
-import { Card, Col, Row } from "antd";
+import { Button, Card, Col, Row } from "antd";
 import Meta from "antd/lib/card/Meta";
 import Title from "antd/lib/typography/Title";
+import Popup from "reactjs-popup";
 
 function AboutUs() {
 	return (
@@ -15,36 +16,100 @@ function AboutUs() {
              
                     <Row gutter={[18,18]}>
                         <Col sm={{span:24}} md={{span:12}}>
-                            <Card hoverable
-                                cover={<img alt="person1" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person1-card"/>}>
-                                <Row justify="center">
-                                    <Meta title="Julian" />
-                                </Row>
-                            </Card>
+                            <Popup trigger={
+                                <Card hoverable
+                                    cover={<img alt="person1" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person1-card"/>}>
+                                    <Row justify="center">
+                                        <Meta title="Julian" />
+                                    </Row>
+                                </Card> 
+                            } position="right center" modal closeOnDocumentClick>
+                                {(close: any) => (
+                                    <div className='modal'>
+                                        <div>
+                                            <h1>Julian Teschner</h1>
+                                        </div>
+                                        <div>
+                                            <button className="close" onClick={close}></button>
+                                        </div>
+                                        <div data-testId="g1-text"> Hochschule für Technik Stuttgart</div>
+                                        <div data-testId="g1-text"> Studiengang: Bachelor Informatik</div>
+                                    </div>
+                                    )
+                                }
+                            </Popup>
                         </Col>
                         <Col sm={{span:24}} md={{span:12}}>
-                            <Card hoverable 
-                                cover={<img alt="person2" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person2-card"/>}>
-                                <Row justify="center">
-                                    <Meta title="Kilian" />
-                                </Row>
-                            </Card>
+                            <Popup trigger={
+                                <Card hoverable 
+                                    cover={<img alt="person2" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person2-card"/>}>
+                                    <Row justify="center">
+                                        <Meta title="Kilian" />
+                                    </Row>
+                                </Card>
+                            } position="right center" modal closeOnDocumentClick>
+                                {(close: any) => (
+                                    <div className='modal'>
+                                        <div>
+                                            <h1>Kilian Hammer</h1>
+                                        </div>
+                                        <div>
+                                            <button className="close" onClick={close}></button>
+                                        </div>
+                                        <div data-testId="g1-text"> Hochschule für Technik Stuttgart</div>
+                                        <div data-testId="g2-text"> Studiengang: Bachelor Informatik</div>
+                                    </div>
+                                    )
+                                }
+                            </Popup>
                         </Col>
                         <Col sm={{span:24}} md={{span:12}}>
-                            <Card hoverable
-                                cover={<img alt="person3" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person3-card"/>}>
-                                <Row justify="center">
-                                    <Meta title="Marco" />
-                                </Row>
-                            </Card>
+                            <Popup trigger={
+                                <Card hoverable
+                                    cover={<img alt="person3" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person3-card"/>}>
+                                    <Row justify="center">
+                                        <Meta title="Marco" />
+                                    </Row>
+                                </Card>
+                            } position="right center" modal closeOnDocumentClick>
+                                {(close: any) => (
+                                    <div className='modal'>
+                                        <div>
+                                            <h1>Marco Haas</h1>
+                                        </div>
+                                        <div>
+                                            <button className="close" onClick={close}></button>
+                                        </div>
+                                        <div data-testId="g1-text"> Hochschule für Technik Stuttgart</div>
+                                        <div data-testId="g3-text"> Studiengang: Bachelor Informatik</div>
+                                    </div>
+                                    )
+                                }
+                            </Popup>   
                         </Col>
                         <Col sm={{span:24}} md={{span:12}}>
-                            <Card hoverable 
-                                cover={<img alt="person4" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person4-card"/>}>
-                                <Row justify="center">
-                                    <Meta title="Moritz" />
-                                </Row>
-                            </Card>
+                            <Popup trigger={
+                                <Card hoverable 
+                                    cover={<img alt="person4" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person4-card"/>}>
+                                    <Row justify="center">
+                                        <Meta title="Moritz" />
+                                    </Row>
+                                </Card>
+                            } position="right center" modal closeOnDocumentClick>
+                                {(close: any) => (
+                                    <div className='modal'>
+                                        <div>
+                                            <h1>Moritz Zucker</h1>
+                                        </div>
+                                        <div>
+                                            <button className="close" onClick={close}></button>
+                                        </div>
+                                        <div data-testId="g1-text"> Hochschule für Technik Stuttgart</div>
+                                        <div data-testId="g4-text"> Studiengang: Bachelor Informatik</div>
+                                    </div>
+                                    )
+                                }
+                            </Popup>      
                         </Col>
                     </Row>
                 </Col>

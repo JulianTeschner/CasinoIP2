@@ -1,13 +1,14 @@
 import RootRoutes from "./routes/root.routes";
 import './App.less';
-import { ThemeProvider } from "@emotion/react";
-import defaultTheme from "./themes/default";
+import { ThemeProviderOwn } from "./themes/theme-provider";
 
 function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-       <RootRoutes />
-     </ThemeProvider>
+   <div className="App">
+      <ThemeProviderOwn>
+        <RootRoutes />
+      </ThemeProviderOwn>
+   </div>
   );
 }
 

@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { Alert, Button, Form, Input, message } from 'antd';
 import auth0 from '../../config/auth0';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { RouteName } from '../../routes/routesnames';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState("");
-  const location = useLocation();
-  const locationState:any = location.state;
   const navigate = useNavigate();
 
   const handleSubmit = (values:any) => {
@@ -31,8 +28,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="SignIn">
-      <div className="SignIn-Content">
+    <>
         <h2>Login</h2>
 
         {errorMessage ? (
@@ -50,10 +46,10 @@ export default function SignIn() {
             onFinish={handleSubmit}
           >
             <Form.Item 
-              label="Username"
+              label="Email"
               name="username"
-              data-testid="signIn-username"
-              rules={[{ required: true, message: "Please input your username!" }]}
+              data-testid="signIn-email"
+              rules={[{ required: true, message: "Please input your email!" }]}
             >
               <Input />
             </Form.Item>
@@ -81,9 +77,7 @@ export default function SignIn() {
               </Button>
             </Form.Item>
           </Form>
-        
-      </div>
-    </div>
+    </>
   );
   
 }

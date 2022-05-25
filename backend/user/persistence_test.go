@@ -15,13 +15,14 @@ var ctx context.Context
 
 func TestCreateClient(t *testing.T) {
 	client := Client
+	expected = createDummyUser()
 	NewClient()
 	assert.NotEqual(t, Client, client)
 }
 
 func TestGetValue(t *testing.T) {
 	teardown := addDummyUserToDb()
-	value, _ := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "Test")
+	value, _ := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
 	assert.Equal(t, expected, value)
 	defer teardown()
 }

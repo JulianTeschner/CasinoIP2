@@ -1,10 +1,29 @@
 import React, { useEffect, useRef } from 'react';
 import { Space, Button } from 'antd';
 import './style/Blackjack.css';
+import axios from 'axios';
+import { URL_ENDPOINT } from '../../config/env';
+
+const headerGetDev = {
+  'Access-Control-Allow-Origin': '*',
+  'Content-Type': 'application/json'
+} 
+
+const headerGet = {
+  'Content-Type': 'application/json'
+}
+
+const headerPatchDev = {
+  'Access-Control-Allow-Origin': '*',
+  'Content-Type': 'application/x-www-form-urlencoded'
+}
+
+const headerPatch = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+} 
 
 function Blackjack() {
     const deck = [{"Farbe": "♥", "Wert": "2", "Gespielt": 0}, {"Farbe": "♥", "Wert": "3", "Gespielt": 0}, {"Farbe": "♥", "Wert": "4", "Gespielt": 0}, {"Farbe": "♥", "Wert": "5", "Gespielt": 0}, {"Farbe": "♥", "Wert": "6", "Gespielt": 0}, {"Farbe": "♥", "Wert": "7", "Gespielt": 0}, {"Farbe": "♥", "Wert": "8", "Gespielt": 0}, {"Farbe": "♥", "Wert": "9", "Gespielt": 0}, {"Farbe": "♥", "Wert": "10", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♥", "Wert": "King", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♣", "Wert": "2", "Gespielt": 0}, {"Farbe": "♣", "Wert": "3", "Gespielt": 0}, {"Farbe": "♣", "Wert": "4", "Gespielt": 0}, {"Farbe": "♣", "Wert": "5", "Gespielt": 0}, {"Farbe": "♣", "Wert": "6", "Gespielt": 0}, {"Farbe": "♣", "Wert": "7", "Gespielt": 0}, {"Farbe": "♣", "Wert": "8", "Gespielt": 0}, {"Farbe": "♣", "Wert": "9", "Gespielt": 0}, {"Farbe": "♣", "Wert": "10", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♣", "Wert": "King", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♦", "Wert": "2", "Gespielt": 0}, {"Farbe": "♦", "Wert": "3", "Gespielt": 0}, {"Farbe": "♦", "Wert": "4", "Gespielt": 0}, {"Farbe": "♦", "Wert": "5", "Gespielt": 0}, {"Farbe": "♦", "Wert": "6", "Gespielt": 0}, {"Farbe": "♦", "Wert": "7", "Gespielt": 0}, {"Farbe": "♦", "Wert": "8", "Gespielt": 0}, {"Farbe": "♦", "Wert": "9", "Gespielt": 0}, {"Farbe": "♦", "Wert": "10", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♦", "Wert": "King", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♠", "Wert": "2", "Gespielt": 0}, {"Farbe": "♠", "Wert": "3", "Gespielt": 0}, {"Farbe": "♠", "Wert": "4", "Gespielt": 0}, {"Farbe": "♠", "Wert": "5", "Gespielt": 0}, {"Farbe": "♠", "Wert": "6", "Gespielt": 0}, {"Farbe": "♠", "Wert": "7", "Gespielt": 0}, {"Farbe": "♠", "Wert": "8", "Gespielt": 0}, {"Farbe": "♠", "Wert": "9", "Gespielt": 0}, {"Farbe": "♠", "Wert": "10", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♠", "Wert": "King", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Ace", "Gespielt": 0}];
-
     const deck_copy = useRef(deck);
     const [guthaben, setGuthaben] = React.useState<any>(' ');
     const einsatz = useRef(0);
@@ -14,10 +33,9 @@ function Blackjack() {
     const [status, setStatus] = React.useState<any>('');
     const showUI = useRef(false);
     const dealerPick = useRef(false);
-    
-
+  
     // test
-    const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTc3NjI4MCwiZXhwIjoxNjUxODYyNjgwLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.Oau7zdJbfXkdV5kQdNY74tGaSmYI8PLucOlDFm3GA1ycvFFXhfHt8vuupgBOCI2DJk6eB4Qu2JOZPBHSnu0A8V_ZCGf20hx9QbGAgWiKi8ULdAUF_6e9mAmXyc2lmeLdZTD5O0lJKAi3lJtRMXdcpRET8UnECLILWa-NS8vzETE5Suozg9SFq7m2hXJZ2W-Uv8pjJkUq2gO1W_unMT8kXOUBoXm-uioCuMlZXX0muhqZC9oKgI1e6eb9DkQsyUhGzHAq-ajGKilVj021uXajMj2h3EFnITTk5_pljuxPhPBW8Y52LqKx7NtwzSUjQV70fWJdyfoFm5LQB6ZR_qFxgQ"});
+    const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTc3NjI4MCwiZXhwIjoxNjUxODYyNjgwLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.Oau7zdJbfXkdV5kQdNY74tGaSmYI8PLucOlDFm3GA1ycvFFXhfHt8vuupgBOCI2DJk6eB4Qu2JOZPBHSnu0A8V_ZCGf20hx9QbGAgWiKi8ULdAUF_6e9mAmXyc2lmeLdZTD5O0lJKAi3lJtRMXdcpRET8UnECLILWa-NS8vzETE5Suozg9SFq7m2hXJZ2W-Uv8pjJkUq2gO1W_unMT8kXOUBoXm-uioCuMlZXX0muhqZC9oKgI1e6eb9DkQsyUhGzHAq-ajGKilVj021uXajMj2h3EFnITTk5_pljuxPhPBW8Y52LqKx7NtwzSUjQV70fWJdyfoFm5LQB6ZR_qFxgQ"});   
 
     function addCards(cards:any):number {
         var sum = 0;
@@ -54,32 +72,22 @@ function Blackjack() {
     }
 
     async function getBalance() {
-        await fetch('http://localhost:8080/user/' + user.username, {
+        await axios(URL_ENDPOINT + user.username, {
             method: 'GET',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + user.token,
-                'Content-Type': 'application/json'
-            }
+            headers: process.env.NODE_ENV === 'development' ? headerGetDev : headerGet
         })
-        .then(response => response.json())
-        .then(data => setGuthaben(data.balance.Amount))
+        .then(data => setGuthaben(data.data.balance.Amount))
         .catch(error => console.log(error));
     }
 
     async function patchBalance(val:any) {
-        await fetch('http://localhost:8080/user/balance/amount/' + user.username, {
+        await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
             method: 'PATCH',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Authorization': 'Bearer ' + user.token,
-                'Content-Type': 'application/x-www-form-urlencoded'
-                },
-            body: new URLSearchParams({
+            headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
+            data: new URLSearchParams({
                 'balance.amount': val
             })
-        }).then(response => response.json())
-        .then(data => console.log(data))
+        }).then(data => console.log(data.data))
         .catch(error => console.log(error));
     }
 
