@@ -6,6 +6,8 @@ on:
     branches: [main]
     types: 
       - completed
+env:
+  CI: false
 
 jobs:
   deploy:
