@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { Alert, Button, Form, Input, message } from 'antd';
 import auth0 from '../../config/auth0';
 import { Link, useNavigate } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+import { useUserStore } from '../../config/zustand';
 
 export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const addUser = useUserStore((state:any) => state.addUser);
 
   const handleSubmit = (values:any) => {
     auth0.client.login(
@@ -22,6 +25,11 @@ export default function SignIn() {
         message.success("Login successful");
         localStorage.setItem("accessToken", authResult.accessToken);
 
+        var idToken: any = authResult.idToken;
+        var decodedIdToken:any = jwtDecode(idToken);
+        
+        addUser(decodedIdToken.email, decodedIdToken.nickname);
+        
         navigate("/overview");
       }
     );

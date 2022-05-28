@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Space, Button } from 'antd';
 import Popup from 'reactjs-popup';
 import { useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../config/zustand';
 
 function Logout() {
     const navigate = useNavigate();
+    const removeUser = useUserStore((state:any) => state.removeUser);
 
     return (
         <div className='app'>
@@ -22,6 +24,9 @@ function Logout() {
                             data-testId="logout-button"
                             onClick={  async () => {
                             localStorage.removeItem("accessToken");
+                            
+                            removeUser();
+                            
                             navigate('/public/home');
                             }
                         }>
