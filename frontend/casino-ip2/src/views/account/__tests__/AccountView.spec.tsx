@@ -2,10 +2,13 @@ import React from 'react';
 import { render, screen } from "@testing-library/react";
 import Account from "../AccountView";
 import { AllProviders } from '../../../testUtils';
+import axios from 'axios';
+
+jest.mock("axios");
 
 describe("AboutUs", () => {
 	it("it should render the account overview", async () => {
-        const fetchrespone = {
+        const res = {
             "user": {
               "FirstName": "Max",
               "LastName": "Mustermann",
@@ -18,9 +21,12 @@ describe("AboutUs", () => {
           }
         };
           
-        global.fetch = jest.fn().mockReturnValue(Promise.resolve({
-          json: () => Promise.resolve(fetchrespone)
-        }));
+        axios.mockResolvedValue({ data: res,
+          status: 200,
+          statusText: "OK",
+          headers: {},
+          config: {},
+        });
 
 		render(
 			<AllProviders>
@@ -57,6 +63,7 @@ describe("AboutUs", () => {
     });
 
     it('should show loading data because there is no connection', async () => {
+        axios.mockRejectedValue({});
         render(<Account />);
         
         const btn = await screen.findByText('Account');
