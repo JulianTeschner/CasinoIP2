@@ -1,12 +1,11 @@
 import { Menu, Row, PageHeader, Col, Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RouteName } from '../../routes/routesnames';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import Title from 'antd/lib/typography/Title';
 import WinLoss from '../../views/winloss/WinLoss';
 import Logout from '../../views/logout/Logout';
+import Account from '../../views/account/AccountView';
 
 export default function Header() {
     return(
@@ -28,9 +27,7 @@ export default function Header() {
                     <WinLoss />
                   </Menu.Item>
                   <Menu.Item key="Account">
-                    <Link to={`${RouteName.OVERVIEW}`}>
-                      Account
-                    </Link>
+                    <Account />
                   </Menu.Item>
                 </Menu.ItemGroup>
                 <Menu.ItemGroup>
