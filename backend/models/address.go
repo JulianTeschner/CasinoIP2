@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 // import "go.mongodb.org/mongo-driver/bson"
 
 type Address struct {
@@ -9,6 +11,6 @@ type Address struct {
 	Zip    string `bson:"zip, omitempty" json:"zip"`
 }
 
-// func (address Address) String() string {
-// 	return fmt.Sprintf("%s\n%s\n%s\n%s\n", address.Street, address.City, address.State, address.Zip)
-// }
+func (address Address) String() string {
+	return fmt.Sprintf("%s\n%s\n%s\n%s\n", address.Street, address.City, address.State, address.Zip)
+}

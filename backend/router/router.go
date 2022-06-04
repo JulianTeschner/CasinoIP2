@@ -24,6 +24,7 @@ func New() *gin.Engine {
 		userGroup.GET("/:name", user.GetUserHandler)
 		userGroup.PATCH("/balance/amount/:name", user.PatchUserBalanceHandler)
 		userGroup.PATCH("/balance/lastdeposit/:name", user.PatchUserLastDepositHandler)
+		userGroup.PATCH("/streak/:name", user.PatchLoginStreakHandler)
 		userGroup.POST("", user.PostUserHandler)
 		userGroup.DELETE("/:name", user.DeleteUserHandler)
 	}

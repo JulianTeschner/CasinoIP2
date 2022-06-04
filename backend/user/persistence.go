@@ -100,3 +100,34 @@ func UpdateUserBalance(database string,
 	}
 	return result, nil
 }
+
+// UpdateLoginStreak updates a user's streak.
+func UpdateLoginStreak(database string,
+	collection string,
+	key string,
+	value string) (*mongo.UpdateResult, error) {
+
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	user, err := GetUser(database, collection, key, value)
+	if err != nil {
+		log.Println("User not found: ", err)
+		return nil, err
+	}
+
+	var result *mongo.UpdateResult
+	if user.LastLogin.Format("2006-01-02") != time.Now().AddDate(0, 0, -1).Format("2006-01-02") {
+		result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"last_login": time.Now().Format("01-02-2006"), "login_streak": 1}})
+		if err != nil {
+			log.Println("Update failed: ", err)
+			return result, err
+		}
+	} else {
+		result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"last_login": time.Now().Format("01-02-2006"), "login_streak": user.LoginStreak + 1}})
+		if err != nil {
+			return result, err
+		}
+	}
+
+	return result, nil
+}
