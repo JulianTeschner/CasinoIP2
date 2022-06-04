@@ -88,3 +88,17 @@ func PatchUserLastDepositHandler(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, result)
 }
+
+func PatchLoginStreakHandler(c *gin.Context) {
+
+	log.Println("PatchWinStreakHandler")
+	name := c.Param("name")
+	c.Request.ParseForm()
+
+	result, err := UpdateLoginStreak(os.Getenv("MONGO_INITDB_ROOT_DATABASE"), "users", "username", name)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, result)
+}

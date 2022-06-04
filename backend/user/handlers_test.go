@@ -25,6 +25,7 @@ func setupHandlersTest() func() {
 		userGroup.GET("/:name", GetUserHandler)
 		userGroup.PATCH("/balance/amount/:name", PatchUserBalanceHandler)
 		userGroup.PATCH("/balance/lastdeposit/:name", PatchUserLastDepositHandler)
+		userGroup.PATCH("/streak/:name", PatchLoginStreakHandler)
 		userGroup.POST("", PostUserHandler)
 		userGroup.DELETE("/:name", DeleteUserHandler)
 	}
@@ -183,4 +184,14 @@ func TestPatchUserLastDepositNoConnection(t *testing.T) {
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusNotFound, w.Code)
 	NewClient()
+}
+
+func TestPatchLoginStreakHandler(t *testing.T) {
+	w := httptest.NewRecorder()
+	teardown := addDummyUserToDb()
+	defer teardown()
+
+	req, _ := http.NewRequest("PATCH", "/user/streak/fish", nil)
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusOK, w.Code)
 }

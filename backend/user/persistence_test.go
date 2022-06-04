@@ -75,7 +75,7 @@ func TestPostUserFail(t *testing.T) {
 	assert.Error(t, err)
 }
 
-func TestPutUserBalance(t *testing.T) {
+func TestUpdateUserBalance(t *testing.T) {
 	teardown := addDummyUserToDb()
 	UpdateUserBalance(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish", "balance.amount", 500)
 	user, _ := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
@@ -83,9 +83,25 @@ func TestPutUserBalance(t *testing.T) {
 	defer teardown()
 }
 
-func TestPutUserBalanceFail(t *testing.T) {
+func TestUpdateUserBalanceFail(t *testing.T) {
 	Client.Disconnect(ctx)
 	_, err := UpdateUserBalance(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish", "balance.amount", 500)
 	assert.Error(t, err)
 	NewClient()
+}
+
+func TestUpdateUserStreak(t *testing.T) {
+	teardown := addDummyUserToDb()
+	UpdateLoginStreak(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
+	user, _ := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
+	assert.Equal(t, 4, user.LoginStreak)
+	defer teardown()
+}
+
+func TestUpdateUserStreakReset(t *testing.T) {
+	teardown := addDummyUserToDb2()
+	UpdateLoginStreak(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish2")
+	user, _ := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish2")
+	assert.Equal(t, 1, user.LoginStreak)
+	defer teardown()
 }

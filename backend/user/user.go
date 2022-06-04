@@ -2,11 +2,13 @@ package user
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
+	"time"
+
 	"github.com/JulianTeschner/CasinoIP2/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"log"
-	"time"
 )
 
 type User struct {
@@ -18,6 +20,9 @@ type User struct {
 	DateOfBirth time.Time          `bson:"date_of_birth, omitempty" json:"date_of_birth"`
 	Address     models.Address     `bson:"address, omitempty, inline" json:"address"`
 	Balance     models.Balance     `bson:"balance, omitempty, inline" json:"balance"`
+	IsActive    bool               `bson:"is_active, omitempty" json:"is_active"`
+	LastLogin   time.Time          `bson:"last_login, omitempty" json:"last_login"`
+	LoginStreak int                `bson:"login_streak, omitempty" json:"login_streak"`
 }
 
 // UnmarshalBSON is a custom bson unmarshaler for User
@@ -32,6 +37,9 @@ func (u *User) UnmarshalBSON(data []byte) error {
 		DateOfBirth string             `bson:"date_of_birth"`
 		Address     models.Address     `bson:"address"`
 		Balance     models.Balance     `bson:"balance"`
+		IsActive    bool               `bson:"is_active" `
+		LastLogin   string             `bson:"last_login"`
+		LoginStreak int                `bson:"login_streak"`
 	})
 
 	if err := bson.Unmarshal(data, decoded); err != nil {
@@ -50,6 +58,13 @@ func (u *User) UnmarshalBSON(data []byte) error {
 	u.DateOfBirth = date
 	u.Address = decoded.Address
 	u.Balance = decoded.Balance
+	u.IsActive = decoded.IsActive
+	login, err := time.Parse("01-02-2006", decoded.LastLogin)
+	if err != nil {
+		return err
+	}
+	u.LastLogin = login
+	u.LoginStreak = decoded.LoginStreak
 	return nil
 }
 
@@ -64,6 +79,9 @@ func (u *User) MarshalBSON() ([]byte, error) {
 		DateOfBirth string             `bson:"date_of_birth"`
 		Address     models.Address     `bson:"address"`
 		Balance     models.Balance     `bson:"balance"`
+		IsActive    bool               `bson:"is_active"`
+		LastLogin   string             `bson:"last_login"`
+		LoginStreak int                `bson:"login_streak"`
 	}{
 		ID:          u.ID,
 		Username:    u.Username,
@@ -73,6 +91,9 @@ func (u *User) MarshalBSON() ([]byte, error) {
 		DateOfBirth: u.DateOfBirth.Format("01-02-2006"),
 		Address:     u.Address,
 		Balance:     u.Balance,
+		IsActive:    u.IsActive,
+		LastLogin:   u.LastLogin.Format("01-02-2006"),
+		LoginStreak: u.LoginStreak,
 	})
 }
 
@@ -89,6 +110,9 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		DateOfBirth string             `json:"date_of_birth"`
 		Address     models.Address     `json:"address"`
 		Balance     models.Balance     `json:"balance"`
+		IsActive    bool               `json:"is_active"`
+		LastLogin   string             `json:"last_login"`
+		LoginStreak int                `json:"login_streak"`
 	})
 
 	if err := json.Unmarshal(data, decoded); err != nil {
@@ -111,6 +135,13 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	u.DateOfBirth = date
 	u.Address = decoded.Address
 	u.Balance = decoded.Balance
+	u.IsActive = decoded.IsActive
+	login, err := time.Parse("01-02-2006", decoded.LastLogin)
+	if err != nil {
+		return err
+	}
+	u.LastLogin = login
+	u.LoginStreak = decoded.LoginStreak
 	return nil
 }
 
@@ -124,6 +155,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 		DateOfBirth string             `json:"date_of_birth"`
 		Address     models.Address     `json:"address"`
 		Balance     models.Balance     `json:"balance"`
+		IsActive    bool               `json:"is_active"`
+		LastLogin   string             `json:"last_login"`
+		LoginStreak int                `json:"login_streak"`
 	}{
 		ID:          u.ID,
 		Username:    u.Username,
@@ -133,9 +167,19 @@ func (u *User) MarshalJSON() ([]byte, error) {
 		DateOfBirth: u.DateOfBirth.Format("01-02-2006"),
 		Address:     u.Address,
 		Balance:     u.Balance,
+		IsActive:    u.IsActive,
+		LastLogin:   u.LastLogin.Format("01-02-2006"),
+		LoginStreak: u.LoginStreak,
 	})
 }
 
-// func (user User) String() string {
-// 	return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n", user.FirstName, user.LastName, user.Email, user.DateOfBirth.Format("01-02-2006"), user.Address, user.Balance)
-// }
+func (user User) String() string {
+	return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n%s\n%d\n", user.FirstName, user.LastName,
+		user.Email,
+		user.DateOfBirth.Format("01-02-2006"),
+		user.Address,
+		user.Balance,
+		user.LastLogin.Format("01-02-2006"),
+		user.LoginStreak)
+
+}
