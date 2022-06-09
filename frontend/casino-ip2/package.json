@@ -60,5 +60,8 @@
     "@types/react-test-renderer": "^18.0.0",
     "craco-swc": "^0.5.1",
     "msw": "^0.39.2"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
