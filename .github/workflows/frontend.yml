@@ -28,7 +28,7 @@ jobs:
         node-version: 16
     
     - name: install node dependencies
-      run: npm ci
+      run: npm install --force
     
     - name: run tests
       run:  npm run test -- --coverage --update-snapshot --watchAll=false
