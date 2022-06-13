@@ -98,6 +98,15 @@ func TestUpdateUserStreak(t *testing.T) {
 	defer teardown()
 }
 
+func TestUpdateUserStreakNoChange(t *testing.T) {
+	teardown := addDummyUserToDb()
+	UpdateLoginStreak(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
+	UpdateLoginStreak(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
+	user, _ := GetUser(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish")
+	assert.Equal(t, 4, user.LoginStreak)
+	defer teardown()
+}
+
 func TestUpdateUserStreakReset(t *testing.T) {
 	teardown := addDummyUserToDb2()
 	UpdateLoginStreak(os.Getenv("MONGO_INITDB_TEST_DATABASE"), "users", "username", "fish2")
