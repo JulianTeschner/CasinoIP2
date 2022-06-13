@@ -91,7 +91,7 @@ func PatchUserLastDepositHandler(c *gin.Context) {
 
 func PatchLoginStreakHandler(c *gin.Context) {
 
-	log.Println("PatchWinStreakHandler")
+	log.Println("PatchLoginStreakHandler")
 	name := c.Param("name")
 	c.Request.ParseForm()
 
