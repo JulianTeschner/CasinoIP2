@@ -1,10 +1,15 @@
 import React from 'react';
 import { render, screen } from "@testing-library/react";
 import Register from "../register";
+import { AllProviders } from '../../../testUtils';
 
 describe("Register", () => {
 	it("renders the form for the register process", async () => {
-		render(<Register/>);
+		render(
+			<AllProviders>
+				<Register/>
+			</AllProviders>
+		);
 
 		const findHeadline = await screen.findByTestId('register-h1');
         const findFirstname = await screen.findByText('First Name');
@@ -14,6 +19,7 @@ describe("Register", () => {
 		const findState = await screen.findByText('State');
         const findBirthday = await screen.findByText('Day of birth');
 		const findEmail = await screen.findByText('E-Mail');
+		const findUsername = await screen.findByText('Username');
 		const findPassword = await screen.findByText('Password');
         const findPasswordRepeat = await screen.findByText('Confirm Password');
 		const btn = await screen.findByTestId('register-btn')
@@ -26,6 +32,7 @@ describe("Register", () => {
         expect(findState).toBeInTheDocument();
 		expect(findBirthday).toBeInTheDocument();
 		expect(findEmail).toBeInTheDocument();
+		expect(findUsername).toBeInTheDocument();
 		expect(findPassword).toBeInTheDocument();
         expect(findPasswordRepeat).toBeInTheDocument();
 		expect(btn).toBeInTheDocument();

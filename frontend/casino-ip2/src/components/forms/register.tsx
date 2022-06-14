@@ -1,10 +1,33 @@
 import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
 import Title from 'antd/lib/typography/Title';
+import axios from 'axios';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { URL_ENDPOINT } from '../../config/env';
  
 function Register() {
 
-  const handleSubmit = (values:any) => {
+  const navigate = useNavigate();
+
+  const headerPatchDev = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+  
+  const headerPatch = {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  } 
+
+  async function handleSubmit(val:any) {
+    
+    await axios(URL_ENDPOINT, {
+      method: 'POST',
+      headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
+      data: val
+    }).then(data => console.log(data))
+    .catch(error => console.log(error));
+
+    navigate("/home");
     
   };
   return (
@@ -28,7 +51,7 @@ function Register() {
             
             <Form.Item 
               label="First Name"
-              name="firstname"
+              name="first_name"
               data-testid="register-firstname"
               rules={[
                 { required: true, message: "Please input your first name!" }
@@ -139,6 +162,20 @@ function Register() {
                 {
                   required: true,
                   message: 'Please input your E-mail!',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Username"
+              name="username"
+              data-testid="register-username"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input a username!',
                 },
               ]}
             >
