@@ -2,8 +2,27 @@ import React from 'react';
 import { render, screen } from "@testing-library/react";
 import Register from "../register";
 import { AllProviders } from '../../../testUtils';
+import axios from 'axios';
 
 describe("Register", () => {
+	/*
+	beforeEach(() => {
+		const res = {
+			"user": {
+			  "Username": 'Test',
+			  "FirstName": 'First',
+			  "LastName": 'Last',
+			  "DateOfBirth": "2022-01-01",
+		  }};
+		  
+		  axios.mockResolvedValue({ data: res,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+      });
+	})
+	*/
 	it("renders the form for the register process", async () => {
 		render(
 			<AllProviders>

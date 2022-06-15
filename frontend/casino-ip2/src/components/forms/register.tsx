@@ -9,6 +9,8 @@ function Register() {
 
   const navigate = useNavigate();
 
+  const [errorMessage, setErrorMessage] = React.useState("");
+
   const headerPatchDev = {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -19,17 +21,25 @@ function Register() {
   } 
 
   async function handleSubmit(val:any) {
-    
     await axios(URL_ENDPOINT, {
       method: 'POST',
       headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
-      data: val
-    }).then(data => console.log(data))
-    .catch(error => console.log(error));
-
-    navigate("/home");
-    
+      data: new URLSearchParams({
+        'user.Username': val.Username,
+        'user.FirstName': val.FirstName,
+        'user.LastName': val.LastName,
+        'user.DateOfBirth': val.DateOfBirth,
+      })
+    }).then(data => {
+      console.log(data);
+      navigate("/home")
+    })
+    .catch(error => {
+      setErrorMessage(`Register failed. Please try again later`);
+      console.log(error)
+    });    
   };
+
   return (
       <>
         <Row>
@@ -51,7 +61,7 @@ function Register() {
             
             <Form.Item 
               label="First Name"
-              name="first_name"
+              name="FirstName"
               data-testid="register-firstname"
               rules={[
                 { required: true, message: "Please input your first name!" }
@@ -62,7 +72,7 @@ function Register() {
 
             <Form.Item
               label="Last Name"
-              name="last_name"
+              name="LastName"
               data-testid="register-lastname"
               rules={[
                 {
@@ -77,7 +87,7 @@ function Register() {
 
             <Form.Item
               label="Street" 
-              name="street"
+              name="Street"
               data-testid="register-street"
               rules={[
                 {
@@ -92,7 +102,7 @@ function Register() {
 
             <Form.Item
               label="ZIP"
-              name="zip"
+              name="Zip"
               data-testid="register-zip"
               rules={[
                 {
@@ -107,7 +117,7 @@ function Register() {
 
             <Form.Item 
               label="City"
-              name="city"
+              name="City"
               data-testid="register-city"
               rules={[
                 {
@@ -122,7 +132,7 @@ function Register() {
 
             <Form.Item
               label="State"
-              name="state"
+              name="State"
               data-testid="register-state"
               rules={[
                 {
@@ -137,7 +147,7 @@ function Register() {
 
             <Form.Item
               label="Day of birth"
-              name="dayOfBirth"
+              name="DateOfBirth"
               data-testid="register-dayOfBirth"
               rules={[
                 {
@@ -152,7 +162,7 @@ function Register() {
 
             <Form.Item
               label="E-Mail"
-              name="email"
+              name="Email"
               data-testid="register-email"
               rules={[
                 {
@@ -170,7 +180,7 @@ function Register() {
 
             <Form.Item
               label="Username"
-              name="username"
+              name="Username"
               data-testid="register-username"
               rules={[
                 {
@@ -184,7 +194,7 @@ function Register() {
 
             <Form.Item
               label="Password"
-              name="password"
+              name="Password"
               data-testid="register-password1"
               rules={[
                 {
