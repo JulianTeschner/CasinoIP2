@@ -15,8 +15,8 @@ describe("AboutUs", () => {
               "Street": "Street",
               "City": "Stuttgart",
               "State": "Germany",
-              "zip": "70174",
-              "Birthday": "01.01.2000",
+              "Zip": "70174",
+              "DateOfBirth": "01.01.2000",
               "Email": "max@mustermann.com"
           }
         };
@@ -64,7 +64,11 @@ describe("AboutUs", () => {
 
     it('should show loading data because there is no connection', async () => {
         axios.mockRejectedValue({});
-        render(<Account />);
+        render(
+          <AllProviders>
+				    <Account/>
+			    </AllProviders>          
+        );
         
         const btn = await screen.findByText('Account');
   
