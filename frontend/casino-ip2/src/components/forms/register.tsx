@@ -157,7 +157,7 @@ function Register() {
                 },
               ]}
             >
-              <DatePicker/>
+              <Input type="date"/>
             </Form.Item>
 
             <Form.Item
