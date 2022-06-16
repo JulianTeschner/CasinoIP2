@@ -1,21 +1,13 @@
 import React from 'react';
 import './style/Register.css';
-import RegistrationForm from "./Register";
+import Register from '../../components/forms/register';
 
 function RegisterView() {
 	return (
  		
-
-		<div className="content">
-			
-		<div id="container"/>
-		<RegistrationForm/>
-
-		</div>	
+		<Register/>	
 			
 	);
 }
-
-
 
 export default RegisterView;

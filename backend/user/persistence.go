@@ -116,14 +116,22 @@ func UpdateLoginStreak(database string,
 	}
 
 	var result *mongo.UpdateResult
-	if user.LastLogin.Format("2006-01-02") != time.Now().AddDate(0, 0, -1).Format("2006-01-02") {
-		result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"last_login": time.Now().Format("01-02-2006"), "login_streak": 1}})
+	if user.LastLogin.Format("2006-01-02") == time.Now().Format("2006-01-02") {
+		log.Println("User already logged in today")
+		result = &mongo.UpdateResult{
+			MatchedCount:  0,   // The number of documents matched by the filter.
+			ModifiedCount: 0,   // The number of documents modified by the operation.
+			UpsertedCount: 0,   // The number of documents upserted by the operation.
+			UpsertedID:    nil, // The _id field of the upserted document, or nil if no upsert was done.
+		}
+	} else if user.LastLogin.Format("2006-01-02") != time.Now().AddDate(0, 0, -1).Format("2006-01-02") {
+		result, err = Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"last_login": time.Now().Format("01-02-2006"), "login_streak": 1}})
 		if err != nil {
 			log.Println("Update failed: ", err)
 			return result, err
 		}
 	} else {
-		result, err := Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"last_login": time.Now().Format("01-02-2006"), "login_streak": user.LoginStreak + 1}})
+		result, err = Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"last_login": time.Now().Format("01-02-2006"), "login_streak": user.LoginStreak + 1}})
 		if err != nil {
 			return result, err
 		}

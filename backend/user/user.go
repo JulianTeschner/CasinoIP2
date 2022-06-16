@@ -2,7 +2,6 @@ package user
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"time"
 
@@ -173,13 +172,13 @@ func (u *User) MarshalJSON() ([]byte, error) {
 	})
 }
 
-func (user User) String() string {
-	return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n%s\n%d\n", user.FirstName, user.LastName,
-		user.Email,
-		user.DateOfBirth.Format("01-02-2006"),
-		user.Address,
-		user.Balance,
-		user.LastLogin.Format("01-02-2006"),
-		user.LoginStreak)
-
-}
+// func (user User) String() string {
+// 	return fmt.Sprintf("%s %s\n%s\n%s\n%s\n%s\n%s\n%d\n", user.FirstName, user.LastName,
+// 		user.Email,
+// 		user.DateOfBirth.Format("01-02-2006"),
+// 		user.Address,
+// 		user.Balance,
+// 		user.LastLogin.Format("01-02-2006"),
+// 		user.LoginStreak)
+//
+// }

@@ -40,6 +40,17 @@ function Overview() {
 								</Card>
           					</Link>
 						</Col>
+						<Col sm={{span:24}} md={{span:12}}>
+							<Link to={`${RouteName.SPORTBET}`} data-testId="sportbet-link">
+								<Card hoverable 
+									cover={<img alt="sportbet" src={require('./images/sportbet.jpg')} height="260px" data-testId="sportbet-card"/>}>
+										<Row justify="center">
+											<Meta title="Sportbet" />
+										</Row>
+										
+								</Card>
+          					</Link>
+						</Col>
 					</Row>
 				</div>
       		</Col>

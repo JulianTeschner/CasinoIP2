@@ -71,4 +71,21 @@ describe("Overview", () => {
 		expect(slotmachineHeadline).toBeInTheDocument();
 
 	});
+
+	it("should navigate to sportbet", async () =>{
+		render(
+			<AllProviders>
+				<Overview/>
+			</AllProviders>
+		);
+
+		const sportbetLink = screen.getByTestId('sportbet-link');
+
+		userEvent.click(sportbetLink);
+
+		const sportbetHeadline = await screen.findByText(/Sportbet/i);
+		
+		expect(sportbetHeadline).toBeInTheDocument();
+
+	});
 });
