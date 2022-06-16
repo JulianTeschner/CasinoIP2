@@ -19,6 +19,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_KEY}}  
           heroku_app_name: "casino-frontend1"
           heroku_email: ${{secrets.HEROKU_MAIL}} 
-          buildpack: "https://github.com/mars/create-react-app-buildpack"
           appdir: "./frontend/casino-ip2"
-          usedocker: false
+          usedocker: true
