@@ -4,6 +4,8 @@ import axios from 'axios';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { URL_ENDPOINT } from '../../config/env';
+import auth0 from '../../config/auth0';
+
  
 function Register() {
 
@@ -20,7 +22,20 @@ function Register() {
     'Content-Type': 'application/x-www-form-urlencoded'
   } 
 
+  async function auth0Submit(val:any){
+    auth0.signup({ 
+      connection: 'Username-Password-Authentication', 
+      email: val.Email, 
+      password: val.Password,
+      username: val.Username,
+    }, function (err) { 
+      console.log(err);
+      if (err) return alert('Something went wrong: ' + err); 
+        return alert('success signup without login!') 
+    });
+  }
   async function handleSubmit(val:any) {
+    auth0Submit(val);
     await axios(URL_ENDPOINT, {
       method: 'POST',
       headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
@@ -28,7 +43,12 @@ function Register() {
         'user.Username': val.Username,
         'user.FirstName': val.FirstName,
         'user.LastName': val.LastName,
+        'user.Email': val.Email,
         'user.DateOfBirth': val.DateOfBirth,
+        'user.Address.Street': val.Street,
+        'user.Address.City': val.City,
+        'user.Address.State': val.State,
+        'user.Address.Zip': val.Zip,
       })
     }).then(data => {
       console.log(data);
