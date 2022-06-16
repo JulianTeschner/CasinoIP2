@@ -3,4 +3,6 @@ export const RouteName = {
     HOME: "/home",
     OVERVIEW: "/overview",
     REGISTER: "/register",
+    SLOTMACHINE: "/slotmachine"
+    
 }

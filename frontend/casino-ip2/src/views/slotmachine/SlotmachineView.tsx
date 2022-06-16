@@ -1,6 +1,5 @@
 import React from 'react';
-import './style/Register.css';
-import SlotmachineForm from "./Slotmachine";
+import Slotmachine from "./Slotmachine";
 
 function SlotmachineView() {
 	return (
@@ -9,7 +8,7 @@ function SlotmachineView() {
 		<div className="content">
 			
 		<div id="container"/>
-		<SlotmachineForm/>
+		<Slotmachine/>
 
 		</div>	
 			

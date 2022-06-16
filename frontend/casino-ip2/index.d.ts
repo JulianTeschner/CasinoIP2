@@ -1,0 +1,1 @@
+declare module 'jquery-slotmachine/dist/slotmachine'
