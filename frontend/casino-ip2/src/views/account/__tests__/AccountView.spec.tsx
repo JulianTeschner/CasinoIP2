@@ -77,5 +77,43 @@ describe("AboutUs", () => {
         const loading = await screen.findByText("Loading Data...");
   
         expect(loading).toBeInTheDocument();
-      })
+      });
+
+      it('should delete account after button-click', async () => {
+        axios.mockRejectedValue({});
+        render(
+          <AllProviders>
+				    <Account/>
+			    </AllProviders>          
+        );
+        
+        const btn = await screen.findByText('Account');
+  
+        btn.click();
+  
+        const deleteBtn = await screen.findByText('Delete account!')
+  
+        expect(deleteBtn).toBeInTheDocument();
+
+        deleteBtn.click();
+      });
+
+      it('should lock account after button-click', async () => {
+        axios.mockRejectedValue({});
+        render(
+          <AllProviders>
+				    <Account/>
+			    </AllProviders>          
+        );
+        
+        const btn = await screen.findByText('Account');
+  
+        btn.click();
+  
+        const lockBtn = await screen.findByText('Lock account!')
+  
+        expect(lockBtn).toBeInTheDocument();
+
+        lockBtn.click();
+      });
 });    
