@@ -58,7 +58,8 @@ describe("Register", () => {
 		expect(btn).toBeInTheDocument();
 	});
 
-	it('should lock account after button-click', async () => {
+	it('should handle submit error', async () => {
+		axios.mockRejectedValue({});
         render(
         	<AllProviders>
 				<Register/>
@@ -94,7 +95,9 @@ describe("Register", () => {
 
         registerBtn.click();
 
-		await expect(screen.findByText('Login'));
+		const text = await screen.findByText("First Name");
+
+      	await expect(text).toBeInTheDocument();
       });
 });
 
