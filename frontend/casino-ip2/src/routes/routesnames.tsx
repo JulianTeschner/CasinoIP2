@@ -5,5 +5,6 @@ export const RouteName = {
     OVERVIEW: "/overview",
     BLACKJACK: "/games/blackjack",
     SLOTMACHINE: "/games/slotmachine",
+    SPORTBET: "/games/sportbet",
     ABOUTUS: "/aboutus",
 }
