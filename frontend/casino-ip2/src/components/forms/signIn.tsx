@@ -4,11 +4,24 @@ import auth0 from '../../config/auth0';
 import { Link, useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { useUserStore } from '../../config/zustand';
+import axios from 'axios';
+import { URL_ENDPOINT } from '../../config/env';
 
 export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const addUser = useUserStore((state:any) => state.addUser);
+
+  var user = useUserStore((state:any) => state.userProps)[0];
+
+  const headerPatchDev = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+  
+  const headerPatch = {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  } 
 
   const handleSubmit = (values:any) => {
     auth0.client.login(
@@ -34,6 +47,36 @@ export default function SignIn() {
       }
     );
   };
+
+  async function handleStreak (values:any) {
+    await axios(URL_ENDPOINT + 'streak/' + user.username, {
+      method: 'PATCH',
+      headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
+    }).then(data => {
+      if(data.data.streak == 1){
+        message.success("You are logged in two days in a row. You get a bonus of 2€.");
+        handleDeposit(2);
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    });
+  };
+
+  async function handleDeposit(val:any) {
+    await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
+        method: 'PATCH',
+        headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
+        data: new URLSearchParams({
+            'balance.amount': val
+        })
+      }).then(val => {
+        console.log("streak successful");
+      })
+      .catch(error => {
+        console.log(error)
+      });
+    };
 
   return (
     <>

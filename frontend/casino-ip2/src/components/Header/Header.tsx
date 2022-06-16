@@ -6,6 +6,8 @@ import 'reactjs-popup/dist/index.css';
 import WinLoss from '../../views/winloss/WinLoss';
 import Logout from '../../views/logout/Logout';
 import Account from '../../views/account/AccountView';
+import Mail from '../../views/mail/MailView';
+import Balance from '../../views/balance/Balance';
 
 export default function Header() {
     return(
@@ -28,6 +30,12 @@ export default function Header() {
                   </Menu.Item>
                   <Menu.Item key="Account">
                     <Account />
+                  </Menu.Item>
+                  <Menu.Item key="Balance">
+                    <Balance />
+                  </Menu.Item>
+                  <Menu.Item key="Mail Support">
+                    <Mail />
                   </Menu.Item>
                 </Menu.ItemGroup>
                 <Menu.ItemGroup>
