@@ -1,7 +1,6 @@
 import React, { useEffect, useRef , useState} from 'react';
 import { Space, Button } from 'antd';
 import { getAutomaticTypeDirectiveNames } from 'typescript';
-import background from './img/background-image.jpg';
 
 
 
@@ -56,9 +55,9 @@ function Slotmachine(){
         console.log('Einsatz gesetzt:', betval);
         einsatz.current = betval;
         if(gewonnen===3) {
-            setStatus("You got a big Win!");
-            setGuthaben(guthaben + betval * 10);
-            patchBalance(guthaben + betval * 10);
+            setStatus("Jackpot!");
+            setGuthaben(guthaben + betval * 100);
+            patchBalance(guthaben + betval * 100);
         } else {
             setGuthaben(guthaben - betval);
             patchBalance(guthaben - betval);
@@ -149,17 +148,13 @@ function Slotmachine(){
   return (
     
     
-    <div style={{ backgroundImage:`url(${background})`, backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    width: '100vw',
-    height: '100vh' }}className='content'>
-      <div style={{backgroundColor: 'white'}}>
+    <div className='content'>
 
       <h1>{getitem1}{getitem2}{getitem3}</h1>
+      
 
       <button onClick={spin}>Spin</button>
-      <label>Anzahl an spins: </label>
+      <label>Anzahl an spins für den Autospin: </label>
       <input type="number" name="anzahlSpins" onChange={(e)=>{
         setAnzahlSpins(e.target.valueAsNumber);
       }}/> 
@@ -176,7 +171,6 @@ function Slotmachine(){
                         </form>                    
                     </div>
     </div>
-</div>
     );
 };
 export default Slotmachine;
