@@ -6,7 +6,7 @@ import (
 	"github.com/JulianTeschner/CasinoIP2/middleware"
 	"github.com/JulianTeschner/CasinoIP2/user"
 	"github.com/gin-gonic/gin"
-
+	"github.com/gin-contrib/cors"
 	"github.com/gwatts/gin-adapter"
 )
 
@@ -16,6 +16,12 @@ func New() *gin.Engine {
 	gin.ForceConsoleColor()
 
 	r := gin.Default()
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"POST", "GET", "PATCH", "DELETE"},
+		AllowHeaders: []string{"Content-Type, access-control-allow-origin, access-control-allow-headers, Authorization"},
+	}))
 
 	// Wrap the http handler with gin adapter
 	userGroup := r.Group("/user")
