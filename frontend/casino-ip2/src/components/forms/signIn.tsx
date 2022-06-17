@@ -14,6 +14,15 @@ export default function SignIn() {
 
   var user = useUserStore((state:any) => state.userProps)[0];
 
+  const headerGetDev = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  } 
+  
+  const headerGet = {
+    'Content-Type': 'application/json'
+  }
+
   const headerPatchDev = {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -44,6 +53,7 @@ export default function SignIn() {
         addUser(decodedIdToken.email, decodedIdToken.nickname);
         
         navigate("/overview");
+        handleStreak(values);
       }
     );
   };
@@ -53,15 +63,26 @@ export default function SignIn() {
       method: 'PATCH',
       headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
     }).then(data => {
-      if(data.data.streak == 1){
-        message.success("You are logged in two days in a row. You get a bonus of 2€.");
-        handleDeposit(2);
-      }
+      checkStreak(data);
+      console.log(data)
     })
     .catch(error => {
       console.log(error)
     });
   };
+
+  async function checkStreak (values: any){
+    await axios(URL_ENDPOINT + user.username, {
+            method: 'GET',
+            headers: process.env.NODE_ENV === 'development' ? headerGetDev : headerGet
+        })
+        .then(data => {    
+          if(data.data.streak % 2 == 0){
+            message.success("You are logged in two days in a row. You get a bonus of 5 credits.");
+            handleDeposit(data.data.Balance.amount+5);
+          }
+        }).catch(error => console.log(error));
+  }
 
   async function handleDeposit(val:any) {
     await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {

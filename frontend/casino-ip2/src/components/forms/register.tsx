@@ -1,4 +1,4 @@
-import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
+import { Button, Col, DatePicker, Form, Input, message, Row } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import axios from 'axios';
 import * as React from 'react';
@@ -13,13 +13,13 @@ function Register() {
 
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  const headerPatchDev = {
+  const headerPostDev = {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/text'
   }
   
-  const headerPatch = {
-    'Content-Type': 'application/x-www-form-urlencoded'
+  const headerPost = {
+    'Content-Type': 'application/text'
   } 
 
   async function auth0Submit(val:any){
@@ -30,16 +30,15 @@ function Register() {
       username: val.Username,
     }, function (err) { 
       console.log(err);
-      if (err) return alert('Something went wrong: ' + err); 
-        return alert('success signup without login!') 
+      if (err) return message.error('Something went wrong: ' + err); 
+        return message.success('success signup without login!');
     });
   }
   async function handleSubmit(val:any) {
-    auth0Submit(val);
     await axios(URL_ENDPOINT, {
       method: 'POST',
-      headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
-      data: new URLSearchParams({
+      headers: process.env.NODE_ENV === 'development' ? headerPostDev : headerPost,
+      data: ({
         'user.Username': val.Username,
         'user.FirstName': val.FirstName,
         'user.LastName': val.LastName,
@@ -51,6 +50,7 @@ function Register() {
         'user.Address.Zip': val.Zip,
       })
     }).then(data => {
+      auth0Submit(val);
       console.log(data);
       navigate("/home")
     })

@@ -4,25 +4,25 @@ import Register from "../register";
 import { AllProviders } from '../../../testUtils';
 import axios from 'axios';
 import userEvent from '@testing-library/user-event';
+import { URL_ENDPOINT } from '../../../config/env';
 
 jest.mock("axios");
 
 describe("Register", () => {
-	const res = {
-		"user": {
-			"Username": 'Test',
-			"FirstName": 'First',
-			"LastName": 'Last',
-			"DateOfBirth": "2022-01-01",
-	  }
-	};
-	  
-	axios.mockResolvedValue({ data: res,
-	  status: 200,
-	  statusText: "OK",
-	  headers: {},
-	  config: {},
-	});
+
+		const res = {
+			"user": {
+				'user.Username': 'Username',
+				'user.FirstName': 'First',
+				'user.LastName': 'Last',
+				'user.Email': 'mail@mail.com',
+				'user.DateOfBirth': '2000-01-01',
+				'user.Address.Street': 'Street',
+				'user.Address.City': 'City',
+				'user.Address.State': 'State',
+				'user.Address.Zip': '70172',
+		  }
+		};
 	
 	it("renders the form for the register process", async () => {
 		render(
@@ -85,9 +85,9 @@ describe("Register", () => {
 		userEvent.type(findStreet, 'Street');
 		userEvent.type(findZip, '70172');
 		userEvent.type(findState, 'State');
-		userEvent.type(findBirthday, '1990-01-01');
-		userEvent.type(findEmail, 'mail@mail.de');
-		userEvent.type(findUsername, 'Test');
+		userEvent.type(findBirthday, '2000-01-01');
+		userEvent.type(findEmail, 'mail@mail.com');
+		userEvent.type(findUsername, 'Username');
 		userEvent.type(findPassword, '1234');
 		userEvent.type(findPasswordRepeat, '1234');
   
@@ -99,6 +99,19 @@ describe("Register", () => {
 
       	await expect(text).toBeInTheDocument();
       });
+/*
+	  it('should test axios success', async() =>{
+		axios.post.mockResolvedValueOnce(res);
+		render(
+			<AllProviders>
+				<Register/>
+			</AllProviders>
+		)
+		
+		expect(axios.post).toHaveBeenCalledWith(`${URL_ENDPOINT}`);
+		//expect(result).toEqual(users);
+	  });
+*/	  
 });
 
 
