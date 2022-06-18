@@ -2,6 +2,9 @@ export const RouteName = {
     INDEX: "/",
     HOME: "/home",
     REGISTER: "/register",
-    SLOTMACHINE: "/slotmachine"
-    
+    OVERVIEW: "/overview",
+    BLACKJACK: "/games/blackjack",
+    SLOTMACHINE: "/games/slotmachine",
+    SPORTBET: "/games/sportbet",
+    ABOUTUS: "/aboutus",
 }

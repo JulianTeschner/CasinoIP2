@@ -3,6 +3,7 @@ import { Space, Button } from 'antd';
 import { getAutomaticTypeDirectiveNames } from 'typescript';
 import 'animate.css';
 import { useUserStore } from '../../config/zustand';
+import axios from "axios";
 
 
 
@@ -16,29 +17,28 @@ function Slotmachine(){
 
 
   async function getBalance() {
-    await fetch('http://localhost:8080/user/' + user.username, {
+    await axios('http://localhost:8080/user/' + user.username, {
         method: 'GET',
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
-    .then(data => setGuthaben(data.balance.Amount))
+    .then(data => setGuthaben(data.data.balance.Amount))
     .catch(error => console.log(error));
   }
   
   async function patchBalance(val:any) {
-    await fetch('http://localhost:8080/user/balance/amount/' + user.username, {
+    await axios('http://localhost:8080/user/balance/amount/' + user.username, {
         method: 'PATCH',
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/x-www-form-urlencoded'
             },
-        body: new URLSearchParams({
+        data: new URLSearchParams({
             'balance.amount': val
         })
-    }).then(response => response.json())
+    })
     .then(data => console.log(data))
     .catch(error => console.log(error));
   }
