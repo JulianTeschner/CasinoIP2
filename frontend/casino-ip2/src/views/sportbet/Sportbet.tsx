@@ -94,8 +94,10 @@ function Sportbet() {
                 patchBalance(guthaben - betval);
             }
         } else if(betval === 0) {
+            message.info(`You have to set a positive amount`);
             console.log('Einsatz ist null');
         } else if(betval > guthaben) {
+            message.info(`Your amount is higher then your deposit`);
             console.log('Einsatz nicht gesetzt\nEinsatz ist höher als vorhandenes Guthaben:', betval);
         }
         
@@ -135,7 +137,7 @@ function Sportbet() {
                                         required: true,                                        
                                     },
                                     ]}>
-                                    <Input />
+                                    <Input data-testid="type-amount"/>
                                 </Form.Item>
                                 <label style={{display: 'none'}}>{randGame()}</label>                    
                                 <Form.Item 
@@ -148,7 +150,7 @@ function Sportbet() {
                                     },
                                 ]}>
                                                                     
-                                    <Input />
+                                    <Input data-testid="type-home"/>
                                 </Form.Item>
                                 <Form.Item
                                     label={away}
@@ -160,7 +162,7 @@ function Sportbet() {
                                         },
                                     ]}>
                                     
-                                    <Input />
+                                    <Input data-testid="type-away" />
                                 </Form.Item>
                             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                                 <Button data-testid='play' type="primary" htmlType='submit'>bet and go</Button>

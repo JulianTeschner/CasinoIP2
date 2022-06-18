@@ -8,7 +8,7 @@ import axios from "axios";
 
 jest.mock("axios");
 
-describe("blackjack game", () => {
+describe("sportbet game", () => {
 
 	beforeEach(() => {
 		const res = {
@@ -42,32 +42,14 @@ describe("blackjack game", () => {
 		expect(away).toBeInTheDocument();		
         expect(btn).toBeInTheDocument();
 	});
-/*
-    it("renders the sportbet game status", async () => {    
-        render(<Sportbet/>);
 
-        const setGuthaben = jest.fn();
-          
-        const amount = await screen.findByTestId('sport-amount');
-        const home = await screen.findByTestId('sport-home');
-        const away = await screen.findByTestId('sport-away');
-        const btn = await screen.findByTestId('play');
-
-		userEvent.type(amount, "10");
-        userEvent.type(home, "23");
-        userEvent.type(away, "23");
-        btn.click();
-
-        expect(setGuthaben).toBeCalled();
-	});
-*/
     it("renders the sportbet game reject", async () => {   
         axios.mockRejectedValue({}); 
         render(<Sportbet/>);
 		
-        const amount = await screen.findByTestId('sport-amount');
-        const home = await screen.findByTestId('sport-home');
-        const away = await screen.findByTestId('sport-away');
+        const amount = await screen.findByTestId('type-amount');
+        const home = await screen.findByTestId('type-home');
+        const away = await screen.findByTestId('type-away');
         const btn = await screen.findByTestId('play');
 
 		//expect((input as HTMLInputElement).value).toBe('10');
@@ -76,19 +58,17 @@ describe("blackjack game", () => {
         userEvent.type(away, "23");
         btn.click();
 
-        const balance = await screen.findByTestId('balance');
+        const balance = await screen.findByTestId('type-amount');
 
         expect(balance).toBeInTheDocument();
 	});
-/*
+
     it("should happen nothing if amount is 0", async () => {   
         render(<Sportbet/>);
-        
-        const snapshot = renderer.create(<Sportbet/>).toJSON();
-		
-        const amount = await screen.findByTestId('sport-amount');
-        const home = await screen.findByTestId('sport-home');
-        const away = await screen.findByTestId('sport-away');
+        		
+        const amount = await screen.findByTestId('type-amount');
+        const home = await screen.findByTestId('type-home');
+        const away = await screen.findByTestId('type-away');
         const btn = await screen.findByTestId('play');
 
 		//expect((input as HTMLInputElement).value).toBe('10');
@@ -96,11 +76,52 @@ describe("blackjack game", () => {
         userEvent.type(home, "23");
         userEvent.type(away, "23");
         btn.click();
-        
-        const balance = await screen.findByTestId('balance');
-        
-		expect(snapshot).toMatchSnapshot();
+
+        const text = await screen.findByText('Min. bet amount 1 Credit')
+                
+		expect(text).toBeInTheDocument();
 	});
-*/
+
+    it('should happen nothing if amount is greater than balance', async() => {
+		render(<Sportbet/>);
+		
+		const amount = await screen.findByTestId('type-amount');
+        const home = await screen.findByTestId('type-home');
+        const away = await screen.findByTestId('type-away');
+        const btn = await screen.findByTestId('play');
+
+		userEvent.type(amount, "999");
+        userEvent.type(home, "23");
+        userEvent.type(away, "23");
+        btn.click();
+        
+		const text = await screen.findByText('Min. bet amount 1 Credit')
+                
+		expect(text).toBeInTheDocument();
+	});
+
+
+    it("renders the sportbet game status", async () => {    
+        
+        const mockSetGuthaben = jest.fn();
+
+        jest.mock('react', () => ({
+            useState: (guthaben:any) => [guthaben, mockSetGuthaben]
+        }))
+        
+        render(<Sportbet/>);
+        
+        const amount = await screen.findByTestId('sport-amount');
+        const home = await screen.findByTestId('sport-home');
+        const away = await screen.findByTestId('sport-away');
+        const btn = await screen.findByTestId('play');
+
+		userEvent.type(amount, "10");
+        userEvent.type(home, "23");
+        userEvent.type(away, "23");
+        btn.click();
+
+        expect(mockSetGuthaben).toHaveBeenCalled;
+	});
 
 });
