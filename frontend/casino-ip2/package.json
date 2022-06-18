@@ -11,6 +11,7 @@
     "@types/node": "^16.11.26",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
+    "animate.css": "^4.1.1",
     "antd": "^4.19.5",
     "antd-dayjs-webpack-plugin": "^1.0.6",
     "craco-less": "^2.0.0",

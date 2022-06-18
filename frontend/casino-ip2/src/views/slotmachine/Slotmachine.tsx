@@ -1,26 +1,25 @@
 import React, { useEffect, useRef , useState} from 'react';
 import { Space, Button } from 'antd';
 import { getAutomaticTypeDirectiveNames } from 'typescript';
-
+import 'animate.css';
+import { useUserStore } from '../../config/zustand';
 
 
 
 function Slotmachine(){
 
-
-
   const einsatz = useRef(0);
   const [guthaben, setGuthaben] = React.useState<any>(' ');
-  const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTc3NjI4MCwiZXhwIjoxNjUxODYyNjgwLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.Oau7zdJbfXkdV5kQdNY74tGaSmYI8PLucOlDFm3GA1ycvFFXhfHt8vuupgBOCI2DJk6eB4Qu2JOZPBHSnu0A8V_ZCGf20hx9QbGAgWiKi8ULdAUF_6e9mAmXyc2lmeLdZTD5O0lJKAi3lJtRMXdcpRET8UnECLILWa-NS8vzETE5Suozg9SFq7m2hXJZ2W-Uv8pjJkUq2gO1W_unMT8kXOUBoXm-uioCuMlZXX0muhqZC9oKgI1e6eb9DkQsyUhGzHAq-ajGKilVj021uXajMj2h3EFnITTk5_pljuxPhPBW8Y52LqKx7NtwzSUjQV70fWJdyfoFm5LQB6ZR_qFxgQ"});
   const showUI = useRef(false);
   const [status, setStatus] = React.useState<any>('');
+  var user = useUserStore((state:any) => state.userProps)[0];
+
 
   async function getBalance() {
     await fetch('http://localhost:8080/user/' + user.username, {
         method: 'GET',
         headers: {
             'Access-Control-Allow-Origin': '*',
-            'Authorization': 'Bearer ' + user.token,
             'Content-Type': 'application/json'
         }
     })
@@ -34,7 +33,6 @@ function Slotmachine(){
         method: 'PATCH',
         headers: {
             'Access-Control-Allow-Origin': '*',
-            'Authorization': 'Bearer ' + user.token,
             'Content-Type': 'application/x-www-form-urlencoded'
             },
         body: new URLSearchParams({
@@ -58,11 +56,7 @@ function Slotmachine(){
             setStatus("Jackpot!");
             setGuthaben(guthaben + betval * 100);
             patchBalance(guthaben + betval * 100);
-        } else {
-            setGuthaben(guthaben - betval);
-            patchBalance(guthaben - betval);
-        }
-        if(gewonnen===2) {
+        } else if(gewonnen===2) {
           setStatus("You got a Win!");
           setGuthaben(guthaben + betval * 2.5);
           patchBalance(guthaben + betval * 2.5);
@@ -79,28 +73,8 @@ function Slotmachine(){
 }
 
 
+//SLOTMACHINE
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   
   const items = [
     1,2,3,4,5,6,7,8,9,0
@@ -116,9 +90,6 @@ function Slotmachine(){
       var item1 = items[Math.floor(Math.random()*items.length)];
       var item2 = items[Math.floor(Math.random()*items.length)];
       var item3 = items[Math.floor(Math.random()*items.length)];
-
-
- 
   
       if(item1===item2 && item1===item3){
         setGewonnen(3);
@@ -143,16 +114,11 @@ function Slotmachine(){
       }
     }
   
-
-  
   return (
-    
     
     <div className='content'>
 
-      <h1>{getitem1}{getitem2}{getitem3}</h1>
-      
-
+      <h1 className="animate__animated animate__bounce">{getitem1}{getitem2}{getitem3}</h1>
       <button onClick={spin}>Spin</button>
       <label>Anzahl an spins für den Autospin: </label>
       <input type="number" name="anzahlSpins" onChange={(e)=>{
