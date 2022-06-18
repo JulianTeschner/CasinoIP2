@@ -60,7 +60,7 @@ body, html {
 	background-position: right;
 	background-repeat: no-repeat;
 	justify-content: flex-end;
-	transform: translateX(-50%);
+	transform: translateX(-100%);
 }
 
 .back_panel_right {
@@ -69,7 +69,7 @@ body, html {
 	background-position: left;
 	background-repeat: no-repeat;
 	justify-content: flex-start;
-	transform: translateX(50%);
+	transform: translateX(100%);
 }
 .content {
 	align-items: center;

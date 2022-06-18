@@ -20,3 +20,6 @@ Um das Backend zu starten muss Go installiert sein (https://go.dev/dl/).
 1. In das directory backend/cmd navigieren.
 2. Starten durch das comand: go run main.go
 3. Die Enpoints der Api befinden stehen im router.go file
+
+## Frontend URL
+https://casino-frontend1.herokuapp.com/

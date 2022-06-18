@@ -3,12 +3,13 @@ on:
   workflow_run:
     # only if the app build and test successfully
     workflows: ['Run Tests']
-    branches: [main]
+    branches: ['main']
     types:
       - completed
 jobs:
   push_to_Docker_Hub:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     defaults:
       run:
         working-directory: ./backend
@@ -27,15 +28,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./
-          file: ./Dockerfile
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/casino:latest
-      # - name: Run the image in a container
-      #   uses: addnab/docker-run-action@v3
-      #   with:
-      #     image: ${{ secrets.DOCKERHUB_USERNAME }}/casino:latest
-      #     run: |
-      #       echo "runing the docker image"
-      #       echo "Testing the go app endpoints"
-      #       echo ${{ steps.docker_build.outputs.digest }}

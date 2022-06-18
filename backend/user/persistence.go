@@ -2,7 +2,9 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -13,14 +15,24 @@ import (
 var Client *mongo.Client
 
 func NewClient() {
+	log.Println("Connecting to database...")
 	var err error
-	Client, err = mongo.NewClient(options.Client().ApplyURI("mongodb://root:password@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	var url string
+	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
+
+	if os.Getenv("MONGO_INITDB_ROOT_PORT") != "" {
+		url = fmt.Sprintf("mongodb://%s:%s@%s:%s", os.Getenv("MONGO_INITDB_ROOT_USERNAME"), os.Getenv("MONGO_INITDB_ROOT_PASSWORD"), os.Getenv("MONGO_INITDB_ROOT_HOST"), os.Getenv("MONGO_INITDB_ROOT_PORT"))
+	} else {
+		url = fmt.Sprintf("mongodb+srv://%s:%s@%s", os.Getenv("MONGO_INITDB_ROOT_USERNAME"), os.Getenv("MONGO_INITDB_ROOT_PASSWORD"), os.Getenv("MONGO_INITDB_ROOT_HOST"))
+	}
+
+	clientOptions := options.Client().ApplyURI(url).SetServerAPIOptions(serverAPIOptions)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	Client, err = mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		log.Fatal(err)
-		// return client, err
 	}
-	Client.Connect(ctx)
 }
 
 // GetUser returns a user from the database. If the user does not exist, it returns an empty user.
@@ -86,5 +98,44 @@ func UpdateUserBalance(database string,
 		log.Println("Update failed: ", err)
 		return result, err
 	}
+	return result, nil
+}
+
+// UpdateLoginStreak updates a user's streak.
+func UpdateLoginStreak(database string,
+	collection string,
+	key string,
+	value string) (*mongo.UpdateResult, error) {
+
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	user, err := GetUser(database, collection, key, value)
+	if err != nil {
+		log.Println("User not found: ", err)
+		return nil, err
+	}
+
+	var result *mongo.UpdateResult
+	if user.LastLogin.Format("2006-01-02") == time.Now().Format("2006-01-02") {
+		log.Println("User already logged in today")
+		result = &mongo.UpdateResult{
+			MatchedCount:  0,   // The number of documents matched by the filter.
+			ModifiedCount: 0,   // The number of documents modified by the operation.
+			UpsertedCount: 0,   // The number of documents upserted by the operation.
+			UpsertedID:    nil, // The _id field of the upserted document, or nil if no upsert was done.
+		}
+	} else if user.LastLogin.Format("2006-01-02") != time.Now().AddDate(0, 0, -1).Format("2006-01-02") {
+		result, err = Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"last_login": time.Now().Format("01-02-2006"), "login_streak": 1}})
+		if err != nil {
+			log.Println("Update failed: ", err)
+			return result, err
+		}
+	} else {
+		result, err = Client.Database(database).Collection(collection).UpdateOne(ctx, bson.M{key: value}, bson.M{"$set": bson.M{"last_login": time.Now().Format("01-02-2006"), "login_streak": user.LoginStreak + 1}})
+		if err != nil {
+			return result, err
+		}
+	}
+
 	return result, nil
 }

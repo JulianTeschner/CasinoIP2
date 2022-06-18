@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`blackjack game nothing should happen if input 0 1`] = `
+<div
+  className="blackjack"
+>
+  <div>
+    <h1>
+      Blackjack
+    </h1>
+    <div
+      className="p-t20"
+    >
+      <div
+        data-testid="balance"
+      >
+        <b>
+          balance: 
+           
+        </b>
+      </div>
+      <div
+        className="p-t10"
+      >
+        <form
+          data-testid="bet-form"
+          onSubmit={[Function]}
+        >
+          <div
+            className="ant-space ant-space-horizontal ant-space-align-center"
+            style={Object {}}
+          >
+            <div
+              className="ant-space-item"
+              style={
+                Object {
+                  "marginRight": 8,
+                }
+              }
+            >
+              <label>
+                min. bet amount 1 Credit
+              </label>
+            </div>
+            <div
+              className="ant-space-item"
+              style={
+                Object {
+                  "marginRight": 8,
+                }
+              }
+            >
+              <input
+                data-testid="bet-input"
+                name="einsatz"
+                type="number"
+              />
+            </div>
+            <div
+              className="ant-space-item"
+              style={Object {}}
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                data-testid="play"
+                disabled={false}
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  bet and go
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`blackjack game nothing should happen if input greater than balance 1`] = `
+<div
+  className="blackjack"
+>
+  <div>
+    <h1>
+      Blackjack
+    </h1>
+    <div
+      className="p-t20"
+    >
+      <div
+        data-testid="balance"
+      >
+        <b>
+          balance: 
+           
+        </b>
+      </div>
+      <div
+        className="p-t10"
+      >
+        <form
+          data-testid="bet-form"
+          onSubmit={[Function]}
+        >
+          <div
+            className="ant-space ant-space-horizontal ant-space-align-center"
+            style={Object {}}
+          >
+            <div
+              className="ant-space-item"
+              style={
+                Object {
+                  "marginRight": 8,
+                }
+              }
+            >
+              <label>
+                min. bet amount 1 Credit
+              </label>
+            </div>
+            <div
+              className="ant-space-item"
+              style={
+                Object {
+                  "marginRight": 8,
+                }
+              }
+            >
+              <input
+                data-testid="bet-input"
+                name="einsatz"
+                type="number"
+              />
+            </div>
+            <div
+              className="ant-space-item"
+              style={Object {}}
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                data-testid="play"
+                disabled={false}
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  bet and go
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

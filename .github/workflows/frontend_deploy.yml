@@ -1,0 +1,23 @@
+name: deploy frontend to heroku
+
+on:
+  workflow_run:
+    workflows: ["frontend pipeline"]
+    branches: [main]
+    types: 
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_KEY}}  
+          heroku_app_name: "casino-frontend1"
+          heroku_email: ${{secrets.HEROKU_MAIL}} 
+          appdir: "./frontend/casino-ip2"
+          usedocker: true
