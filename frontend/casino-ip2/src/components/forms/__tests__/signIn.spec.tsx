@@ -28,7 +28,7 @@ describe("SignIn", () => {
 	it("should enable a user login", async () => {
 		const spy = jest
 			.spyOn(auth0.client, "login")
-			.mockImplementation((values:any, cb:any) => cb(null, { accessToken: "123" }));
+			.mockImplementation((values, cb) => cb(null, { accessToken: "123" }));
 
 		render(
 			<AllProviders>
@@ -36,25 +36,25 @@ describe("SignIn", () => {
 			</AllProviders>
 		);
 		
-		const username:any = await screen.findAllByLabelText(/Email/i);
-		const password:any = await screen.findAllByLabelText(/Password/i);
+		const username = await screen.findByTestId("type-mail");
+		const password = await screen.findByTestId("type-pwd");
 		const submit = await screen.findByRole("button", { name: /submit/i });
 
-		userEvent.type(username, "test");
+		userEvent.type(username, "test@test.de");
 		userEvent.type(password, "test");
 		userEvent.click(submit);
 
-		//const text = await screen.findByText(/Login successful/i);
+		const text = await screen.findByText(/Email/i);
 
-		//expect(spy).toHaveBeenCalled();
-		//expect(text).toBeInTheDocument();
-		//spy.mockRestore();
+		expect(spy).toHaveBeenCalled();
+		expect(text).toBeInTheDocument();
+		spy.mockRestore();
 	});
 
 	it("should show an error if sign in failed", async () => {
 		const spy = jest
 			.spyOn(auth0.client, "login")
-			.mockImplementation((values, cb) =>({ description: "NEIN" }));
+			.mockImplementation((values, cb) => cb({ error:'invalid_token', description:'NEIN' },null));
 
 		render(
 			<AllProviders>
@@ -62,19 +62,19 @@ describe("SignIn", () => {
 			</AllProviders>
 		);
 
-		const username:any = await screen.findAllByLabelText(/Email/i);
-		const password:any = await screen.findAllByLabelText(/Password/i);
+		const username = await screen.findByTestId("type-mail");
+		const password = await screen.findByTestId("type-pwd");
 		const submit = await screen.findByRole("button", { name: /submit/i });
 
 		userEvent.type(username, "test");
 		userEvent.type(password, "test");
 		userEvent.click(submit);
 
-		//const text = await screen.findByText(/Login failed: NEIN/i);
+		const text = await screen.findByText(/Login failed: NEIN/i);
 
-		//expect(spy).toHaveBeenCalled();
-		//expect(text).toBeInTheDocument();
-		//spy.mockRestore(); 		
+		expect(spy).toHaveBeenCalled();
+		expect(text).toBeInTheDocument();
+		spy.mockRestore(); 		
 	});
 
 });

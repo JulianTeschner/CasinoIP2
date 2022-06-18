@@ -115,7 +115,7 @@ export default function SignIn() {
               data-testid="signIn-email"
               rules={[{ required: true, message: "Please input your email!" }]}
             >
-              <Input />
+              <Input data-testId="type-mail"/>
             </Form.Item>
 
             <Form.Item 
@@ -124,7 +124,7 @@ export default function SignIn() {
               data-testid="signIn-password"
               rules={[{ required: true, message: "Please input your password!" }]}
             >
-              <Input.Password />
+              <Input.Password data-testId="type-pwd"/>
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
