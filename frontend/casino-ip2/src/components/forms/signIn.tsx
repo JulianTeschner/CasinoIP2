@@ -18,19 +18,11 @@ export default function SignIn() {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json'
   } 
-  
-  const headerGet = {
-    'Content-Type': 'application/json'
-  }
 
   const headerPatchDev = {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/x-www-form-urlencoded'
   }
-  
-  const headerPatch = {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  } 
 
   const handleSubmit = (values:any) => {
     auth0.client.login(
@@ -61,7 +53,7 @@ export default function SignIn() {
   async function handleStreak (values:any) {
     await axios(URL_ENDPOINT + 'streak/' + user.username, {
       method: 'PATCH',
-      headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
+      headers: headerPatchDev,
     }).then(data => {
       checkStreak(data);
       console.log(data)
@@ -74,7 +66,7 @@ export default function SignIn() {
   async function checkStreak (values: any){
     await axios(URL_ENDPOINT + user.username, {
             method: 'GET',
-            headers: process.env.NODE_ENV === 'development' ? headerGetDev : headerGet
+            headers: headerGetDev
         })
         .then(data => {    
           if(data.data.streak % 2 == 0){
@@ -87,7 +79,7 @@ export default function SignIn() {
   async function handleDeposit(val:any) {
     await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
         method: 'PATCH',
-        headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
+        headers: headerPatchDev,
         data: new URLSearchParams({
             'balance.amount': val
         })

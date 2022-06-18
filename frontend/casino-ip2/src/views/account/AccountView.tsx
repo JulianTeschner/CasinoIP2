@@ -17,14 +17,12 @@ function Account() {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json'
     } 
-    const headerGet = {
-      'Content-Type': 'application/json'
-    }
+
   
     async function getData() {
       await axios(URL_ENDPOINT + user.username, {
         method: 'GET',
-        headers: process.env.NODE_ENV === 'development' ? headerGetDev : headerGet,
+        headers: headerGetDev,
       }).then(data => {
         console.log('data:', data.data);
         setData(data.data)
@@ -40,7 +38,7 @@ function Account() {
     async function deleteAccount(val:any) {
       await axios(URL_ENDPOINT + user.username, {
         method: 'DELETE',
-        headers: process.env.NODE_ENV === 'development' ? headerGetDev : headerGet
+        headers: headerGetDev
         })
         .then(val => {
           localStorage.removeItem("accessToken");                  

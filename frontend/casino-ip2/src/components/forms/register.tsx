@@ -15,12 +15,8 @@ function Register() {
 
   const headerPostDev = {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/text'
+    'Content-Type': 'application/x-www-form-urlencoded'
   }
-  
-  const headerPost = {
-    'Content-Type': 'application/text'
-  } 
 
   async function auth0Submit(val:any){
     auth0.signup({ 
@@ -37,8 +33,8 @@ function Register() {
   async function handleSubmit(val:any) {
     await axios(URL_ENDPOINT, {
       method: 'POST',
-      headers: process.env.NODE_ENV === 'development' ? headerPostDev : headerPost,
-      data: ({
+      headers: headerPostDev,
+      data: new URLSearchParams({
         'user.Username': val.Username,
         'user.FirstName': val.FirstName,
         'user.LastName': val.LastName,

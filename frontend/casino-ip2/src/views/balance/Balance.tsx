@@ -17,15 +17,11 @@ function Balance() {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-    
-    const headerPatch = {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    } 
 
     async function handleDeposit(val:any) {
         await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
             method: 'PATCH',
-            headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
+            headers: headerPatchDev,
             data: new URLSearchParams({
                 'balance.amount': val.balance
             })
