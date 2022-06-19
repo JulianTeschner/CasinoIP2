@@ -50,13 +50,19 @@ function Account() {
     }
 
     async function lockAccount(val:any) {
-      
-      localStorage.removeItem("accessToken");                  
-      removeUser();
-      navigate("/home")
-        
+     const box = document.getElementById('lock-box');
+     if(box != null) {
+       box.style.display='flex';
+       box.style.zIndex='9999';
+     }
+     setTimeout(() => {
+       if(box != null) {
+         box.style.display='none';
+         box.style.zIndex='0';
+       }
+     },20000);
+
       console.log('Lock');
-      
     }
 
     return (

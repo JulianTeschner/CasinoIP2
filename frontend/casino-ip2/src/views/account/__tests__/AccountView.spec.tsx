@@ -5,6 +5,8 @@ import { AllProviders } from '../../../testUtils';
 import axios from 'axios';
 
 jest.mock("axios");
+jest.useFakeTimers();
+jest.spyOn(global, 'setTimeout');
 
 describe("AboutUs", () => {
 	it("it should render the account overview", async () => {
@@ -115,5 +117,8 @@ describe("AboutUs", () => {
         expect(lockBtn).toBeInTheDocument();
 
         lockBtn.click();
+
+        expect(setTimeout).toHaveBeenCalled();
+
       });
 });    
