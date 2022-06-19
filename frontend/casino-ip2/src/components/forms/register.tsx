@@ -15,7 +15,7 @@ function Register() {
 
   const headerPostDev = {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json'
   }
 
   async function auth0Submit(val:any){
@@ -34,7 +34,7 @@ function Register() {
     await axios(URL_ENDPOINT, {
       method: 'POST',
       headers: headerPostDev,
-      data: new URLSearchParams({
+      data: {
         'user.Username': val.Username,
         'user.FirstName': val.FirstName,
         'user.LastName': val.LastName,
@@ -44,7 +44,7 @@ function Register() {
         'user.Address.City': val.City,
         'user.Address.State': val.State,
         'user.Address.Zip': val.Zip,
-      })
+      }
     }).then(data => {
       auth0Submit(val);
       console.log(data);
