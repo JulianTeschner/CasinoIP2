@@ -4,6 +4,7 @@ import Balance from '../Balance';
 import { AllProviders } from '../../../testUtils';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
+import { EmailJSResponseStatus } from 'emailjs-com';
 
 jest.mock("axios");
 
@@ -35,9 +36,26 @@ describe('balance view', () => {
       expect(findLastname).toBeInTheDocument();
       expect(findCredit).toBeInTheDocument();
       expect(findDeposit).toBeInTheDocument();
+
+      const findTab = await screen.findByText('Pay off');
+      findTab.click();
+
+      const balanceTextOff = await screen.findByTestId('balance-text-off');
+      const btnDepositOff = await screen.findByTestId('balance-button-off');
+      const findFirstnameOff = await screen.findByTestId('deposit-first-off');
+		  const findLastnameOff = await screen.findByTestId('deposit-last-off');
+      const findCreditOff = await screen.findByTestId('deposit-number-off');
+		  const findDepositOff = await screen.findByTestId('deposit-deposit-off');
+
+      expect(balanceTextOff).toBeInTheDocument();
+      expect(btnDepositOff).toBeInTheDocument();
+      expect(findFirstnameOff).toBeInTheDocument();
+      expect(findLastnameOff).toBeInTheDocument();
+      expect(findCreditOff).toBeInTheDocument();
+      expect(findDepositOff).toBeInTheDocument();
     });
 
-    it('should handle balance input error', async () => {
+    it('should handle balance in input error', async () => {
       axios.mockRejectedValue({});
       render(
         <AllProviders>
@@ -77,5 +95,90 @@ describe('balance view', () => {
       await expect(text).toBeInTheDocument();
     });
 
+    it('should handle balance off input error', async () => {
+      axios.mockRejectedValue({});
+      render(
+        <AllProviders>
+            <Balance />
+        </AllProviders>);
+
+      const btn = await screen.findByRole("button", {name: /Balance/i});
+
+      expect(btn).toBeInTheDocument();
+
+      btn.click();
+
+      const findTab = await screen.findByText('Pay off');
+      findTab.click();
+
+      const balanceTextOff = await screen.findByTestId('balance-text-off');
+      const btnDepositOff = await screen.findByTestId('balance-button-off');
+      const findFirstnameOff = await screen.findByTestId('deposit-first-off');
+		  const findLastnameOff = await screen.findByTestId('deposit-last-off');
+      const findCreditOff = await screen.findByTestId('deposit-number-off');
+		  const findDepositOff = await screen.findByTestId('deposit-deposit-off');
+
+      expect(balanceTextOff).toBeInTheDocument();
+      expect(btnDepositOff).toBeInTheDocument();
+      expect(findFirstnameOff).toBeInTheDocument();
+      expect(findLastnameOff).toBeInTheDocument();
+      expect(findCreditOff).toBeInTheDocument();
+      expect(findDepositOff).toBeInTheDocument();
+
+      userEvent.type(findFirstnameOff, "First");
+      userEvent.type(findLastnameOff, "Last");
+      userEvent.type(findCreditOff, "1234123412341234");
+      userEvent.type(findDepositOff, "20");
+      btnDepositOff.click();
+
+      const text = await screen.findByTestId("balance-text-off");
+
+      await expect(text).toBeInTheDocument();
+    });
+
+    it('should handle balance off input error', async () => {
+      
+      const mockSetGuthaben = jest.fn();
+
+        jest.mock('react', () => ({
+            useState: (guthaben:any) => [guthaben, mockSetGuthaben]
+        }))
+
+      render(
+        <AllProviders>
+            <Balance />
+        </AllProviders>);
+
+      const btn = await screen.findByRole("button", {name: /Balance/i});
+
+      expect(btn).toBeInTheDocument();
+
+      btn.click();
+
+      const findTab = await screen.findByText('Pay off');
+      findTab.click();
+
+      const balanceTextOff = await screen.findByTestId('balance-text-off');
+      const btnDepositOff = await screen.findByTestId('balance-button-off');
+      const findFirstnameOff = await screen.findByTestId('deposit-first-off');
+		  const findLastnameOff = await screen.findByTestId('deposit-last-off');
+      const findCreditOff = await screen.findByTestId('deposit-number-off');
+		  const findDepositOff = await screen.findByTestId('deposit-deposit-off');
+
+      expect(balanceTextOff).toBeInTheDocument();
+      expect(btnDepositOff).toBeInTheDocument();
+      expect(findFirstnameOff).toBeInTheDocument();
+      expect(findLastnameOff).toBeInTheDocument();
+      expect(findCreditOff).toBeInTheDocument();
+      expect(findDepositOff).toBeInTheDocument();
+
+      userEvent.type(findFirstnameOff, "First");
+      userEvent.type(findLastnameOff, "Last");
+      userEvent.type(findCreditOff, "1234123412341234");
+      userEvent.type(findDepositOff, "20");
+      btnDepositOff.click();
+
+      expect(mockSetGuthaben).toHaveBeenCalled;
+    });
 
 })
