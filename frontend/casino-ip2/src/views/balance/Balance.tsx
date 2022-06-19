@@ -47,7 +47,7 @@ function Balance() {
                         <div>
                             <button className="close" onClick={close}></button>
                         </div>
-                        <div data-testId="balance-text"> Here you can deposit money to your account </div>
+                        <div data-testid="balance-text"> Here you can deposit money to your account </div>
                         
                         <Form 
                             name="basic"
@@ -113,7 +113,7 @@ function Balance() {
       		                    <Col span={12} offset={6}>
                                     <Form.Item>
                                         <Button 
-                                            data-testId="balance-button" type="primary" htmlType="submit"                       
+                                            data-testid="balance-button" type="primary" htmlType="submit"                       
                                         >Deposit</Button>
                                     </Form.Item>
                                 </Col>

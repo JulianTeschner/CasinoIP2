@@ -46,13 +46,13 @@ function Mail() {
                         <div>
                             <button className="close" onClick={close}></button>
                         </div>
-                        <div data-testId="account-text"> Here you can write an email to our support team </div>                        
+                        <div data-testid="account-text"> Here you can write an email to our support team </div>                        
                     
                         <form onSubmit={onSubmit}>
                             <Input
                                 type='text'
                                 name='from_name'
-                                data-testId='from-name'
+                                data-testid='from-name'
                                 placeholder='from name'
                                 value={toSend.from_name}
                                 onChange={handleChange}
@@ -60,7 +60,7 @@ function Mail() {
                             <Input
                                 type='text'
                                 name='message'
-                                data-testId='message'
+                                data-testid='message'
                                 placeholder='Your message'
                                 value={toSend.message}
                                 onChange={handleChange}
@@ -68,12 +68,12 @@ function Mail() {
                             <Input
                                 type='text'
                                 name='reply_to'
-                                data-testId='reply-mail'
+                                data-testid='reply-mail'
                                 placeholder='Your email'
                                 value={toSend.reply_to}
                                 onChange={handleChange}
                             />
-                            <Button type="primary" htmlType="submit" data-testId='mail-submit'>Submit</Button>
+                            <Button type="primary" htmlType="submit" data-testid='mail-submit'>Submit</Button>
 
                         </form>
                     </div>

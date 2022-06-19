@@ -113,7 +113,7 @@ function Sportbet() {
             <div>
             <Row>
                 <Col span={12} offset={6}>
-                    <Title data-testId="sportbet-h1">
+                    <Title data-testid="sportbet-h1">
                         Sportbet
                     </Title>
                     <div data-testid='balance'><b>balance: {guthaben}</b></div>

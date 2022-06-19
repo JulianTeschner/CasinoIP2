@@ -19,9 +19,9 @@ function Logout() {
                         <div>
                             <button className="close" onClick={close}></button>
                         </div>
-                        <div data-testId="logout-text"> Do you really want to logout from the casino-app? </div>
+                        <div data-testid="logout-text"> Do you really want to logout from the casino-app? </div>
                         <Button 
-                            data-testId="logout-button"
+                            data-testid="logout-button"
                             onClick={  async () => {
                             localStorage.removeItem("accessToken");
                             

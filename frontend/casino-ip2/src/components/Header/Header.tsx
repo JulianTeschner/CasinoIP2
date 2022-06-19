@@ -13,7 +13,7 @@ export default function Header() {
     return(
       <Row>
         <Col span={9}>
-          <Link to={`${RouteName.OVERVIEW}`} data-testId="header-link">
+          <Link to={`${RouteName.OVERVIEW}`} data-testid="header-link">
             <PageHeader
               title="Casino"
               className="site-page-header"
@@ -22,7 +22,7 @@ export default function Header() {
           </Link>
         </Col>
         <Col span={3} offset={12}>
-          <Menu mode="horizontal" style={{background: 'transparent'}} data-testId="dropdown-menu">
+          <Menu mode="horizontal" style={{background: 'transparent'}} data-testid="dropdown-menu">
               <Menu.SubMenu key="SubMenu" icon={<MenuOutlined style={{ fontSize: '24px' }}/>} data-testid="icon">
                 <Menu.ItemGroup>
                   <Menu.Item key="Win/Loss">

@@ -18,7 +18,7 @@ function AboutUs() {
                         <Col sm={{span:24}} md={{span:12}}>
                             <Popup trigger={
                                 <Card hoverable
-                                    cover={<img alt="person1" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person1-card"/>}>
+                                    cover={<img alt="person1" src={require('./images/platzhalter-person.jpg')} height="260px" data-testid="person1-card"/>}>
                                     <Row justify="center">
                                         <Meta title="Julian" />
                                     </Row>
@@ -32,8 +32,8 @@ function AboutUs() {
                                         <div>
                                             <button className="close" onClick={close}></button>
                                         </div>
-                                        <div data-testId="g1-text"> Hochschule für Technik Stuttgart</div>
-                                        <div data-testId="g1-text"> Studiengang: Bachelor Informatik</div>
+                                        <div data-testid="g1-text"> Hochschule für Technik Stuttgart</div>
+                                        <div data-testid="g1-text"> Studiengang: Bachelor Informatik</div>
                                     </div>
                                     )
                                 }
@@ -42,7 +42,7 @@ function AboutUs() {
                         <Col sm={{span:24}} md={{span:12}}>
                             <Popup trigger={
                                 <Card hoverable 
-                                    cover={<img alt="person2" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person2-card"/>}>
+                                    cover={<img alt="person2" src={require('./images/platzhalter-person.jpg')} height="260px" data-testid="person2-card"/>}>
                                     <Row justify="center">
                                         <Meta title="Kilian" />
                                     </Row>
@@ -56,8 +56,8 @@ function AboutUs() {
                                         <div>
                                             <button className="close" onClick={close}></button>
                                         </div>
-                                        <div data-testId="g1-text"> Hochschule für Technik Stuttgart</div>
-                                        <div data-testId="g2-text"> Studiengang: Bachelor Informatik</div>
+                                        <div data-testid="g1-text"> Hochschule für Technik Stuttgart</div>
+                                        <div data-testid="g2-text"> Studiengang: Bachelor Informatik</div>
                                     </div>
                                     )
                                 }
@@ -66,7 +66,7 @@ function AboutUs() {
                         <Col sm={{span:24}} md={{span:12}}>
                             <Popup trigger={
                                 <Card hoverable
-                                    cover={<img alt="person3" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person3-card"/>}>
+                                    cover={<img alt="person3" src={require('./images/platzhalter-person.jpg')} height="260px" data-testid="person3-card"/>}>
                                     <Row justify="center">
                                         <Meta title="Marco" />
                                     </Row>
@@ -80,8 +80,8 @@ function AboutUs() {
                                         <div>
                                             <button className="close" onClick={close}></button>
                                         </div>
-                                        <div data-testId="g1-text"> Hochschule für Technik Stuttgart</div>
-                                        <div data-testId="g3-text"> Studiengang: Bachelor Informatik</div>
+                                        <div data-testid="g1-text"> Hochschule für Technik Stuttgart</div>
+                                        <div data-testid="g3-text"> Studiengang: Bachelor Informatik</div>
                                     </div>
                                     )
                                 }
@@ -90,7 +90,7 @@ function AboutUs() {
                         <Col sm={{span:24}} md={{span:12}}>
                             <Popup trigger={
                                 <Card hoverable 
-                                    cover={<img alt="person4" src={require('./images/platzhalter-person.jpg')} height="260px" data-testId="person4-card"/>}>
+                                    cover={<img alt="person4" src={require('./images/platzhalter-person.jpg')} height="260px" data-testid="person4-card"/>}>
                                     <Row justify="center">
                                         <Meta title="Moritz" />
                                     </Row>
@@ -104,8 +104,8 @@ function AboutUs() {
                                         <div>
                                             <button className="close" onClick={close}></button>
                                         </div>
-                                        <div data-testId="g1-text"> Hochschule für Technik Stuttgart</div>
-                                        <div data-testId="g4-text"> Studiengang: Bachelor Informatik</div>
+                                        <div data-testid="g1-text"> Hochschule für Technik Stuttgart</div>
+                                        <div data-testid="g4-text"> Studiengang: Bachelor Informatik</div>
                                     </div>
                                     )
                                 }

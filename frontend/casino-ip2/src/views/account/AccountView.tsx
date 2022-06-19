@@ -70,7 +70,7 @@ function Account() {
                         <div>
                             <button className="close" onClick={close}></button>
                         </div>
-                        <div data-testId="account-text"> Here you can see your account details </div>                        
+                        <div data-testid="account-text"> Here you can see your account details </div>                        
                         { data === '' ? 
                             <div> Loading Data... </div> :
                             <div className='overview'>

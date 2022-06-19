@@ -60,7 +60,7 @@ function Register() {
       <>
         <Row>
       		<Col span={12} offset={6}>
-						<Title data-testId="register-h1">
+						<Title data-testid="register-h1">
          			Register
       			</Title>
           </Col>
