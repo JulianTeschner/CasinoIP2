@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Space, Button, Form, Row, Col, Input, message } from 'antd';
+import { Space, Button, Form, Row, Col, Input, message, Image } from 'antd';
 import axios from 'axios';
 import './style/Sportbet.css';
 import { URL_ENDPOINT } from '../../config/env';
@@ -110,68 +110,78 @@ function Sportbet() {
 
     return (
             <div className='sportbet'>
-            <div>
-            <Row>
-                <Col span={12} offset={6}>
-                    <Title data-testid="sportbet-h1">
-                        Sportbet
-                    </Title>
-                    <div data-testid='balance'><b>balance: {guthaben}</b></div>
-                </Col>
-            </Row>
-                <div className='p-t20'>
-                    <div className='p-t10'>
-                        <Form name="basic"
-                            labelCol={{ span: 8}}
-                            wrapperCol={{ span: 4 }}
-                            initialValues={{ remember: true }}
-                            autoComplete="off"
-                            data-testid='bet-form' 
-                            onFinish={handleSubmit}>
-                                <Form.Item 
-                                    label="Min. bet amount 1 Credit"
-                                    name="Amount"
-                                    data-testid="sport-amount"
-                                    rules={[
-                                        {
-                                        required: true,                                        
-                                    },
-                                    ]}>
-                                    <Input data-testid="type-amount"/>
-                                </Form.Item>
-                                <label style={{display: 'none'}}>{randGame()}</label>                    
-                                <Form.Item 
-                                label={home}
-                                name="Home"
-                                data-testid="sport-home"
-                                rules={[
-                                    {
-                                    required: true,
-                                    },
-                                ]}>
-                                                                    
-                                    <Input data-testid="type-home"/>
-                                </Form.Item>
-                                <Form.Item
-                                    label={away}
-                                    name="Away"
-                                    data-testid="sport-away"
-                                    rules={[
-                                        {
-                                        required: true,
-                                        },
-                                    ]}>
-                                    
-                                    <Input data-testid="type-away" />
-                                </Form.Item>
-                            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                                <Button data-testid='play' type="primary" htmlType='submit'>bet and go</Button>
-                            </Form.Item>
-                        </Form>                    
-                    </div>
+                <div>
+                    <Row>
+                        <Col span={12} offset={6}>
+                            <Title data-testid="sportbet-h1">
+                                Sportbet
+                            </Title>
+                            <div data-testid='balance' className='pt-15'><b>balance: {guthaben}</b></div>
+
+                            <Form name="basic"
+                                    className='pt-15'
+                                    layout='vertical'
+                                    initialValues={{ remember: true }}
+                                    autoComplete="off"
+                                    data-testid='bet-form' 
+                                    onFinish={handleSubmit}>
+                                        <Form.Item 
+                                            label="Min. bet amount 1 Credit"
+                                            name="Amount"
+                                            data-testid="sport-amount"
+                                            rules={[
+                                                {
+                                                required: true,                                        
+                                            },
+                                            ]}>
+                                            <Input type="number" data-testid="type-amount"/>
+                                        </Form.Item>
+                                        <label style={{display: 'none'}}>{randGame()}</label>
+                                        <Row>
+                                            <Col span={12}>
+                                                <img src={require(`./images/${home}.png`)} className="sportbet-image" />
+                                                <Form.Item 
+                                                    className='sportbet-txt'
+                                                    label={home}
+                                                    name="Home"
+                                                    data-testid="sport-home"
+                                                    rules={[
+                                                        {
+                                                        required: true,
+                                                        },
+                                                ]}>
+                                                                                    
+                                                    <Input data-testid="type-home"/>
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={12} >
+                                                <img src={require(`./images/${away}.png`)} className="sportbet-image" />
+                                                <Form.Item
+                                                    className='sportbet-txt'
+                                                    label={away}
+                                                    name="Away"
+                                                    data-testid="sport-away"
+                                                    rules={[
+                                                        {
+                                                        required: true,
+                                                        },
+                                                    ]}>
+                                                    
+                                                    <Input data-testid="type-away" />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        
+                                        
+                                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                                        <Button data-testid='play' type="primary" htmlType='submit'>bet and go</Button>
+                                    </Form.Item>
+                                </Form>
+                        </Col>
+                    </Row>                      
                 </div>
             </div>
-        </div>
+
     )
 }
 
