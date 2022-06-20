@@ -7,6 +7,7 @@ import axios from "axios";
 
 
 
+
 function Slotmachine(){
 
   const einsatz = useRef(0);
@@ -119,7 +120,7 @@ function Slotmachine(){
     <div className='content'>
 
       <h1 className="animate__animated animate__bounce">{getitem1}{getitem2}{getitem3}</h1>
-      <button onClick={spin}>Spin</button>
+      <button data-testid="spin" onClick={spin}>Spin</button>
       <label>Anzahl an spins für den Autospin: </label>
       <input type="number" name="anzahlSpins" onChange={(e)=>{
         setAnzahlSpins(e.target.valueAsNumber);
@@ -127,14 +128,21 @@ function Slotmachine(){
 
       <div data-testid='balance'><b>balance: {guthaben}</b></div>
                     <div className='p-t10'>
+                    <Space direction='vertical'>
+                    <div data-testid='msg'>
+                        <p><b>{status}</b></p>
+                    </div>
+                    <Space>
                         <form data-testid='bet-form' onSubmit={handleSubmit}>
                             <Space>
                                 <label>min. bet amount 1 Credit</label>
                                 <input data-testid='bet-input' type="number" name="einsatz" />
                                 <Button onClick={spin} data-testid='play' disabled={showUI.current} type="primary" htmlType='submit'>Spin and go</Button>
-                                <Button onClick={spinMehrmals} data-testid='play' disabled={showUI.current} type="primary" htmlType='submit'>Autospin and go</Button>
                             </Space>
-                        </form>                    
+                        </form> 
+                        </Space> 
+                        </Space> 
+              
                     </div>
     </div>
     );
