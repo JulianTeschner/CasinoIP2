@@ -11,9 +11,9 @@ describe("RegisterView", () => {
 			</AllProviders>
 		);
 
-		//const findHeadline = await screen.findByText(/Register/i);
+		const findHeadline = await screen.findByText(/Register/i);
 
-		//expect(findHeadline).toBeInTheDocument();
+		expect(findHeadline).toBeInTheDocument();
 	});
 
 	
