@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../config/zustand';
 import axios from 'axios';
 import { URL_ENDPOINT } from '../../config/env';
+import { send } from 'emailjs-com';
 
 function Balance() {
 
@@ -15,6 +16,11 @@ function Balance() {
 
     const [errorMessage, setErrorMessage] = React.useState("");
     const [guthaben, setGuthaben] = React.useState<any>(' ');
+    const [toSend, setToSend] = useState({
+        to_name: '',
+        message:'',
+        reply_to: '',
+    });
 
     const headerGetDev = {
         'Access-Control-Allow-Origin': '*',
@@ -35,7 +41,11 @@ function Balance() {
         .catch(error => console.log(error));
     }
 
-    async function handlePayIn(val:any) {
+    const handleChange = (e:any) => {
+        setToSend({ ...toSend, [e.target.name]: e.target.value });
+    };
+
+    async function handlePayIn(val:any) {      
         getBalance();
         setGuthaben(guthaben + val.balance);
         await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
@@ -47,11 +57,18 @@ function Balance() {
           }).then(val => {
             navigate("/overview");
             message.success("Deposit successful");
+            send(
+                'service_wyjyj9k',
+                'template_t0gkt3h',
+                toSend,
+                'z4fPMHER9eOdAN1pv'
+            )
           })
           .catch(error => {
             setErrorMessage(`Deposit failed. Please try again later`);
             console.log(error)
-          });     
+          });  
+             
     }
 
     async function handlePayOff(val:any) {
@@ -66,6 +83,12 @@ function Balance() {
           }).then(val => {
             navigate("/overview");
             message.success("Deposit successful");
+            send(
+                'service_wyjyj9k',
+                'template_t0gkt3h',
+                toSend,
+                'z4fPMHER9eOdAN1pv'
+            )
           })
           .catch(error => {
             setErrorMessage(`Deposit failed. Please try again later`);
@@ -107,7 +130,11 @@ function Balance() {
                                             },
                                         ]}
                                     >
-                                        <Input />
+                                        <Input type='text'
+                                            name='to_name'
+                                            data-testid='to-name'
+                                            value={toSend.to_name}
+                                            onChange={handleChange}/>
                                     </Form.Item>
                                     <Form.Item
                                         label="Last Name"
@@ -121,6 +148,23 @@ function Balance() {
                                         ]}
                                     >
                                         <Input />
+                                    </Form.Item>
+                                    <Form.Item
+                                        label="Email"
+                                        name="Email"
+                                        data-testid="deposit-mail"
+                                        rules={[
+                                            {
+                                            required: true,
+                                            message: 'Please input your Email!',
+                                            },
+                                        ]}
+                                    >
+                                        <Input type='email'
+                                            name='reply_to'
+                                            data-testid='reply-to'
+                                            value={toSend.reply_to}
+                                            onChange={handleChange}/>
                                     </Form.Item>
                                     <Form.Item
                                         label="Creditcard-Number"
@@ -146,7 +190,11 @@ function Balance() {
                                             },
                                         ]}
                                     >
-                                        <Input />
+                                        <Input type='text'
+                                            name='message'
+                                            data-testid='message'
+                                            value={toSend.message}
+                                            onChange={handleChange} />
                                     </Form.Item>
                                     <Row>
                                         <Col span={12} offset={6}>
@@ -184,7 +232,11 @@ function Balance() {
                                             },
                                         ]}
                                     >
-                                        <Input />
+                                        <Input type='text'
+                                            name='to_name'
+                                            data-testid='to-name-off'
+                                            value={toSend.to_name}
+                                            onChange={handleChange}/>
                                     </Form.Item>
                                     <Form.Item
                                         label="Last Name"
@@ -198,6 +250,23 @@ function Balance() {
                                         ]}
                                     >
                                         <Input />
+                                    </Form.Item>
+                                    <Form.Item
+                                        label="Email"
+                                        name="Email"
+                                        data-testid="deposit-mail-off"
+                                        rules={[
+                                            {
+                                            required: true,
+                                            message: 'Please input your Email!',
+                                            },
+                                        ]}
+                                    >
+                                        <Input type='email'
+                                            name='reply_to'
+                                            data-testid='reply-to-off'
+                                            value={toSend.reply_to}
+                                            onChange={handleChange}/>
                                     </Form.Item>
                                     <Form.Item
                                         label="Creditcard-Number"
@@ -223,7 +292,11 @@ function Balance() {
                                             },
                                         ]}
                                     >
-                                        <Input />
+                                        <Input type='text'
+                                            name='message'
+                                            data-testid='message-off'
+                                            value={toSend.message}
+                                            onChange={handleChange} />
                                     </Form.Item>
                                     <Row>
                                         <Col span={12} offset={6}>
