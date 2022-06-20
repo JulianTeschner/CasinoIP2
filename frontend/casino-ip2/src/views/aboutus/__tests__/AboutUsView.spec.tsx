@@ -41,11 +41,6 @@ describe("AboutUs", () => {
 		expect(findMarco).toBeInTheDocument();
 		expect(findMoritz).toBeInTheDocument();
 
-		expect(findPerson1Card).toHaveAttribute('height', '260px');
-		expect(findPerson2Card).toHaveAttribute('height', '260px');
-		expect(findPerson3Card).toHaveAttribute('height', '260px');
-		expect(findPerson4Card).toHaveAttribute('height', '260px');
-		
 		expect(findPerson1Image).toHaveAttribute('src', 'platzhalter-person.jpg');
 		expect(findPerson2Image).toHaveAttribute('src','platzhalter-person.jpg');
 		expect(findPerson3Image).toHaveAttribute('src', 'platzhalter-person.jpg');

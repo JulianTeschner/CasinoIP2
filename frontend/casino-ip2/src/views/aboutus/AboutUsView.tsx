@@ -18,7 +18,7 @@ function AboutUs() {
                         <Col sm={{span:24}} md={{span:12}}>
                             <Popup trigger={
                                 <Card hoverable
-                                    cover={<img alt="person1" src={require('./images/platzhalter-person.jpg')} height="260px" data-testid="person1-card"/>}>
+                                    cover={<img alt="person1" src={require('./images/platzhalter-person.jpg')} data-testid="person1-card"/>}>
                                     <Row justify="center">
                                         <Meta title="Julian" />
                                     </Row>
@@ -42,7 +42,7 @@ function AboutUs() {
                         <Col sm={{span:24}} md={{span:12}}>
                             <Popup trigger={
                                 <Card hoverable 
-                                    cover={<img alt="person2" src={require('./images/platzhalter-person.jpg')} height="260px" data-testid="person2-card"/>}>
+                                    cover={<img alt="person2" src={require('./images/platzhalter-person.jpg')} data-testid="person2-card"/>}>
                                     <Row justify="center">
                                         <Meta title="Kilian" />
                                     </Row>
@@ -66,7 +66,7 @@ function AboutUs() {
                         <Col sm={{span:24}} md={{span:12}}>
                             <Popup trigger={
                                 <Card hoverable
-                                    cover={<img alt="person3" src={require('./images/platzhalter-person.jpg')} height="260px" data-testid="person3-card"/>}>
+                                    cover={<img alt="person3" src={require('./images/platzhalter-person.jpg')} data-testid="person3-card"/>}>
                                     <Row justify="center">
                                         <Meta title="Marco" />
                                     </Row>
@@ -90,7 +90,7 @@ function AboutUs() {
                         <Col sm={{span:24}} md={{span:12}}>
                             <Popup trigger={
                                 <Card hoverable 
-                                    cover={<img alt="person4" src={require('./images/platzhalter-person.jpg')} height="260px" data-testid="person4-card"/>}>
+                                    cover={<img alt="person4" src={require('./images/platzhalter-person.jpg')} data-testid="person4-card"/>}>
                                     <Row justify="center">
                                         <Meta title="Moritz" />
                                     </Row>

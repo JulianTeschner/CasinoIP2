@@ -110,8 +110,10 @@ function Account() {
                               </Space>
                             </div>
                           }
-                          <button onClick={deleteAccount}>Delete account!</button>
-                          <button onClick={lockAccount}>Lock account!</button>
+                          <Space>
+                            <Button type="primary" onClick={deleteAccount}>Delete account!</Button>
+                            <Button type="primary" onClick={lockAccount}>Lock account!</Button>
+                          </Space>
                     </div>
                 )}
             </Popup>

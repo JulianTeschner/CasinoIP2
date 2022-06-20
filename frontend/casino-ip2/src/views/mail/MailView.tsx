@@ -3,6 +3,7 @@ import { useState } from "react";
 import Popup from "reactjs-popup";
 import { send } from 'emailjs-com';
 import { useNavigate } from "react-router-dom";
+import TextArea from "antd/lib/input/TextArea";
 
 function Mail() {
 
@@ -15,7 +16,6 @@ function Mail() {
     });
 
     const onSubmit = (e:any) => {
-        e.preventDefault();
         send(
             'service_wyjyj9k',
             'template_pf97nwh',
@@ -47,35 +47,62 @@ function Mail() {
                             <button className="close" onClick={close}></button>
                         </div>
                         <div data-testid="account-text"> Here you can write an email to our support team </div>                        
-                    
-                        <form onSubmit={onSubmit}>
-                            <Input
-                                type='text'
-                                name='from_name'
-                                data-testid='from-name'
-                                placeholder='from name'
-                                value={toSend.from_name}
-                                onChange={handleChange}
-                            />
-                            <Input
-                                type='text'
-                                name='message'
-                                data-testid='message'
-                                placeholder='Your message'
-                                value={toSend.message}
-                                onChange={handleChange}
-                            />
-                            <Input
-                                type='text'
-                                name='reply_to'
-                                data-testid='reply-mail'
-                                placeholder='Your email'
-                                value={toSend.reply_to}
-                                onChange={handleChange}
-                            />
-                            <Button type="primary" htmlType="submit" data-testid='mail-submit'>Submit</Button>
 
-                        </form>
+                        <Form 
+                            name="basic"
+                            labelCol={{ span: 8}}
+                            wrapperCol={{ span: 10 }}
+                            initialValues={{ remember: true }}
+                            autoComplete="off"
+                            onFinish={onSubmit}
+                        >
+                            <Form.Item 
+                                label="Name"
+                                name="from-name"
+                                data-testid="email-name"
+                                rules={[
+                                    { required: true, message: "Please input your name!" }
+                                ]}
+                                >
+                                <Input type='text'
+                                    name='from_name'
+                                    data-testid='from-name'
+                                    value={toSend.from_name}
+                                    onChange={handleChange}/>
+                            </Form.Item>
+                            <Form.Item 
+                                label="Email"
+                                name="from-email"
+                                data-testid="email-email"
+                                rules={[
+                                    { required: true, message: "Please input your email!" }
+                                ]}
+                                >
+                                <Input type='email'
+                                    name='reply_to'
+                                    data-testid='reply-mail'
+                                    value={toSend.reply_to}
+                                    onChange={handleChange}/>
+                            </Form.Item>
+                            <Form.Item 
+                                label="Message"
+                                name="message"
+                                data-testid="email-message"
+                                rules={[
+                                    { required: true, message: "Please input your message!" }
+                                ]}
+                                >
+                                <TextArea 
+                                    rows={4}
+                                    name='message'
+                                    data-testid='message'
+                                    value={toSend.message}
+                                    onChange={handleChange} />
+                            </Form.Item>
+
+                            <Button type="primary" htmlType="submit" data-testid='mail-submit'>Submit</Button>
+                        </Form>
+                          
                     </div>
                 )}
             </Popup>

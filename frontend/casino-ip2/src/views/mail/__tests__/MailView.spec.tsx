@@ -47,18 +47,18 @@ describe("Mail", () => {
 
         btn.click();
 
-		const fromname:any = await screen.findAllByTestId('from-name');
-		const message:any = await screen.findAllByTestId('message');
-        const replymail:any = await screen.findAllByTestId('reply-mail');
+		const fromname = await screen.findByTestId('from-name');
+		const message = await screen.findByTestId('message');
+        const replymail = await screen.findByTestId('reply-mail');
 		const submit = await screen.findByRole("button", { name: /submit/i });
 
 		userEvent.type(fromname, "test");
 		userEvent.type(message, "test");
-        userEvent.type(replymail, "test");
+        userEvent.type(replymail, "test@test.de");
 		userEvent.click(submit);
 
-		//const text = await screen.findByText("Message successful");
+		const text = await screen.findByTestId("message");
 
-		//expect(text).toBeInTheDocument();
+		expect(text).toBeInTheDocument();
 	});
 }); 
