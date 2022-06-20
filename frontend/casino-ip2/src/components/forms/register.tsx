@@ -31,7 +31,7 @@ function Register() {
     });
   }
   async function handleSubmit(val:any) {
-    await axios(URL_ENDPOINT, {
+    await axios(URL_ENDPOINT.slice(0,-1), {
       method: 'POST',
       headers: headerPostDev,
       data: {
