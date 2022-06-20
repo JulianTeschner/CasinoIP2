@@ -1,17 +1,17 @@
 import React from 'react';
 import { render, screen } from "@testing-library/react";
-import Register from "../Slotmachine";
+import Slotmachine from "../Slotmachine";
 import { AllProviders } from '../../../testUtils';
 
-describe("Register", () => {
+describe("Slotmachine", () => {
 	it("renders a headline", async () => {
 		render(
 			<AllProviders>
-				<Register/>
+				<Slotmachine/>
 			</AllProviders>
 		);
 
-		const findHeadline = await screen.findByText(/Register/i);
+		const findHeadline = await screen.findByText(/Slotmachine/i);
 
 		expect(findHeadline).toBeInTheDocument();
 	});

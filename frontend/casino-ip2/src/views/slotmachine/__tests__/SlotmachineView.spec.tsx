@@ -1,17 +1,17 @@
 import React from 'react';
 import { render, screen } from "@testing-library/react";
-import RegisterView from "../SlotmachineView";
+import SotmachineView from "../SlotmachineView";
 import { AllProviders } from '../../../testUtils';
 
-describe("RegisterView", () => {
+describe("SotmachineView", () => {
 	it("renders a headline", async () => {
 		render(
 			<AllProviders>
-				<RegisterView/>
+				<SotmachineView/>
 			</AllProviders>
 		);
 
-		const findHeadline = await screen.findByText(/Register/i);
+		const findHeadline = await screen.findByText(/Slotmachine/i);
 
 		expect(findHeadline).toBeInTheDocument();
 	});
