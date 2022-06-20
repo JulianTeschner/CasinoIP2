@@ -61,6 +61,7 @@
     "@craco/craco": "^6.4.3",
     "@types/react-test-renderer": "^18.0.0",
     "craco-swc": "^0.5.1",
+    "jest-watch-typeahead": "^0.6.5",
     "msw": "^0.39.2"
   }
 }
