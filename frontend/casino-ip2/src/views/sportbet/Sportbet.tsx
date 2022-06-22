@@ -11,18 +11,10 @@ const headerGetDev = {
   'Content-Type': 'application/json'
 } 
 
-const headerGet = {
-  'Content-Type': 'application/json'
-}
-
 const headerPatchDev = {
   'Access-Control-Allow-Origin': '*',
   'Content-Type': 'application/x-www-form-urlencoded'
 }
-
-const headerPatch = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-} 
 
 function Sportbet() {
     
@@ -41,7 +33,7 @@ function Sportbet() {
     async function getBalance() {
         await axios(URL_ENDPOINT + user.username, {
             method: 'GET',
-            headers: process.env.NODE_ENV === 'development' ? headerGetDev : headerGet
+            headers: headerGetDev
         })
         .then(data => setGuthaben(data.data.balance.Amount))
         .catch(error => console.log(error));
@@ -50,7 +42,7 @@ function Sportbet() {
     async function patchBalance(val:any) {
         await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
             method: 'PATCH',
-            headers: process.env.NODE_ENV === 'development' ? headerPatchDev : headerPatch,
+            headers: headerPatchDev,
             data: new URLSearchParams({
                 'balance.amount': val
             })
