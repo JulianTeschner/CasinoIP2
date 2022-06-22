@@ -7,19 +7,19 @@ import axios from "axios";
 import { URL_ENDPOINT } from '../../config/env';
 import Title from 'antd/lib/typography/Title';
 
-const headerGetDev = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-} 
-
-const headerPatchDev = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/x-www-form-urlencoded',
-  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-}
-
 function Slotmachine(){
+
+  const headerGetDev = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+  } 
+  
+  const headerPatchDev = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+  }
 
   const einsatz = useRef(0);
   const [guthaben, setGuthaben] = React.useState<any>(' ');

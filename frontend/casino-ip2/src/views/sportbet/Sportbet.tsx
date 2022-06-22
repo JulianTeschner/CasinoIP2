@@ -6,19 +6,19 @@ import { URL_ENDPOINT } from '../../config/env';
 import { useUserStore } from '../../config/zustand';
 import Title from 'antd/lib/typography/Title';
 
-const headerGetDev = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-} 
-
-const headerPatchDev = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/x-www-form-urlencoded',
-  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-}
-
 function Sportbet() {
+
+    const headerGetDev = {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+    } 
+      
+    const headerPatchDev = {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+    }
     
     // test
     //const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTc3NjI4MCwiZXhwIjoxNjUxODYyNjgwLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.Oau7zdJbfXkdV5kQdNY74tGaSmYI8PLucOlDFm3GA1ycvFFXhfHt8vuupgBOCI2DJk6eB4Qu2JOZPBHSnu0A8V_ZCGf20hx9QbGAgWiKi8ULdAUF_6e9mAmXyc2lmeLdZTD5O0lJKAi3lJtRMXdcpRET8UnECLILWa-NS8vzETE5Suozg9SFq7m2hXJZ2W-Uv8pjJkUq2gO1W_unMT8kXOUBoXm-uioCuMlZXX0muhqZC9oKgI1e6eb9DkQsyUhGzHAq-ajGKilVj021uXajMj2h3EFnITTk5_pljuxPhPBW8Y52LqKx7NtwzSUjQV70fWJdyfoFm5LQB6ZR_qFxgQ"});   

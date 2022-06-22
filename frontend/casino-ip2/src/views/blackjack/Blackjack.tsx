@@ -5,19 +5,22 @@ import axios from 'axios';
 import { URL_ENDPOINT } from '../../config/env';
 import { useUserStore } from '../../config/zustand';
 
-const headerGetDev = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-} 
 
-const headerPatchDev = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/x-www-form-urlencoded',
-  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-} 
 
 function Blackjack() {
+
+    const headerGetDev = {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+    } 
+
+    const headerPatchDev = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+    } 
+    
     const deck = [{"Farbe": "♥", "Wert": "2", "Gespielt": 0}, {"Farbe": "♥", "Wert": "3", "Gespielt": 0}, {"Farbe": "♥", "Wert": "4", "Gespielt": 0}, {"Farbe": "♥", "Wert": "5", "Gespielt": 0}, {"Farbe": "♥", "Wert": "6", "Gespielt": 0}, {"Farbe": "♥", "Wert": "7", "Gespielt": 0}, {"Farbe": "♥", "Wert": "8", "Gespielt": 0}, {"Farbe": "♥", "Wert": "9", "Gespielt": 0}, {"Farbe": "♥", "Wert": "10", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♥", "Wert": "King", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♣", "Wert": "2", "Gespielt": 0}, {"Farbe": "♣", "Wert": "3", "Gespielt": 0}, {"Farbe": "♣", "Wert": "4", "Gespielt": 0}, {"Farbe": "♣", "Wert": "5", "Gespielt": 0}, {"Farbe": "♣", "Wert": "6", "Gespielt": 0}, {"Farbe": "♣", "Wert": "7", "Gespielt": 0}, {"Farbe": "♣", "Wert": "8", "Gespielt": 0}, {"Farbe": "♣", "Wert": "9", "Gespielt": 0}, {"Farbe": "♣", "Wert": "10", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♣", "Wert": "King", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♦", "Wert": "2", "Gespielt": 0}, {"Farbe": "♦", "Wert": "3", "Gespielt": 0}, {"Farbe": "♦", "Wert": "4", "Gespielt": 0}, {"Farbe": "♦", "Wert": "5", "Gespielt": 0}, {"Farbe": "♦", "Wert": "6", "Gespielt": 0}, {"Farbe": "♦", "Wert": "7", "Gespielt": 0}, {"Farbe": "♦", "Wert": "8", "Gespielt": 0}, {"Farbe": "♦", "Wert": "9", "Gespielt": 0}, {"Farbe": "♦", "Wert": "10", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♦", "Wert": "King", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♠", "Wert": "2", "Gespielt": 0}, {"Farbe": "♠", "Wert": "3", "Gespielt": 0}, {"Farbe": "♠", "Wert": "4", "Gespielt": 0}, {"Farbe": "♠", "Wert": "5", "Gespielt": 0}, {"Farbe": "♠", "Wert": "6", "Gespielt": 0}, {"Farbe": "♠", "Wert": "7", "Gespielt": 0}, {"Farbe": "♠", "Wert": "8", "Gespielt": 0}, {"Farbe": "♠", "Wert": "9", "Gespielt": 0}, {"Farbe": "♠", "Wert": "10", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♠", "Wert": "King", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Ace", "Gespielt": 0}];
     const deck_copy = useRef(deck);
     const [guthaben, setGuthaben] = React.useState<any>(' ');
