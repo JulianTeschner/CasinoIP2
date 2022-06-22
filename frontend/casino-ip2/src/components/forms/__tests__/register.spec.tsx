@@ -118,7 +118,6 @@ describe("Register", () => {
 		const text = await screen.findByText("First Name");
 
       	await expect(text).toBeInTheDocument();
-
       });
 /*
 	  it('should test axios success', async() =>{
