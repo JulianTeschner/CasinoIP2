@@ -5,7 +5,7 @@ const auth0 = new WebAuth({
   domain: env.AUTH0_DOMAIN,
   clientID: env.AUTH0_CLIENT_ID,
   responseType: "token id_token",
-  redirectUri: "http://localhost:3000/overview",
+  redirectUri: "https://casino-frontend1.herokuapp.com/overview",
   audience: env.API_ENDPOINT,
   scope: "openid profile email",
 });
