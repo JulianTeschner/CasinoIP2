@@ -1,7 +1,7 @@
 import React, { useEffect, useRef , useState} from 'react';
 import { Space, Button } from 'antd';
 import { getAutomaticTypeDirectiveNames } from 'typescript';
-import 'animate.css';
+//import 'animate.css';
 import { useUserStore } from '../../config/zustand';
 import axios from "axios";
 
