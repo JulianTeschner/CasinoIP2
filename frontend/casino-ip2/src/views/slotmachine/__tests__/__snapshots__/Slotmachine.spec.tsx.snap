@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`nothing should happen if input 0 1`] = `
+exports[`slotmachine game nothing should happen if input 0 1`] = `
 <div
   className="Slotmachine"
 >
@@ -194,7 +194,7 @@ exports[`nothing should happen if input 0 1`] = `
 </div>
 `;
 
-exports[`nothing should happen if input greater than balance 1`] = `
+exports[`slotmachine game nothing should happen if input greater than balance 1`] = `
 <div
   className="Slotmachine"
 >
@@ -388,7 +388,7 @@ exports[`nothing should happen if input greater than balance 1`] = `
 </div>
 `;
 
-exports[`renders correctly 1`] = `
+exports[`slotmachine game renders correctly 1`] = `
 <div
   className="Slotmachine"
 >
