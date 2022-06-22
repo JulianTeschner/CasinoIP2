@@ -24,12 +24,14 @@ function Balance() {
 
     const headerGetDev = {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
     } 
     
     const headerPatchDev = {
       'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
     }
 
     async function getBalance() {
