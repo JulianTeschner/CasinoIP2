@@ -1,21 +1,12 @@
 import React, { useEffect, useRef , useState} from 'react';
-import { Space, Button, message, Row, Col } from 'antd';
+import { Space, Button } from 'antd';
 import { getAutomaticTypeDirectiveNames } from 'typescript';
-import './style/Slotmachine.css';
+import 'animate.css';
 import { useUserStore } from '../../config/zustand';
 import axios from "axios";
-import { URL_ENDPOINT } from '../../config/env';
-import Title from 'antd/lib/typography/Title';
 
-const headerGetDev = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json'
-} 
 
-const headerPatchDev = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/x-www-form-urlencoded'
-}
+
 
 function Slotmachine(){
 
@@ -25,29 +16,33 @@ function Slotmachine(){
   const [status, setStatus] = React.useState<any>('');
   var user = useUserStore((state:any) => state.userProps)[0];
 
+
   async function getBalance() {
-    await axios(URL_ENDPOINT + user.username, {
+    await axios('http://localhost:8080/user/' + user.username, {
         method: 'GET',
-        headers: headerGetDev
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json'
+        }
     })
     .then(data => setGuthaben(data.data.balance.Amount))
     .catch(error => console.log(error));
-}
-
+  }
+  
   async function patchBalance(val:any) {
-    await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
+    await axios('http://localhost:8080/user/balance/amount/' + user.username, {
         method: 'PATCH',
-        headers: headerPatchDev,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/x-www-form-urlencoded'
+            },
         data: new URLSearchParams({
             'balance.amount': val
         })
-    }).then(data => console.log(data.data))
+    })
+    .then(data => console.log(data))
     .catch(error => console.log(error));
-}
-
-  useEffect(() => {
-    getBalance();
-}, []);
+  }
 
 
   function handleSubmit(e: any) {
@@ -72,10 +67,8 @@ function Slotmachine(){
       }
         showUI.current = true;
     } else if(betval === 0) {
-        message.info(`You have to set a positive amount`);
         console.log('Einsatz ist null');
     } else if(betval > guthaben) {
-        message.info(`Your amount is higher then your deposit`);
         console.log('Einsatz nicht gesetzt\nEinsatz ist höher als vorhandenes Guthaben:', betval);
     }
 }
@@ -124,48 +117,34 @@ function Slotmachine(){
   
   return (
     
-    <div className='Slotmachine'>
-      <Row>
-        <Col span={12} offset={6}>
-          <Title data-testid="slotmachine-h1">
-            Slotmachine
-          </Title>
-          <div data-testid='balance' className='pt-15'><b>balance: {guthaben}</b></div>
-          <form data-testid='bet-form' onSubmit={handleSubmit}>
-            <Space>
-              <label>min. bet amount 1 Credit</label>
-              <input data-testid='bet-input' type="number" name="einsatz" />
-            </Space>
+    <div className='content'>
 
-            <div style={{textAlign: 'center', alignItems: 'center'}}>
-              <h1 style={{ fontSize: '100px', letterSpacing: '1rem'}} className="animate__animated animate__bounce">{getitem1}{getitem2}{getitem3}</h1>
-              
-              <Button onClick={spin} type="primary" style={{ alignItems: 'center' }}>Spin</Button><br /> 
+      <h1 className="animate__animated animate__bounce">{getitem1}{getitem2}{getitem3}</h1>
+      <button data-testid="spin" onClick={spin}>Spin</button>
+      <label>Anzahl an spins für den Autospin: </label>
+      <input type="number" name="anzahlSpins" onChange={(e)=>{
+        setAnzahlSpins(e.target.valueAsNumber);
+      }}/> 
 
-                <div className='p-t10'>
-                  <Space direction='vertical'>
+      <div data-testid='balance'><b>balance: {guthaben}</b></div>
+                    <div className='p-t10'>
+                    <Space direction='vertical'>
                     <div data-testid='msg'>
-                      <p><b>{status}</b></p>
+                        <p><b>{status}</b></p>
                     </div>
                     <Space>
-                    
-                      <Space direction='vertical'>
-                        <label>Anzahl an spins für den Autospin: </label>
-                        <input type="number" name="anzahlSpins" onChange={(e)=>{
-                          setAnzahlSpins(e.target.valueAsNumber);
-                        }}/>
-                      
-                        <Button onClick={spin} data-testid='play' disabled={showUI.current} type="primary" htmlType='submit'>Spin and go</Button>
-                      </Space>
-                      
-                  </Space>
-                </Space>                 
-              </div>
-            </div>
-          </form>
-          </Col>
-        </Row>
-      </div>
+                        <form data-testid='bet-form' onSubmit={handleSubmit}>
+                            <Space>
+                                <label>min. bet amount 1 Credit</label>
+                                <input data-testid='bet-input' type="number" name="einsatz" />
+                                <Button onClick={spin} data-testid='play' disabled={showUI.current} type="primary" htmlType='submit'>Spin and go</Button>
+                            </Space>
+                        </form> 
+                        </Space> 
+                        </Space> 
+              
+                    </div>
+    </div>
     );
 };
 export default Slotmachine;
