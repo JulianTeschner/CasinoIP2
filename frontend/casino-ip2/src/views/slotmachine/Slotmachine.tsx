@@ -9,12 +9,14 @@ import Title from 'antd/lib/typography/Title';
 
 const headerGetDev = {
   'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json'
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
 } 
 
 const headerPatchDev = {
   'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/x-www-form-urlencoded'
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
 }
 
 function Slotmachine(){
@@ -30,7 +32,7 @@ function Slotmachine(){
         method: 'GET',
         headers: headerGetDev
     })
-    .then(data => setGuthaben(data.data.balance.Amount))
+    .then(data => setGuthaben(data.data.balance.amount))
     .catch(error => console.log(error));
 }
 

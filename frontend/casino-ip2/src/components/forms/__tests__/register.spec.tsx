@@ -23,7 +23,7 @@ describe("Register", () => {
 				'user.Email': 'mail@mail.com',
 				'user.DateOfBirth': '2000-01-01',
 				'user.Address.Street': 'Street',
-				'user.Address.City': 'City',
+				'user.Address.city': 'City',
 				'user.Address.State': 'State',
 				'user.Address.Zip': '70172',
 		  }

@@ -84,28 +84,28 @@ function Account() {
                               <Space direction='vertical' size={10}>
                                 <Space size={20}>
                                   <div>
-                                    First Name: {data.user.FirstName}
+                                    First Name: {data.first_name}
                                   </div>
                                   <div>
-                                    Last Name: {data.user.LastName}
+                                    Last Name: {data.last_name}
                                   </div>
                                   <div>
-                                    Street: {data.user.Street}
+                                    Street: {data.address.street}
                                   </div>
                                   <div>
-                                    City: {data.user.City}
+                                    City: {data.address.city}
                                   </div>
                                   <div>
-                                    State: {data.user.State}
+                                    State: {data.address.state}
                                   </div>
                                   <div>
-                                    ZIP: {data.user.Zip}
+                                    ZIP: {data.address.zip}
                                   </div>
                                   <div>
-                                    Birthday: {data.user.DateOfBirth}
+                                    Birthday: {data.date_of_birth}
                                   </div>
                                   <div>
-                                    Email: {data.user.Email}
+                                    Email: {data.email}
                                   </div>
                                 </Space>
                               </Space>

@@ -71,9 +71,9 @@ export default function SignIn() {
             headers: headerGetDev
         })
         .then(data => {    
-          if(data.data.streak % 2 == 0){
+          if(data.data.login_streak % 2 == 0){
             message.success("You are logged in two days in a row. You get a bonus of 5 credits.");
-            handleDeposit(data.data.Balance.amount+5);
+            handleDeposit(data.data.balance.amount+5);
           }
         }).catch(error => console.log(error));
   }

@@ -6,7 +6,7 @@ import "fmt"
 
 type Address struct {
 	Street string `bson:"street, omitempty" json:"street"`
-	City   string `bson:"city, omitempty" josn:"city"`
+	City   string `bson:"city, omitempty" json:"city"`
 	State  string `bson:"state, omitempty" json:"state"`
 	Zip    string `bson:"zip, omitempty" json:"zip"`
 }
