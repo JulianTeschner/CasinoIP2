@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row, Space } from "antd";
+import { Button, Card, Col, message, Row, Space } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +7,24 @@ import { URL_ENDPOINT } from "../../config/env";
 import { useUserStore } from "../../config/zustand";
 import "./style/Account.css";
 
+const headerGetDev = {
+  'Access-Control-Allow-Origin': '*',
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+} 
+
+const headerPatchDev = {
+  'Access-Control-Allow-Origin': '*',
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+}
+
 function Account() {
     const [data, setData] = useState<any>('');
     //const [user, setUser] = React.useState<any>({"username": "fish123", "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVsM3NGclRrWExXMENseVV3NmFyZSJ9.eyJpc3MiOiJodHRwczovL2Rldi1jN2ZiYnl0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MkBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9jYXNpbm8tYXBpLyIsImlhdCI6MTY1MTc2NjE4MiwiZXhwIjoxNjUxODUyNTgyLCJhenAiOiJHd3NXNmRPWlpCWVNWY0dkMHE2TXBGRmd6SWdhZzY3MiIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.WvSrKkTRs4y7l5MbjAH99WFAIPQ3dpWnjwQMHBzS4BxUtH6k4RaRDVYwsvlOheimTu0J_RlFRfyB2WPIEi885YUkJFdsEy3iSFCsS1Bo4BIy5USCrrB1YefgqyPvnNxdHTDZZZgPbIO5bX6waYe5XplmX6HM5CnqGQ_9_6hYNBGjn5xM1cE6hMp4nn6qR-2daf_loEcmYLcOO9gPg0DQmuA8o9KJxEY0ztoLY_PFuQDjBGmHWLG5g6Ae5A9ao5LUX5JIaI-QgnY0C7pAZCXkU8iElwU8alEbf3MOmr9OguyuYSK771iswlkgxnQBF3ivMF65qD5ej2n9rQEbgTe6YA"});
     var user = useUserStore((state:any) => state.userProps)[0];
 
     const navigate = useNavigate();
-
-    const headerGetDev = {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-    } 
-
   
     async function getData() {
       await axios(URL_ENDPOINT + user.username, {
@@ -66,6 +71,34 @@ function Account() {
 
       console.log('Lock');
     }
+  
+    async function checkStreak (values: any){
+      await axios(URL_ENDPOINT + user.username, {
+              method: 'GET',
+              headers: headerGetDev
+          })
+          .then(data => {    
+            if(data.data.login_streak % 2 == 0){
+              message.success("You are logged in two days in a row. You get a bonus of 5 credits.");
+              handleDeposit(data.data.balance.amount+5);
+            }
+          }).catch(error => console.log(error));
+    }
+  
+    async function handleDeposit(val:any) {
+      await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
+          method: 'PATCH',
+          headers: headerPatchDev,
+          data: new URLSearchParams({
+              'balance.amount': val
+          })
+        }).then(val => {
+          console.log("streak successful");
+        })
+        .catch(error => {
+          console.log(error)
+        });
+      };
 
     return (
         <div>
@@ -116,6 +149,7 @@ function Account() {
                             </div>
                           }
                           <Space>
+                            <Button type="primary" onClick={checkStreak}>Check streak!</Button>
                             <Button type="primary" onClick={deleteAccount}>Delete account!</Button>
                             <Button type="primary" onClick={lockAccount}>Lock account!</Button>
                           </Space>

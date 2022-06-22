@@ -20,12 +20,6 @@ export default function SignIn() {
     'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
   } 
 
-  const headerPatchDev = {
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
-  }
-
   const handleSubmit = (values:any) => {
     auth0.client.login(
       {
@@ -47,51 +41,9 @@ export default function SignIn() {
         addUser(decodedIdToken.email, decodedIdToken.nickname);
         
         navigate("/overview");
-        handleStreak(values);
       }
     );
   };
-
-  async function handleStreak (values:any) {
-    await axios(URL_ENDPOINT + 'streak/' + user.username, {
-      method: 'PATCH',
-      headers: headerPatchDev,
-    }).then(data => {
-      checkStreak(data);
-      console.log(data)
-    })
-    .catch(error => {
-      console.log(error)
-    });
-  };
-
-  async function checkStreak (values: any){
-    await axios(URL_ENDPOINT + user.username, {
-            method: 'GET',
-            headers: headerGetDev
-        })
-        .then(data => {    
-          if(data.data.login_streak % 2 == 0){
-            message.success("You are logged in two days in a row. You get a bonus of 5 credits.");
-            handleDeposit(data.data.balance.amount+5);
-          }
-        }).catch(error => console.log(error));
-  }
-
-  async function handleDeposit(val:any) {
-    await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
-        method: 'PATCH',
-        headers: headerPatchDev,
-        data: new URLSearchParams({
-            'balance.amount': val
-        })
-      }).then(val => {
-        console.log("streak successful");
-      })
-      .catch(error => {
-        console.log(error)
-      });
-    };
 
   return (
     <>

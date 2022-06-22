@@ -7,12 +7,12 @@ const useStore = create(set => ({
             username: undefined,
         }
     ],
-    addUser: (email:any, username: any) =>
+    addUser: (newEmail:any, newUsername: any) =>
         set((state:any) => ({
             userProps: [
                 {
-                    email: email,
-                    username: username,
+                    email: newEmail,
+                    username: newUsername,
                 },
             ]
         })),
