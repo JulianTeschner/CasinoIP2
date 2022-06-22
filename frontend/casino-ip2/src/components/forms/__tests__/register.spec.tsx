@@ -15,19 +15,19 @@ jest.mock('auth0-js');
 
 describe("Register", () => {
 
-		const res = {
-			"user": {
-				'user.Username': 'Username',
-				'user.FirstName': 'First',
-				'user.LastName': 'Last',
-				'user.Email': 'mail@mail.com',
-				'user.DateOfBirth': '2000-01-01',
-				'user.Address.Street': 'Street',
-				'user.Address.city': 'City',
-				'user.Address.State': 'State',
-				'user.Address.Zip': '70172',
-		  }
-		};
+		// const res = {
+		// 	"user": {
+		// 		'user.Username': 'Username',
+		// 		'user.FirstName': 'First',
+		// 		'user.LastName': 'Last',
+		// 		'user.Email': 'mail@mail.com',
+		// 		'user.DateOfBirth': '2000-01-01',
+		// 		'user.Address.Street': 'Street',
+		// 		'user.Address.city': 'City',
+		// 		'user.Address.State': 'State',
+		// 		'user.Address.Zip': '70172',
+		//   }
+		// };
 	
     beforeEach(() => {
       const res = {
