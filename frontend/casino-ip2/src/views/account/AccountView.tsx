@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { URL_ENDPOINT } from "../../config/env";
 import { useUserStore } from "../../config/zustand";
+import "./style/Account.css";
 
 function Account() {
     const [data, setData] = useState<any>('');
@@ -80,33 +81,36 @@ function Account() {
                         <div data-testid="account-text"> Here you can see your account details </div>                        
                         { data === '' ? 
                             <div> Loading Data... </div> :
-                            <div className='overview'>
+                            <div>
                               <Space direction='vertical' size={10}>
                                 <Space size={20}>
-                                  <div>
-                                    First Name: {data.first_name}
+                                  <div className="display-grid">
+                                    <div>
+                                      First Name: {data.first_name}
+                                    </div>
+                                    <div>
+                                      Last Name: {data.last_name}
+                                    </div>
+                                    <div>
+                                      Street: {data.address.street}
+                                    </div>
+                                    <div>
+                                      City: {data.address.city}
+                                    </div>
+                                    <div>
+                                      State: {data.address.state}
+                                    </div>
+                                    <div>
+                                      ZIP: {data.address.zip}
+                                    </div>
+                                    <div>
+                                      Birthday: {data.date_of_birth}
+                                    </div>
+                                    <div>
+                                      Email: {data.email}
+                                    </div>
                                   </div>
-                                  <div>
-                                    Last Name: {data.last_name}
-                                  </div>
-                                  <div>
-                                    Street: {data.address.street}
-                                  </div>
-                                  <div>
-                                    City: {data.address.city}
-                                  </div>
-                                  <div>
-                                    State: {data.address.state}
-                                  </div>
-                                  <div>
-                                    ZIP: {data.address.zip}
-                                  </div>
-                                  <div>
-                                    Birthday: {data.date_of_birth}
-                                  </div>
-                                  <div>
-                                    Email: {data.email}
-                                  </div>
+                                  
                                 </Space>
                               </Space>
                             </div>
