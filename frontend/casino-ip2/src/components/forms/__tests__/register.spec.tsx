@@ -5,8 +5,13 @@ import { AllProviders } from '../../../testUtils';
 import axios from 'axios';
 import userEvent from '@testing-library/user-event';
 import { URL_ENDPOINT } from '../../../config/env';
+import { act } from 'react-test-renderer';
+import auth0 from '../../../config/auth0';
+import { WebAuth } from "auth0-js";
 
 jest.mock("axios");
+
+jest.mock('auth0-js');
 
 describe("Register", () => {
 
@@ -24,6 +29,21 @@ describe("Register", () => {
 		  }
 		};
 	
+    beforeEach(() => {
+      const res = {
+        "balance": {
+          "Amount": 100,
+          "LastDeposit": 50
+        }};
+        
+        axios.mockResolvedValue({ data: res,
+          status: 200,
+          statusText: "OK",
+          headers: {},
+          config: {},
+        });
+    })
+
 	it("renders the form for the register process", async () => {
 		render(
 			<AllProviders>
@@ -98,6 +118,7 @@ describe("Register", () => {
 		const text = await screen.findByText("First Name");
 
       	await expect(text).toBeInTheDocument();
+
       });
 /*
 	  it('should test axios success', async() =>{
@@ -112,6 +133,43 @@ describe("Register", () => {
 		//expect(result).toEqual(users);
 	  });
 */	  
-});
 
+    it('should respond ok', async() => {
+      await act(() => {
+        render(
+          <AllProviders>
+            <Register/>
+          </AllProviders>
+        );
+      })
+
+      const findFirstname = await screen.findByLabelText('First Name');
+      const findLastname = await screen.findByLabelText('Last Name');
+      const findStreet = await screen.findByLabelText('Street');
+      const findZip = await screen.findByLabelText('ZIP');
+      const findState = await screen.findByLabelText('State');
+      const findBirthday = await screen.findByLabelText('Day of birth');
+      const findEmail = await screen.findByLabelText('E-Mail');
+      const findUsername = await screen.findByLabelText('Username');
+      const findPassword = await screen.findByLabelText('Password');
+      const findPasswordRepeat = await screen.findByLabelText('Confirm Password');
+      const registerbtn = await screen.findByTestId('register-btn');
+      
+      await act(() => {    
+        userEvent.type(findFirstname, 'First');
+        userEvent.type(findLastname, 'Last');
+        userEvent.type(findStreet, 'Street');
+        userEvent.type(findZip, '70172');
+        userEvent.type(findState, 'State');
+        userEvent.type(findBirthday, '2000-01-01');
+        userEvent.type(findEmail, 'mail@mail.com');
+        userEvent.type(findUsername, 'Username');
+        userEvent.type(findPassword, '1234');
+        userEvent.type(findPasswordRepeat, '1234');
+        userEvent.click(registerbtn);
+      })
+      
+      expect(registerbtn).toBeInTheDocument();
+    })
+});
 

@@ -253,7 +253,7 @@ function Register() {
             <Row>
       		    <Col span={12} offset={6}>
 						    <Form.Item>
-                  <Button data-testid="register-btn" type="primary" htmlType="submit">
+                  <Button data-testid="register-btn" type="primary" htmlType="submit" onClick={handleSubmit}>
                     Register
                   </Button>
                 </Form.Item>
