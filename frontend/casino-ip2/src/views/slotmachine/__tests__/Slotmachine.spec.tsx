@@ -6,8 +6,25 @@ import userEvent from '@testing-library/user-event'
 import renderer from 'react-test-renderer';
 import axios from "axios";
 
+jest.mock("axios");
 
 describe("slotmachine game", () => {
+
+  beforeEach(() => {
+		const res = {
+			"balance": {
+			  "amount": 100,
+			  "LastDeposit": 50
+		  }};
+		  
+		  axios.mockResolvedValue({ data: res,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+      });
+	})
+
 	it('renders correctly', ()=> {
 		const tree = renderer.create(<Slotmachine/>).toJSON();
 		expect(tree).toMatchSnapshot();
@@ -64,36 +81,10 @@ describe("slotmachine game", () => {
 		expect(snapshot).toMatchSnapshot();
 	});
 
+  it('should pass checking game logic', async () => {
+    render(<Slotmachine />);
+
+
+  })
+
 });
-/*
-		it("tests the 'bet and play' button", async () => {    
-		render(<Slotmachine/>);
-			
-			const btnplay = await screen.findByTestId('play');
-			const input = await screen.findByTestId('bet-input');
-
-			userEvent.type(input, '10');
-			userEvent.click(btnplay);
-			
-
-		});
-
-
-		
-
-		it('should not render overlay', async () => {
-			render(<Slotmachine/>);
-			
-			const btnplay = await screen.findByTestId('play');
-			const input = await screen.findByTestId('bet-input');
-
-			userEvent.type(input, '10');
-			userEvent.click(btnplay);
-
-		});
-
-		
-
-		
-	});
-	*/

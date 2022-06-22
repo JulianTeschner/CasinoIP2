@@ -1,6 +1,5 @@
 import React, { useEffect, useRef , useState} from 'react';
 import { Space, Button, message, Row, Col } from 'antd';
-import { getAutomaticTypeDirectiveNames } from 'typescript';
 import './style/Slotmachine.css';
 import { useUserStore } from '../../config/zustand';
 import axios from "axios";
@@ -116,12 +115,6 @@ function Slotmachine(){
       setItem2(item2);
       setItem3(item3);
       
-    }
-
-    function spinMehrmals(){
-      for(var i=1;anzahlSpins<i;i++){
-        spin();
-      }
     }
   
   return (
