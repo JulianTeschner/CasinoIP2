@@ -3,8 +3,7 @@ import Slotmachine from "./Slotmachine";
 
 function SlotmachineView() {
 	return (
-		<div className="content">
-			<div id="container"/>
+		<div>
 			<Slotmachine/>
 		</div>	
 	);

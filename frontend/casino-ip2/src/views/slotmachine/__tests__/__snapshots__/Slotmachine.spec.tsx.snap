@@ -2,62 +2,40 @@
 
 exports[`nothing should happen if input 0 1`] = `
 <div
-  className="content"
+  className="Slotmachine"
 >
-  <h1
-    className="animate__animated animate__bounce"
-  >
-    0
-    0
-    0
-  </h1>
-  <button
-    onClick={[Function]}
-  >
-    Spin
-  </button>
-  <label>
-    Anzahl an spins für den Autospin: 
-  </label>
-  <input
-    name="anzahlSpins"
-    onChange={[Function]}
-    type="number"
-  />
   <div
-    data-testid="balance"
-  >
-    <b>
-      balance: 
-       
-    </b>
-  </div>
-  <div
-    className="p-t10"
+    className="ant-row"
+    style={Object {}}
   >
     <div
-      className="ant-space ant-space-vertical"
+      className="ant-col ant-col-12 ant-col-offset-6"
       style={Object {}}
     >
-      <div
-        className="ant-space-item"
+      <h1
+        className="ant-typography"
+        data-testid="slotmachine-h1"
+        onClick={null}
         style={
           Object {
-            "marginBottom": 8,
+            "WebkitLineClamp": undefined,
           }
         }
       >
-        <div
-          data-testid="msg"
-        >
-          <p>
-            <b />
-          </p>
-        </div>
-      </div>
+        Slotmachine
+      </h1>
       <div
-        className="ant-space-item"
-        style={Object {}}
+        className="pt-15"
+        data-testid="balance"
+      >
+        <b>
+          balance: 
+           
+        </b>
+      </div>
+      <form
+        data-testid="bet-form"
+        onSubmit={[Function]}
       >
         <div
           className="ant-space ant-space-horizontal ant-space-align-center"
@@ -65,83 +43,152 @@ exports[`nothing should happen if input 0 1`] = `
         >
           <div
             className="ant-space-item"
+            style={
+              Object {
+                "marginRight": 8,
+              }
+            }
+          >
+            <label>
+              min. bet amount 1 Credit
+            </label>
+          </div>
+          <div
+            className="ant-space-item"
             style={Object {}}
           >
-            <form
-              data-testid="bet-form"
-              onSubmit={[Function]}
+            <input
+              data-testid="bet-input"
+              name="einsatz"
+              type="number"
+            />
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "textAlign": "center",
+            }
+          }
+        >
+          <h1
+            className="animate__animated animate__bounce"
+            style={
+              Object {
+                "fontSize": "100px",
+                "letterSpacing": "1rem",
+              }
+            }
+          >
+            0
+            0
+            0
+          </h1>
+          <button
+            className="ant-btn ant-btn-primary"
+            onClick={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+              }
+            }
+            type="button"
+          >
+            <span>
+              Spin
+            </span>
+          </button>
+          <br />
+          <div
+            className="p-t10"
+          >
+            <div
+              className="ant-space ant-space-vertical"
+              style={Object {}}
             >
               <div
-                className="ant-space ant-space-horizontal ant-space-align-center"
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <div
+                  data-testid="msg"
+                >
+                  <p>
+                    <b />
+                  </p>
+                </div>
+              </div>
+              <div
+                className="ant-space-item"
                 style={Object {}}
               >
                 <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <label>
-                    min. bet amount 1 Credit
-                  </label>
-                </div>
-                <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <input
-                    data-testid="bet-input"
-                    name="einsatz"
-                    type="number"
-                  />
-                </div>
-                <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <button
-                    className="ant-btn ant-btn-primary"
-                    data-testid="play"
-                    disabled={false}
-                    onClick={[Function]}
-                    type="submit"
-                  >
-                    <span>
-                      Spin and go
-                    </span>
-                  </button>
-                </div>
-                <div
-                  className="ant-space-item"
+                  className="ant-space ant-space-horizontal ant-space-align-center"
                   style={Object {}}
                 >
-                  <button
-                    className="ant-btn ant-btn-primary"
-                    data-testid="play-auto"
-                    disabled={false}
-                    onClick={[Function]}
-                    type="submit"
+                  <div
+                    className="ant-space-item"
+                    style={Object {}}
                   >
-                    <span>
-                      Autospin and go
-                    </span>
-                  </button>
+                    <div
+                      className="ant-space ant-space-vertical"
+                      style={Object {}}
+                    >
+                      <div
+                        className="ant-space-item"
+                        style={
+                          Object {
+                            "marginBottom": 8,
+                          }
+                        }
+                      >
+                        <label>
+                          Anzahl an spins für den Autospin: 
+                        </label>
+                      </div>
+                      <div
+                        className="ant-space-item"
+                        style={
+                          Object {
+                            "marginBottom": 8,
+                          }
+                        }
+                      >
+                        <input
+                          name="anzahlSpins"
+                          onChange={[Function]}
+                          type="number"
+                        />
+                      </div>
+                      <div
+                        className="ant-space-item"
+                        style={Object {}}
+                      >
+                        <button
+                          className="ant-btn ant-btn-primary"
+                          data-testid="play"
+                          disabled={false}
+                          onClick={[Function]}
+                          type="submit"
+                        >
+                          <span>
+                            Spin and go
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
@@ -149,62 +196,40 @@ exports[`nothing should happen if input 0 1`] = `
 
 exports[`nothing should happen if input greater than balance 1`] = `
 <div
-  className="content"
+  className="Slotmachine"
 >
-  <h1
-    className="animate__animated animate__bounce"
-  >
-    0
-    0
-    0
-  </h1>
-  <button
-    onClick={[Function]}
-  >
-    Spin
-  </button>
-  <label>
-    Anzahl an spins für den Autospin: 
-  </label>
-  <input
-    name="anzahlSpins"
-    onChange={[Function]}
-    type="number"
-  />
   <div
-    data-testid="balance"
-  >
-    <b>
-      balance: 
-       
-    </b>
-  </div>
-  <div
-    className="p-t10"
+    className="ant-row"
+    style={Object {}}
   >
     <div
-      className="ant-space ant-space-vertical"
+      className="ant-col ant-col-12 ant-col-offset-6"
       style={Object {}}
     >
-      <div
-        className="ant-space-item"
+      <h1
+        className="ant-typography"
+        data-testid="slotmachine-h1"
+        onClick={null}
         style={
           Object {
-            "marginBottom": 8,
+            "WebkitLineClamp": undefined,
           }
         }
       >
-        <div
-          data-testid="msg"
-        >
-          <p>
-            <b />
-          </p>
-        </div>
-      </div>
+        Slotmachine
+      </h1>
       <div
-        className="ant-space-item"
-        style={Object {}}
+        className="pt-15"
+        data-testid="balance"
+      >
+        <b>
+          balance: 
+           
+        </b>
+      </div>
+      <form
+        data-testid="bet-form"
+        onSubmit={[Function]}
       >
         <div
           className="ant-space ant-space-horizontal ant-space-align-center"
@@ -212,83 +237,152 @@ exports[`nothing should happen if input greater than balance 1`] = `
         >
           <div
             className="ant-space-item"
+            style={
+              Object {
+                "marginRight": 8,
+              }
+            }
+          >
+            <label>
+              min. bet amount 1 Credit
+            </label>
+          </div>
+          <div
+            className="ant-space-item"
             style={Object {}}
           >
-            <form
-              data-testid="bet-form"
-              onSubmit={[Function]}
+            <input
+              data-testid="bet-input"
+              name="einsatz"
+              type="number"
+            />
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "textAlign": "center",
+            }
+          }
+        >
+          <h1
+            className="animate__animated animate__bounce"
+            style={
+              Object {
+                "fontSize": "100px",
+                "letterSpacing": "1rem",
+              }
+            }
+          >
+            0
+            0
+            0
+          </h1>
+          <button
+            className="ant-btn ant-btn-primary"
+            onClick={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+              }
+            }
+            type="button"
+          >
+            <span>
+              Spin
+            </span>
+          </button>
+          <br />
+          <div
+            className="p-t10"
+          >
+            <div
+              className="ant-space ant-space-vertical"
+              style={Object {}}
             >
               <div
-                className="ant-space ant-space-horizontal ant-space-align-center"
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <div
+                  data-testid="msg"
+                >
+                  <p>
+                    <b />
+                  </p>
+                </div>
+              </div>
+              <div
+                className="ant-space-item"
                 style={Object {}}
               >
                 <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <label>
-                    min. bet amount 1 Credit
-                  </label>
-                </div>
-                <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <input
-                    data-testid="bet-input"
-                    name="einsatz"
-                    type="number"
-                  />
-                </div>
-                <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <button
-                    className="ant-btn ant-btn-primary"
-                    data-testid="play"
-                    disabled={false}
-                    onClick={[Function]}
-                    type="submit"
-                  >
-                    <span>
-                      Spin and go
-                    </span>
-                  </button>
-                </div>
-                <div
-                  className="ant-space-item"
+                  className="ant-space ant-space-horizontal ant-space-align-center"
                   style={Object {}}
                 >
-                  <button
-                    className="ant-btn ant-btn-primary"
-                    data-testid="play-auto"
-                    disabled={false}
-                    onClick={[Function]}
-                    type="submit"
+                  <div
+                    className="ant-space-item"
+                    style={Object {}}
                   >
-                    <span>
-                      Autospin and go
-                    </span>
-                  </button>
+                    <div
+                      className="ant-space ant-space-vertical"
+                      style={Object {}}
+                    >
+                      <div
+                        className="ant-space-item"
+                        style={
+                          Object {
+                            "marginBottom": 8,
+                          }
+                        }
+                      >
+                        <label>
+                          Anzahl an spins für den Autospin: 
+                        </label>
+                      </div>
+                      <div
+                        className="ant-space-item"
+                        style={
+                          Object {
+                            "marginBottom": 8,
+                          }
+                        }
+                      >
+                        <input
+                          name="anzahlSpins"
+                          onChange={[Function]}
+                          type="number"
+                        />
+                      </div>
+                      <div
+                        className="ant-space-item"
+                        style={Object {}}
+                      >
+                        <button
+                          className="ant-btn ant-btn-primary"
+                          data-testid="play"
+                          disabled={false}
+                          onClick={[Function]}
+                          type="submit"
+                        >
+                          <span>
+                            Spin and go
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>
@@ -296,62 +390,40 @@ exports[`nothing should happen if input greater than balance 1`] = `
 
 exports[`renders correctly 1`] = `
 <div
-  className="content"
+  className="Slotmachine"
 >
-  <h1
-    className="animate__animated animate__bounce"
-  >
-    0
-    0
-    0
-  </h1>
-  <button
-    onClick={[Function]}
-  >
-    Spin
-  </button>
-  <label>
-    Anzahl an spins für den Autospin: 
-  </label>
-  <input
-    name="anzahlSpins"
-    onChange={[Function]}
-    type="number"
-  />
   <div
-    data-testid="balance"
-  >
-    <b>
-      balance: 
-       
-    </b>
-  </div>
-  <div
-    className="p-t10"
+    className="ant-row"
+    style={Object {}}
   >
     <div
-      className="ant-space ant-space-vertical"
+      className="ant-col ant-col-12 ant-col-offset-6"
       style={Object {}}
     >
-      <div
-        className="ant-space-item"
+      <h1
+        className="ant-typography"
+        data-testid="slotmachine-h1"
+        onClick={null}
         style={
           Object {
-            "marginBottom": 8,
+            "WebkitLineClamp": undefined,
           }
         }
       >
-        <div
-          data-testid="msg"
-        >
-          <p>
-            <b />
-          </p>
-        </div>
-      </div>
+        Slotmachine
+      </h1>
       <div
-        className="ant-space-item"
-        style={Object {}}
+        className="pt-15"
+        data-testid="balance"
+      >
+        <b>
+          balance: 
+           
+        </b>
+      </div>
+      <form
+        data-testid="bet-form"
+        onSubmit={[Function]}
       >
         <div
           className="ant-space ant-space-horizontal ant-space-align-center"
@@ -359,83 +431,152 @@ exports[`renders correctly 1`] = `
         >
           <div
             className="ant-space-item"
+            style={
+              Object {
+                "marginRight": 8,
+              }
+            }
+          >
+            <label>
+              min. bet amount 1 Credit
+            </label>
+          </div>
+          <div
+            className="ant-space-item"
             style={Object {}}
           >
-            <form
-              data-testid="bet-form"
-              onSubmit={[Function]}
+            <input
+              data-testid="bet-input"
+              name="einsatz"
+              type="number"
+            />
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "alignItems": "center",
+              "textAlign": "center",
+            }
+          }
+        >
+          <h1
+            className="animate__animated animate__bounce"
+            style={
+              Object {
+                "fontSize": "100px",
+                "letterSpacing": "1rem",
+              }
+            }
+          >
+            0
+            0
+            0
+          </h1>
+          <button
+            className="ant-btn ant-btn-primary"
+            onClick={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+              }
+            }
+            type="button"
+          >
+            <span>
+              Spin
+            </span>
+          </button>
+          <br />
+          <div
+            className="p-t10"
+          >
+            <div
+              className="ant-space ant-space-vertical"
+              style={Object {}}
             >
               <div
-                className="ant-space ant-space-horizontal ant-space-align-center"
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <div
+                  data-testid="msg"
+                >
+                  <p>
+                    <b />
+                  </p>
+                </div>
+              </div>
+              <div
+                className="ant-space-item"
                 style={Object {}}
               >
                 <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <label>
-                    min. bet amount 1 Credit
-                  </label>
-                </div>
-                <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <input
-                    data-testid="bet-input"
-                    name="einsatz"
-                    type="number"
-                  />
-                </div>
-                <div
-                  className="ant-space-item"
-                  style={
-                    Object {
-                      "marginRight": 8,
-                    }
-                  }
-                >
-                  <button
-                    className="ant-btn ant-btn-primary"
-                    data-testid="play"
-                    disabled={false}
-                    onClick={[Function]}
-                    type="submit"
-                  >
-                    <span>
-                      Spin and go
-                    </span>
-                  </button>
-                </div>
-                <div
-                  className="ant-space-item"
+                  className="ant-space ant-space-horizontal ant-space-align-center"
                   style={Object {}}
                 >
-                  <button
-                    className="ant-btn ant-btn-primary"
-                    data-testid="play-auto"
-                    disabled={false}
-                    onClick={[Function]}
-                    type="submit"
+                  <div
+                    className="ant-space-item"
+                    style={Object {}}
                   >
-                    <span>
-                      Autospin and go
-                    </span>
-                  </button>
+                    <div
+                      className="ant-space ant-space-vertical"
+                      style={Object {}}
+                    >
+                      <div
+                        className="ant-space-item"
+                        style={
+                          Object {
+                            "marginBottom": 8,
+                          }
+                        }
+                      >
+                        <label>
+                          Anzahl an spins für den Autospin: 
+                        </label>
+                      </div>
+                      <div
+                        className="ant-space-item"
+                        style={
+                          Object {
+                            "marginBottom": 8,
+                          }
+                        }
+                      >
+                        <input
+                          name="anzahlSpins"
+                          onChange={[Function]}
+                          type="number"
+                        />
+                      </div>
+                      <div
+                        className="ant-space-item"
+                        style={Object {}}
+                      >
+                        <button
+                          className="ant-btn ant-btn-primary"
+                          data-testid="play"
+                          disabled={false}
+                          onClick={[Function]}
+                          type="submit"
+                        >
+                          <span>
+                            Spin and go
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

@@ -1,10 +1,11 @@
 import React, { useEffect, useRef , useState} from 'react';
-import { Space, Button, message } from 'antd';
+import { Space, Button, message, Row, Col } from 'antd';
 import { getAutomaticTypeDirectiveNames } from 'typescript';
 import './style/Slotmachine.css';
 import { useUserStore } from '../../config/zustand';
 import axios from "axios";
 import { URL_ENDPOINT } from '../../config/env';
+import Title from 'antd/lib/typography/Title';
 
 const headerGetDev = {
   'Access-Control-Allow-Origin': '*',
@@ -123,33 +124,47 @@ function Slotmachine(){
   
   return (
     
-    <div className='content'>
-
-      <h1 className="animate__animated animate__bounce">{getitem1}{getitem2}{getitem3}</h1>
-      <button onClick={spin}>Spin</button>
-      <label>Anzahl an spins für den Autospin: </label>
-      <input type="number" name="anzahlSpins" onChange={(e)=>{
-        setAnzahlSpins(e.target.valueAsNumber);
-      }}/> 
-
-      <div data-testid='balance'><b>balance: {guthaben}</b></div>
-        <div className='p-t10'>
-          <Space direction='vertical'>
-            <div data-testid='msg'>
-              <p><b>{status}</b></p>
-            </div>
+    <div className='Slotmachine'>
+      <Row>
+        <Col span={12} offset={6}>
+          <Title data-testid="slotmachine-h1">
+            Slotmachine
+          </Title>
+          <div data-testid='balance' className='pt-15'><b>balance: {guthaben}</b></div>
+          <form data-testid='bet-form' onSubmit={handleSubmit}>
             <Space>
-              <form data-testid='bet-form' onSubmit={handleSubmit}>
-                <Space>
-                  <label>min. bet amount 1 Credit</label>
-                  <input data-testid='bet-input' type="number" name="einsatz" />
-                  <Button onClick={spin} data-testid='play' disabled={showUI.current} type="primary" htmlType='submit'>Spin and go</Button>
-                  <Button onClick={spinMehrmals} data-testid='play-auto' disabled={showUI.current} type="primary" htmlType='submit'>Autospin and go</Button>
-                </Space>
-              </form>   
+              <label>min. bet amount 1 Credit</label>
+              <input data-testid='bet-input' type="number" name="einsatz" />
             </Space>
-          </Space>                 
-        </div>
+
+            <div style={{textAlign: 'center', alignItems: 'center'}}>
+              <h1 style={{ fontSize: '100px', letterSpacing: '1rem'}} className="animate__animated animate__bounce">{getitem1}{getitem2}{getitem3}</h1>
+              
+              <Button onClick={spin} type="primary" style={{ alignItems: 'center' }}>Spin</Button><br /> 
+
+                <div className='p-t10'>
+                  <Space direction='vertical'>
+                    <div data-testid='msg'>
+                      <p><b>{status}</b></p>
+                    </div>
+                    <Space>
+                    
+                      <Space direction='vertical'>
+                        <label>Anzahl an spins für den Autospin: </label>
+                        <input type="number" name="anzahlSpins" onChange={(e)=>{
+                          setAnzahlSpins(e.target.valueAsNumber);
+                        }}/>
+                      
+                        <Button onClick={spin} data-testid='play' disabled={showUI.current} type="primary" htmlType='submit'>Spin and go</Button>
+                      </Space>
+                      
+                  </Space>
+                </Space>                 
+              </div>
+            </div>
+          </form>
+          </Col>
+        </Row>
       </div>
     );
 };
