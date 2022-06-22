@@ -5,10 +5,21 @@ import { AllProviders } from '../../../testUtils';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import { EmailJSResponseStatus } from 'emailjs-com';
+import { act } from 'react-test-renderer';
 
 jest.mock("axios");
 
 describe('balance view', () => {
+
+    beforeEach(() => {
+      axios.mockResolvedValue({ data: {},
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+      });
+    });
+
     it('should render balance view', async () => {
       render(
         <AllProviders>
@@ -20,6 +31,7 @@ describe('balance view', () => {
 
       expect(headline).toBeInTheDocument();
       expect(btn).toBeInTheDocument();
+
 
       btn.click();
 
@@ -209,22 +221,25 @@ describe('balance view', () => {
     });
 
     it('should handle balance getBalance', async () => {
-      
-      const getBalance = 
-
       render(
         <AllProviders>
             <Balance />
-        </AllProviders>);
+        </AllProviders>
+      );
 
       const btn = await screen.findByRole("button", {name: /Balance/i});
 
       expect(btn).toBeInTheDocument();
-
-      btn.click();
+      
+      await act(() => {
+        btn.click();
+      });
 
       const findTab = await screen.findByText('Pay off');
-      findTab.click();
+      
+      await act(() => {
+        findTab.click();
+      });
 
       const balanceTextOff = await screen.findByTestId('balance-text-off');
       const btnDepositOff = await screen.findByTestId('balance-button-off');
@@ -242,14 +257,15 @@ describe('balance view', () => {
       expect(findCreditOff).toBeInTheDocument();
       expect(findDepositOff).toBeInTheDocument();
 
-      userEvent.type(findFirstnameOff, "First");
-      userEvent.type(findLastnameOff, "Last");
-      userEvent.type(findEmailOff, "test@test.com");
-      userEvent.type(findCreditOff, "1234123412341234");
-      userEvent.type(findDepositOff, "20");
-      btnDepositOff.click();
+      await act(() => {
+        userEvent.type(findFirstnameOff, "First");
+        userEvent.type(findLastnameOff, "Last");
+        userEvent.type(findEmailOff, "test@test.com");
+        userEvent.type(findCreditOff, "1234123412341234");
+        userEvent.type(findDepositOff, "20");
+        btnDepositOff.click();
+      });
 
-      expect(axios.get).toHaveBeenCalled;
+      expect(btnDepositOff).toBeInTheDocument();
     });
-
 })
