@@ -39,7 +39,7 @@ function Balance() {
             method: 'GET',
             headers: headerGetDev
         })
-        .then(data => setGuthaben(data.data.balance.Amount))
+        .then(data => setGuthaben(data.data.balance.amount))
         .catch(error => console.log(error));
     }
 

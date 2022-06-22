@@ -90,16 +90,16 @@ function Account() {
                                     Last Name: {data.last_name}
                                   </div>
                                   <div>
-                                    Street: {data.adress.street}
+                                    Street: {data.address.street}
                                   </div>
                                   <div>
-                                    City: {data.adress.city}
+                                    City: {data.address.City}
                                   </div>
                                   <div>
-                                    State: {data.adress.state}
+                                    State: {data.address.state}
                                   </div>
                                   <div>
-                                    ZIP: {data.adress.zip}
+                                    ZIP: {data.address.zip}
                                   </div>
                                   <div>
                                     Birthday: {data.date_of_birth}

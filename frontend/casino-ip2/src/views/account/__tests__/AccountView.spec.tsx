@@ -15,10 +15,10 @@ describe("AboutUs", () => {
             "user": {
               "first_name": "Max",
               "last_name": "Mustermann",
-              "adress.street": "Street",
-              "adress.city": "Stuttgart",
-              "adress.state": "Germany",
-              "adress.zip": "70174",
+              "address.street": "Street",
+              "address.city": "Stuttgart",
+              "address.state": "Germany",
+              "address.zip": "70174",
               "date_of_birth": "01.01.2000",
               "email": "max@mustermann.com"
           }

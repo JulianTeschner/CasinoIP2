@@ -13,7 +13,7 @@ describe("sportbet game", () => {
 	beforeEach(() => {
 		const res = {
 			"balance": {
-			  "Amount": 100,
+			  "amount": 100,
 			  "LastDeposit": 50
 		  }};
 		  
