@@ -6,9 +6,13 @@ import userEvent from '@testing-library/user-event'
 import renderer from 'react-test-renderer';
 import axios from "axios";
 
-/*
-describe("slotmachine game", () => {
 
+describe("slotmachine game", () => {
+	it('renders correctly', ()=> {
+		
+	})
+});
+/*
 	it('renders correctly', ()=> {
 		const tree = renderer.create(<Slotmachine/>).toJSON();
 		expect(tree).toMatchSnapshot();

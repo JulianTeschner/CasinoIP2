@@ -18,7 +18,7 @@ const headerPatchDev = {
 }
 
 function Slotmachine(){
-/*
+
   const einsatz = useRef(0);
   const [guthaben, setGuthaben] = React.useState<any>(' ');
   const showUI = useRef(false);
@@ -168,7 +168,7 @@ function Slotmachine(){
       </div>
     );
 
-*/
+
 };
 
 export default Slotmachine;
