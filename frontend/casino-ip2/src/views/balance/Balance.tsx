@@ -304,7 +304,7 @@ function Balance() {
                                         <Col span={12} offset={6}>
                                             <Form.Item>
                                                 <Button 
-                                                    data-testid="balance-button-off" type="primary" htmlType="submit" onClick={handlePayOff}                     
+                                                    data-testid="balance-button-off" type="primary" htmlType="submit"                    
                                                 >Pay off</Button>
                                             </Form.Item>
                                         </Col>
