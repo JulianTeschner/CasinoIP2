@@ -93,7 +93,7 @@ function Account() {
                                     Street: {data.address.street}
                                   </div>
                                   <div>
-                                    City: {data.address.City}
+                                    City: {data.address.city}
                                   </div>
                                   <div>
                                     State: {data.address.state}
