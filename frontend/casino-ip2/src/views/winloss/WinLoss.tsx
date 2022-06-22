@@ -18,7 +18,7 @@ function WinLoss() {
 
 
   async function getData() {
-      await axios(URL_ENDPOINT + user.username, {
+      await axios(URL_ENDPOINT + `${localStorage.getItem("username")}`, {
               method: 'GET',
               headers: headerGetDev,
       }).then(data => {

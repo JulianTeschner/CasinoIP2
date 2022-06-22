@@ -35,7 +35,7 @@ function Balance() {
     }
 
     async function getBalance() {
-        await axios(URL_ENDPOINT + user.username, {
+        await axios(URL_ENDPOINT + `${localStorage.getItem("username")}`, {
             method: 'GET',
             headers: headerGetDev
         })
@@ -50,7 +50,7 @@ function Balance() {
     async function handlePayIn(val:any) {      
         getBalance();
         setGuthaben(guthaben + val.balance);
-        await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
+        await axios(URL_ENDPOINT + 'balance/amount/' + `${localStorage.getItem("username")}`, {
             method: 'PATCH',
             headers: headerPatchDev,
             data: new URLSearchParams({
@@ -76,7 +76,7 @@ function Balance() {
     async function handlePayOff(val:any) {
         getBalance();
         setGuthaben(guthaben - val.balance);
-        await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
+        await axios(URL_ENDPOINT + 'balance/amount/' + `${localStorage.getItem("username")}`, {
             method: 'PATCH',
             headers: headerPatchDev,
             data: new URLSearchParams({

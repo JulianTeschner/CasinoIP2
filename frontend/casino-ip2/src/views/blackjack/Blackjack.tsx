@@ -20,7 +20,7 @@ function Blackjack() {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
     } 
-    
+
     const deck = [{"Farbe": "♥", "Wert": "2", "Gespielt": 0}, {"Farbe": "♥", "Wert": "3", "Gespielt": 0}, {"Farbe": "♥", "Wert": "4", "Gespielt": 0}, {"Farbe": "♥", "Wert": "5", "Gespielt": 0}, {"Farbe": "♥", "Wert": "6", "Gespielt": 0}, {"Farbe": "♥", "Wert": "7", "Gespielt": 0}, {"Farbe": "♥", "Wert": "8", "Gespielt": 0}, {"Farbe": "♥", "Wert": "9", "Gespielt": 0}, {"Farbe": "♥", "Wert": "10", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♥", "Wert": "King", "Gespielt": 0}, {"Farbe": "♥", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♣", "Wert": "2", "Gespielt": 0}, {"Farbe": "♣", "Wert": "3", "Gespielt": 0}, {"Farbe": "♣", "Wert": "4", "Gespielt": 0}, {"Farbe": "♣", "Wert": "5", "Gespielt": 0}, {"Farbe": "♣", "Wert": "6", "Gespielt": 0}, {"Farbe": "♣", "Wert": "7", "Gespielt": 0}, {"Farbe": "♣", "Wert": "8", "Gespielt": 0}, {"Farbe": "♣", "Wert": "9", "Gespielt": 0}, {"Farbe": "♣", "Wert": "10", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♣", "Wert": "King", "Gespielt": 0}, {"Farbe": "♣", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♦", "Wert": "2", "Gespielt": 0}, {"Farbe": "♦", "Wert": "3", "Gespielt": 0}, {"Farbe": "♦", "Wert": "4", "Gespielt": 0}, {"Farbe": "♦", "Wert": "5", "Gespielt": 0}, {"Farbe": "♦", "Wert": "6", "Gespielt": 0}, {"Farbe": "♦", "Wert": "7", "Gespielt": 0}, {"Farbe": "♦", "Wert": "8", "Gespielt": 0}, {"Farbe": "♦", "Wert": "9", "Gespielt": 0}, {"Farbe": "♦", "Wert": "10", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♦", "Wert": "King", "Gespielt": 0}, {"Farbe": "♦", "Wert": "Ace", "Gespielt": 0}, {"Farbe": "♠", "Wert": "2", "Gespielt": 0}, {"Farbe": "♠", "Wert": "3", "Gespielt": 0}, {"Farbe": "♠", "Wert": "4", "Gespielt": 0}, {"Farbe": "♠", "Wert": "5", "Gespielt": 0}, {"Farbe": "♠", "Wert": "6", "Gespielt": 0}, {"Farbe": "♠", "Wert": "7", "Gespielt": 0}, {"Farbe": "♠", "Wert": "8", "Gespielt": 0}, {"Farbe": "♠", "Wert": "9", "Gespielt": 0}, {"Farbe": "♠", "Wert": "10", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Jack", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Queen", "Gespielt": 0}, {"Farbe": "♠", "Wert": "King", "Gespielt": 0}, {"Farbe": "♠", "Wert": "Ace", "Gespielt": 0}];
     const deck_copy = useRef(deck);
     const [guthaben, setGuthaben] = React.useState<any>(' ');
@@ -71,7 +71,7 @@ function Blackjack() {
     }
 
     async function getBalance() {
-        await axios(URL_ENDPOINT + user.username, {
+        await axios(URL_ENDPOINT + `${localStorage.getItem("username")}`, {
             method: 'GET',
             headers: headerGetDev
         })
@@ -80,7 +80,7 @@ function Blackjack() {
     }
 
     async function patchBalance(val:any) {
-        await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
+        await axios(URL_ENDPOINT + 'balance/amount/' + `${localStorage.getItem("username")}`, {
             method: 'PATCH',
             headers: headerPatchDev,
             data: new URLSearchParams({

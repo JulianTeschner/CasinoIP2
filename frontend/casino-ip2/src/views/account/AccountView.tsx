@@ -28,7 +28,7 @@ function Account() {
     const navigate = useNavigate();
   
     async function getData() {
-      await axios(URL_ENDPOINT + user.username, {
+      await axios(URL_ENDPOINT + `${localStorage.getItem("username")}`, {
         method: 'GET',
         headers: headerGetDev,
       }).then(data => {
@@ -44,13 +44,14 @@ function Account() {
     const removeUser = useUserStore((state:any) => state.removeUser);
 
     async function deleteAccount(val:any) {
-      await axios(URL_ENDPOINT + user.username, {
+      await axios(URL_ENDPOINT + `${localStorage.getItem("username")}`, {
         method: 'DELETE',
         headers: headerGetDev
         })
         .then(val => {
-          localStorage.removeItem("accessToken");                  
           removeUser();
+          localStorage.removeItem("accessToken");                  
+          localStorage.removeItem("username");
           navigate("/home");
         })
         .catch(error => console.log(error));
@@ -74,7 +75,7 @@ function Account() {
     }
   
     async function checkStreak (values: any){
-      await axios(URL_ENDPOINT + user.username, {
+      await axios(URL_ENDPOINT + `${localStorage.getItem("username")}`, {
               method: 'GET',
               headers: headerGetDev
           })
@@ -87,7 +88,7 @@ function Account() {
     }
   
     async function handleDeposit(val:any) {
-      await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
+      await axios(URL_ENDPOINT + 'balance/amount/' + `${localStorage.getItem("username")}`, {
           method: 'PATCH',
           headers: headerPatchDev,
           data: new URLSearchParams({

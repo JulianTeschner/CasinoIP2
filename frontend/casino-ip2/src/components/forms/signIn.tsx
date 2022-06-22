@@ -35,8 +35,10 @@ export default function SignIn() {
         message.success("Login successful");
         localStorage.setItem("accessToken", authResult.accessToken);
 
-        var idToken: any = authResult.idToken;
+        var idToken:any = authResult.idToken;
         var decodedIdToken:any = jwtDecode(idToken);
+
+        localStorage.setItem('username', decodedIdToken.nickname);
         
         addUser(decodedIdToken.email, decodedIdToken.nickname);
         

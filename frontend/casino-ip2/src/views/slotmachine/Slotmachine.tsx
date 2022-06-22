@@ -28,7 +28,7 @@ function Slotmachine(){
   var user = useUserStore((state:any) => state.userProps)[0];
 
   async function getBalance() {
-    await axios(URL_ENDPOINT + user.username, {
+    await axios(URL_ENDPOINT + `${localStorage.getItem("username")}`, {
         method: 'GET',
         headers: headerGetDev
     })
@@ -37,7 +37,7 @@ function Slotmachine(){
 }
 
   async function patchBalance(val:any) {
-    await axios(URL_ENDPOINT + 'balance/amount/' + user.username, {
+    await axios(URL_ENDPOINT + 'balance/amount/' + `${localStorage.getItem("username")}`, {
         method: 'PATCH',
         headers: headerPatchDev,
         data: new URLSearchParams({

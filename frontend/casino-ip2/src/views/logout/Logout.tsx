@@ -23,9 +23,11 @@ function Logout() {
                         <Button 
                             data-testid="logout-button"
                             onClick={  async () => {
-                            localStorage.removeItem("accessToken");
                             
                             removeUser();
+
+                            localStorage.removeItem("accessToken");
+                            localStorage.removeItem("username");
                             
                             navigate('/public/home');
                             }
