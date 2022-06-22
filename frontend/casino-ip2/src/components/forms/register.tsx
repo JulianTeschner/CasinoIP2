@@ -15,7 +15,8 @@ function Register() {
 
   const headerPostDev = {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
   }
 
   async function auth0Submit(val:any){
