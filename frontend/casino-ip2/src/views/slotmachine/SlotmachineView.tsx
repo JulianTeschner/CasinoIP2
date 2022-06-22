@@ -1,20 +1,13 @@
 import React from 'react';
-import SlotmachineForm from "./Slotmachine";
+import Slotmachine from "./Slotmachine";
 
 function SlotmachineView() {
 	return (
- 		
-
 		<div className="content">
-			
-		<div id="container"/>
-		<SlotmachineForm/>
-
+			<div id="container"/>
+			<Slotmachine/>
 		</div>	
-			
 	);
 }
-
-
 
 export default SlotmachineView;
