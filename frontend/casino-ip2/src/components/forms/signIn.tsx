@@ -83,7 +83,7 @@ export default function SignIn() {
         method: 'PATCH',
         headers: headerPatchDev,
         data: new URLSearchParams({
-            'balance.amount': val+5
+            'balance.amount': val
         })
       }).then(val => {
         console.log("streak successful");
