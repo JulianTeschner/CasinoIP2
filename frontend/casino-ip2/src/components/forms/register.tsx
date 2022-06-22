@@ -36,15 +36,15 @@ function Register() {
       method: 'POST',
       headers: headerPostDev,
       data: {
-        'user.Username': val.Username,
-        'user.FirstName': val.FirstName,
-        'user.LastName': val.LastName,
-        'user.Email': val.Email,
-        'user.DateOfBirth': val.DateOfBirth,
-        'user.Address.Street': val.Street,
-        'user.Address.City': val.City,
-        'user.Address.State': val.State,
-        'user.Address.Zip': val.Zip,
+        'username': val.Username,
+        'first_name': val.FirstName,
+        'last_name': val.LastName,
+        'email': val.Email,
+        'date_of_birth': val.DateOfBirth,
+        'address.street': val.Street,
+        'address.city': val.City,
+        'address.state': val.State,
+        'address.zip': val.Zip,
       }
     }).then(data => {
       auth0Submit(val);

@@ -71,7 +71,7 @@ export default function SignIn() {
             headers: headerGetDev
         })
         .then(data => {    
-          if(data.data.streak % 2 == 0){
+          if(data.data.login_streak % 2 == 0){
             message.success("You are logged in two days in a row. You get a bonus of 5 credits.");
             handleDeposit(data.data.Balance.amount+5);
           }
@@ -83,7 +83,7 @@ export default function SignIn() {
         method: 'PATCH',
         headers: headerPatchDev,
         data: new URLSearchParams({
-            'balance.amount': val
+            'balance.amount': val+5
         })
       }).then(val => {
         console.log("streak successful");
