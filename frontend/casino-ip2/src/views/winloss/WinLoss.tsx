@@ -9,7 +9,8 @@ import { URL_ENDPOINT } from '../../config/env';
 function WinLoss() {
   const headerGetDev = {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
   }
 
   const [data, setData] = useState<any>('');
