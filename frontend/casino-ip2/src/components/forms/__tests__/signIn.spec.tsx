@@ -74,7 +74,7 @@ describe("SignIn", () => {
 
 		expect(spy).toHaveBeenCalled();
 		expect(text).toBeInTheDocument();
-		spy.mockRestore(); 		
+		spy.mockRestore(); 	
 	});
 
 });
