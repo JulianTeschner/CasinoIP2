@@ -47,16 +47,14 @@ function Balance() {
         setToSend({ ...toSend, [e.target.name]: e.target.value });
     };
 
-    async function handlePayIn(val:any) {      
-        getBalance();
-        setGuthaben(guthaben + val.balance);
+    async function patchBalance(val:any) {
         await axios(URL_ENDPOINT + 'balance/amount/' + `${localStorage.getItem("username")}`, {
             method: 'PATCH',
             headers: headerPatchDev,
             data: new URLSearchParams({
-                'balance.amount': guthaben
+                'balance.amount': val
             })
-          }).then(val => {
+        }).then(data => {
             navigate("/overview");
             message.success("Deposit successful");
             send(
@@ -65,38 +63,34 @@ function Balance() {
                 toSend,
                 'z4fPMHER9eOdAN1pv'
             )
-          })
-          .catch(error => {
+        })
+        .catch(error => {
             setErrorMessage(`Deposit failed. Please try again later`);
             console.log(error)
-          });  
-             
+        });
+    }
+
+    async function handlePayIn(val:any) {      
+        //val.preventDefault();
+
+        var payval = parseInt(val.Deposit)
+        getBalance();
+        setGuthaben(guthaben + payval);
+        patchBalance(guthaben + payval);            
     }
 
     async function handlePayOff(val:any) {
+        //val.preventDefault();
+
+        var payval = parseInt(val.Deposit)
         getBalance();
-        setGuthaben(guthaben - val.balance);
-        await axios(URL_ENDPOINT + 'balance/amount/' + `${localStorage.getItem("username")}`, {
-            method: 'PATCH',
-            headers: headerPatchDev,
-            data: new URLSearchParams({
-                'balance.amount': guthaben
-            })
-          }).then(val => {
-            navigate("/overview");
-            message.success("Deposit successful");
-            send(
-                'service_wyjyj9k',
-                'template_t0gkt3h',
-                toSend,
-                'z4fPMHER9eOdAN1pv'
-            )
-          })
-          .catch(error => {
-            setErrorMessage(`Deposit failed. Please try again later`);
-            console.log(error)
-          });     
+        setGuthaben(guthaben - payval);
+        patchBalance(guthaben - payval);   
     }
+
+    useEffect(() => {
+        getBalance();
+    }, []);
  
     return (
         <>
