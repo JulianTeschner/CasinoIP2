@@ -55,14 +55,15 @@ function Balance() {
                 'balance.amount': val
             })
         }).then(data => {
-            navigate("/overview");
+            console.log(data);
             message.success("Deposit successful");
             send(
                 'service_wyjyj9k',
                 'template_t0gkt3h',
                 toSend,
                 'z4fPMHER9eOdAN1pv'
-            )
+            );
+            navigate("/overview");
         })
         .catch(error => {
             setErrorMessage(`Deposit failed. Please try again later`);
@@ -76,7 +77,9 @@ function Balance() {
         var payval = parseInt(val.Deposit)
         getBalance();
         setGuthaben(guthaben + payval);
-        patchBalance(guthaben + payval);            
+        patchBalance(guthaben + payval); 
+        console.log("Guthaben"+guthaben);
+        console.log(payval);           
     }
 
     async function handlePayOff(val:any) {
