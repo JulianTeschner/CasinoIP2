@@ -71,6 +71,17 @@ function Balance() {
         });
     }
 
+    async function patchLastDeposit(val:any) {
+        await axios(URL_ENDPOINT + 'balance/lastdeposit/' + `${localStorage.getItem("username")}`, {
+            method: 'PATCH',
+            headers: headerPatchDev,
+            data: new URLSearchParams({
+                'balance.lastdeposit': val
+            })
+        }).then(data => console.log(data))
+        .catch(error => console.log(error));
+    }
+
     async function handlePayIn(val:any) {      
         //val.preventDefault();
 
@@ -78,6 +89,7 @@ function Balance() {
         getBalance();
         setGuthaben(guthaben + payval);
         patchBalance(guthaben + payval); 
+        patchLastDeposit(payval);
         console.log("Guthaben"+guthaben);
         console.log(payval);           
     }
