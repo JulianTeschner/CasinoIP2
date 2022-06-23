@@ -76,7 +76,7 @@ function Balance() {
             method: 'PATCH',
             headers: headerPatchDev,
             data: new URLSearchParams({
-                'balance.lastdeposit': val
+                'balance.last_deposit': val
             })
         }).then(data => console.log(data))
         .catch(error => console.log(error));
@@ -90,7 +90,7 @@ function Balance() {
         setGuthaben(guthaben + payval);
         patchBalance(guthaben + payval); 
         patchLastDeposit(payval);
-        console.log("Guthaben"+guthaben);
+        console.log("Guthaben "+guthaben);
         console.log(payval);           
     }
 
