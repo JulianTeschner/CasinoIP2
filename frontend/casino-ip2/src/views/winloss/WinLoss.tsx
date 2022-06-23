@@ -14,8 +14,6 @@ function WinLoss() {
   }
 
   const [data, setData] = useState<any>('');
-  var user = useUserStore((state:any) => state.userProps)[0];
-
 
   async function getData() {
       await axios(URL_ENDPOINT + `${localStorage.getItem("username")}`, {
@@ -49,23 +47,23 @@ function WinLoss() {
           <Space direction='vertical' size={10}>
             <Space size={20}>
               <div>
-                Last deposit: {data.balance.LastDeposit}
+                Last deposit: {data.balance.last_deposit}
               </div>
               <div>
-                Current amount: {data.balance.Amount}
+                Current amount: {data.balance.amount}
               </div>
             </Space>
             <div>
               {
-              data.balance.LastDeposit > data.balance.Amount ?
+              data.balance.LastDeposit > data.balance.amount ?
                 <p>
-                  <span className='Loss'>Difference: {data.balance.LastDeposit - data.balance.Amount}</span>
+                  <span className='Loss'>Difference: {data.balance.last_deposit - data.balance.amount}</span>
                   <br />
                   <span className='Loss'>no lucky today!</span>
                 </p>
                 :            
                 <p>
-                  <span className='Win'>Difference: {data.balance.Amount - data.balance.LastDeposit}</span>
+                  <span className='Win'>Difference: {data.balance.amount - data.balance.last_deposit}</span>
                   <br />
                   <span className='Win'>Lucky!</span> 
                 </p>           

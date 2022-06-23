@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/JulianTeschner/CasinoIP2/branch/main/graph/badge.svg)](https://codecov.io/gh/JulianTeschner/CasinoIP2)
+
 # CasinoIP2
 
 ## Setup Database

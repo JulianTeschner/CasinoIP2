@@ -10,8 +10,8 @@ describe('win/loss overview', () => {
     it('should render the heading, amount, lastdeposit and difference', async () => {
       const res = {
         "balance": {
-          "Amount": 100,
-          "LastDeposit": 50
+          "amount": 100,
+          "last_deposit": 50
         }};
         
       axios.mockResolvedValue({ data: res,
